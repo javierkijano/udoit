@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "465387687916",
+    "firebase_url": "https://smartmobs-8bebb.firebaseio.com",
+    "project_id": "smartmobs-8bebb",
+    "storage_bucket": "smartmobs-8bebb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465387687916:android:ea56084f48fed30f917ac9",
+        "android_client_info": {
+          "package_name": "com.udoit.smartmobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465387687916-6k6tfmq1hfvc6jk6bc2tuln5u4uqri11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYEiMJQVhyn4Nrqv2LxnQMLCa5Wu_EGkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465387687916-6k6tfmq1hfvc6jk6bc2tuln5u4uqri11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

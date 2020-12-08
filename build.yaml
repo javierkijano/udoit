@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      build_web_compilers|app_core:
+        generate_for:
+          exclude:
+            - lib/src/blocs/service/user_chat_bloc.dart
+            - lib/mqtt_client.dart
+            - lib/theme*
+            - lib/quiz
+            - lib/shopHop
+            - lib/integrations
+            - lib/learner
+            - lib/qibus
+            - lib/quiz
+            - lib/shopHop
+            - lib/smartDeck
+            - lib/social
+            - lib/webApps
+            
