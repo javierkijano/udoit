@@ -46,7 +46,7 @@ class NewSmartMob1State extends State<NewSmartMob1>
             ),
             SizedBox(height: 20),
             Text(
-              'Si eliges un tema, permites que Change.org recomiende tu petición a personas que podrían estar interesadas',
+              'Si eliges un tema, permites que udoit.org recomiende tu petición a personas que podrían estar interesadas',
               style: TextStyle(
                 fontSize: 15,
               ),

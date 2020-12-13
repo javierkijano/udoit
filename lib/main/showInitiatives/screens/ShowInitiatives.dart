@@ -6,11 +6,28 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/showInitiatives/models/models.dart';
 import 'package:udoit/main/utils/AppColors.dart';
-//import 'package:prokit_flutter/theme2/utils/T2DataGenerator.dart';
 import 'package:udoit/main/utils/AppStrings.dart';
 import 'package:udoit/main/utils/globals.dart';
-import 'package:udoit/main/showInitiatives/models/models.dart';
-import 'package:udoit/main/widgets/ListInitiatives.dart';
+import 'package:udoit/main/widgets/ListScreen.dart';
+
+class MyItemFetcher extends ItemFetcher {
+  // This async function simulates fetching results from Internet, etc.
+  @override
+  Future<List<ListModel>> fetchFcn(n) async {
+    List<ListModel> list = <ListModel>[];
+    await Future.delayed(Duration(seconds: 1), () {
+      for (int i = 0; i < n; i++) {
+        list.add(ListModel(
+            name: "Javier",
+            description: "asdfafd",
+            icon: "assets/initiatives/initiative_1.jpg",
+            duration: "10",
+            type: "new"));
+      }
+    });
+    return list;
+  }
+}
 
 class ShowInitiatives extends StatefulWidget {
   static var tag = "/ShowInitiatives";
@@ -21,33 +38,17 @@ class ShowInitiatives extends StatefulWidget {
 
 class ShowInitiativesState extends State<ShowInitiatives> {
   int selectedPos = 1;
-  List<ListModel> mListings_new;
-  List<ListModel> mListings_trend;
-  List<ListModel> mListings_current;
+  MyItemFetcher myItemFetcher_new;
+  MyItemFetcher myItemFetcher_trend;
+  MyItemFetcher myItemFetcher_popular;
 
   @override
   void initState() {
     super.initState();
     selectedPos = 1;
-    mListings_new = List.filled(
-        5,
-        ListModel(
-            name: "Javier",
-            description: "asdfafd",
-            icon: "assets/initiatives/initiative_1.jpg",
-            duration: "10",
-            type: "new"));
-
-    mListings_trend = List.filled(
-        5,
-        ListModel(
-            name: "Quijano",
-            description: "asdfafd",
-            icon: "assets/initiatives/initiative_1.jpg",
-            duration: "10",
-            type: "trend"));
-
-    mListings_current = mListings_new;
+    myItemFetcher_new = MyItemFetcher();
+    myItemFetcher_trend = MyItemFetcher();
+    myItemFetcher_popular = MyItemFetcher();
   }
 
   @override
@@ -62,6 +63,7 @@ class ShowInitiativesState extends State<ShowInitiatives> {
           bottom: TabBar(
             onTap: (value) {
               setState(() {
+                /*
                 switch (value) {
                   case 0:
                     {
@@ -85,6 +87,7 @@ class ShowInitiativesState extends State<ShowInitiatives> {
                       break;
                     }
                 }
+                */
               });
             },
             tabs: [
@@ -98,9 +101,14 @@ class ShowInitiativesState extends State<ShowInitiatives> {
             builder: (_) => Container(
                 width: MediaQuery.of(context).size.width,
                 child: TabBarView(children: <Widget>[
+                  /*
                   ListIniatives(mListings: mListings_new),
                   ListIniatives(mListings: mListings_trend),
                   ListIniatives(mListings: mListings_new),
+                  */
+                  ListScreen(myItemFetcher_new),
+                  ListScreen(myItemFetcher_trend),
+                  ListScreen(myItemFetcher_popular),
                 ]))),
       ),
     );

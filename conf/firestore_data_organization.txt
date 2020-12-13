@@ -1,0 +1,46 @@
+- Iniatives*
+  - Date published
+  - Category
+  - Hashtags
+  - Title
+  - Destinatary
+  - Description
+  - Type
+  - Publisher user
+   - UserId
+  - Users*
+    - UserId
+    - Donations
+    - Likes
+    - Comments
+    - Images
+    - Videos
+    - Donations
+    - Purchases*
+  - Wall
+
+- Round tables:
+  - Title
+  - Description
+  - Moderator
+  - Speakers*
+  - Audience*
+  - Steps
+    - Presentation
+    - Introducción
+    - Discussion
+    - Questions
+    - Answers
+    - Conclusion
+    - Cierre
+
+
+
+
+
+
+
+
+
+
+
