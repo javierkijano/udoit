@@ -13,6 +13,9 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'package:udoit/main/login_signup/screens/T1Signup.dart';
 import 'package:udoit/main/utils/AppImages.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:udoit/main/login_signup/screens/signin_page.dart';
+import 'package:udoit/main/login_signup/screens/register_page.dart';
 
 class T1Login extends StatefulWidget {
   static var tag = "/T1SignIn";
@@ -48,6 +51,20 @@ class _T1LoginState extends State<T1Login> {
     Navigator.popAndPushNamed(context, T1Signup.tag);
   }
 
+  void _showButtonPressDialog(BuildContext context, String provider) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text('$provider Button Pressed!'),
+      backgroundColor: Colors.black26,
+      duration: Duration(milliseconds: 2000),
+    ));
+  }
+
+  void _pushPage(BuildContext context, Widget page) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => page),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +76,7 @@ class _T1LoginState extends State<T1Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: 30),
+                  SizedBox(height: 16),
                   Image.asset(t1_ic_ring, height: 100, width: 100),
                   SizedBox(height: 16),
                   Row(
@@ -101,6 +118,40 @@ class _T1LoginState extends State<T1Login> {
                   text("Create new account",
                       textColor: Globals.appStore.textPrimaryColor,
                       fontFamily: fontMedium),
+                  SizedBox(height: 24),
+                  SignInButtonBuilder(
+                    text: 'Get going with Email',
+                    icon: Icons.email,
+                    onPressed: () {
+                      _showButtonPressDialog(context, 'Email');
+                    },
+                    backgroundColor: Colors.blueGrey[700],
+                    width: 220.0,
+                  ),
+                  Divider(),
+                  SignInButton(
+                    Buttons.Google,
+                    onPressed: () {
+                      //_showButtonPressDialog(context, 'Google');
+                      int a = 0;
+                      _pushPage(context, SignInPage());
+                    },
+                  ),
+                  Divider(),
+                  SignInButton(
+                    Buttons.Facebook,
+                    onPressed: () {
+                      _showButtonPressDialog(context, 'Facebook (mini)');
+                    },
+                  ),
+                  Divider(),
+                  SignInButton(
+                    Buttons.Twitter,
+                    text: "Use Twitter",
+                    onPressed: () {
+                      _showButtonPressDialog(context, 'Twitter');
+                    },
+                  ),
                 ],
               ),
             ),
