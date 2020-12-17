@@ -1,4 +1,4 @@
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/utils/AppIcons.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 import 'package:udoit/main/utils/AppProfiles.dart';

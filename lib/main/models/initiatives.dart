@@ -2,22 +2,26 @@ import 'package:udoit/main/models/configuration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Initiative {
-  String name = "";
-  String duration = "";
+  DateTime dateTime;
   Category category;
-  String description = "";
-  String icon = "";
+  String title;
+  String destinatary;
+  String request;
 
   Initiative(
-      {this.name, this.duration, this.category, this.description, this.icon});
+      {this.dateTime,
+      this.category,
+      this.title,
+      this.destinatary,
+      this.request});
 
   Map<String, dynamic> toJSON() {
     return {
-      'name': name,
-      'duration': duration,
-      'category': category.type.toString(),
-      'description': description,
-      'icon': icon
+      'dateTime': dateTime,
+      'category': category.type,
+      'title': title,
+      'destinatary': destinatary,
+      'request': request
     };
   }
 }

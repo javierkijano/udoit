@@ -9,7 +9,7 @@ import 'package:udoit/main/walkthrough/utils/T4Colors.dart';
 import 'package:udoit/main/walkthrough/utils/T4Constant.dart';
 import 'package:udoit/main/walkthrough/utils/T4Images.dart';
 import 'package:udoit/main/walkthrough/utils/widgets/T4Button.dart';
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_1.dart';
@@ -22,6 +22,7 @@ import 'package:udoit/main/newSmartMob/NewSmartMob_6.dart';
 import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
 import 'package:udoit/main/login_signup/model/T1_model.dart';
 import 'package:udoit/main/login_signup/screens/T1Login.dart';
+import 'package:udoit/main/models/initiatives.dart';
 
 class NewSmartMob extends StatefulWidget {
   static var tag = "/NewSmartMob";
@@ -50,6 +51,8 @@ class NewSmartMobState extends State<NewSmartMob> {
   NewSmartMob4 newSmartMob4;
   NewSmartMob5 newSmartMob5;
   NewSmartMob6 newSmartMob6;
+
+  Initiative initiative;
 
   @override
   void initState() {
@@ -84,13 +87,12 @@ class NewSmartMobState extends State<NewSmartMob> {
           arguments: LoginRoutes("/NewSmartMob"));
     }
     if (currentIndexPage == 5) {
-      NewSmartMobData newSmartMobData = NewSmartMobData(
+      Globals.appInitiatives.add(Initiative(
           dateTime: DateTime.now(),
           category: _keyNewSmartMob1State.currentState.category,
           title: _keyNewSmartMob2State.currentState.title,
           destinatary: _keyNewSmartMob3State.currentState.destinatary,
-          request: _keyNewSmartMob4State.currentState.request);
-      newSmartMobData.WriteToFirestore();
+          request: _keyNewSmartMob4State.currentState.request));
       int a = 0;
     }
   }
@@ -164,54 +166,6 @@ class NewSmartMobState extends State<NewSmartMob> {
                 ],
               ),
             ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class WalkThrough extends StatelessWidget {
-  final String textContent;
-  final String walkImg;
-
-  WalkThrough({Key key, this.textContent, this.walkImg}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var h = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: h * 0.05),
-            height: h * 0.5,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                CachedNetworkImage(
-                    placeholder: placeholderWidgetFn(),
-                    imageUrl: walkImg,
-                    width: width * 0.8,
-                    height: h * 0.4),
-              ],
-            ),
-          ),
-          SizedBox(height: h * 0.08),
-          text(textContent,
-              textColor: Globals.appStore.textPrimaryColor,
-              fontSize: textSizeNormal,
-              fontFamily: fontMedium),
-          Padding(
-            padding: EdgeInsets.only(left: 28.0, right: 28.0),
-            child: text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.simply duumy text ",
-                fontSize: textSizeMedium,
-                maxLine: 3,
-                isCentered: true),
           )
         ],
       ),

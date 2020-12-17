@@ -6,7 +6,7 @@ import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
 import 'package:udoit/main/profile/Profile.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
-import 'package:udoit/main/showInitiatives/screens/ShowInitiatives.dart';
+import 'package:udoit/main/showInitiatives/ShowInitiatives.dart';
 
 Widget bottomNavBar(BuildContext context, selectedIndex) {
   void onItemTapped(int index) {

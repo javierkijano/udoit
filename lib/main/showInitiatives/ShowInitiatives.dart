@@ -7,7 +7,7 @@ import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/showInitiatives/models/models.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 import 'package:udoit/main/utils/AppStrings.dart';
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/widgets/ListScreen.dart';
 
 class MyItemFetcher extends ItemFetcher {

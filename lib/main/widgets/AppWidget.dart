@@ -10,7 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main//utils/common.dart';
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 //import 'package:udoit/main/model/ListModels.dart';
 
 import '../utils/AppColors.dart';

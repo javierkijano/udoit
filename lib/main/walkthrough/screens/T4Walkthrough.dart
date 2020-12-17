@@ -11,7 +11,7 @@ import 'package:udoit/main/walkthrough/utils/T4Constant.dart';
 //import 'package:udoit/main/walkthrough/utils/T4Images.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:udoit/main/walkthrough/utils/widgets/T4Button.dart';
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 
 import 'package:udoit/main/login_signup/screens/T1Login.dart';
 import 'package:udoit/main/login_signup/model/T1_model.dart';

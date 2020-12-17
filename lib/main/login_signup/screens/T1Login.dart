@@ -8,7 +8,7 @@ import 'package:udoit/main/login_signup/utils/T1Strings.dart';
 import 'package:udoit/main/login_signup/utils/T1Widget.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:udoit/main/login_signup/screens/T1Signup.dart';

@@ -1,5 +1,6 @@
 import 'package:udoit/main/store/AppStore.dart';
 import 'package:udoit/main/models/configuration.dart';
+import 'package:udoit/main/models/initiatives.dart';
 
 class Globals {
   static var appStore = AppStore();
@@ -9,4 +10,5 @@ class Globals {
   static String userPhoneNumber = 'javierkijano@gmail.com';
   static var fbApp;
   static Configuration appConf = Configuration(version: 'v0.1');
+  static Initiatives appInitiatives = Initiatives();
 }

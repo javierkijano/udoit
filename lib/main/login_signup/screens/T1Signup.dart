@@ -8,7 +8,7 @@ import 'package:udoit/main/login_signup/utils/T1Strings.dart';
 import 'package:udoit/main/login_signup/utils/T1Widget.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 
 class T1Signup extends StatelessWidget {

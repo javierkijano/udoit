@@ -1,5 +1,5 @@
 import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

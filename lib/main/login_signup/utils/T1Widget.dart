@@ -3,7 +3,7 @@ import 'package:flutter_tags/flutter_tags.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'T1Colors.dart';
 import 'T1Constant.dart';
 //import 'dart:ui';

@@ -12,7 +12,7 @@ import 'package:udoit/main/utils/AppColors.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
 import 'package:udoit/main/utils/AppProfiles.dart';
 
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/widgets/bottomNavBar.dart';
 
 //import 'package:udoit/theme5/utils/T5Constant.dart';

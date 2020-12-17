@@ -9,7 +9,7 @@ import 'package:udoit/main/dashboard/screens/Dashboard.dart';
 import 'package:udoit/main/profile/Profile.dart';
 import 'package:udoit/main/walkthrough/screens/T4Walkthrough.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
-import 'package:udoit/main/showInitiatives/screens/ShowInitiatives.dart';
+import 'package:udoit/main/showInitiatives/ShowInitiatives.dart';
 
 Map<String, WidgetBuilder> routes() {
   return <String, WidgetBuilder>{

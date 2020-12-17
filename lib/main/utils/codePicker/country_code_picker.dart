@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/utils/codePicker/selection_dialog.dart';
 
-import 'package:udoit/main/utils/globals.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
 
 import 'country_code.dart';
 import 'country_codes.dart';

@@ -98,7 +98,7 @@ List<Theme11SongsList> theme11SongList() {
   songList1.subtitle =
       "Presidente del Gobierno de España, presidentes de las 17 Comunidades Autónomas, señores políticos: En la salud, ustedes mandan pero no saben ...";
   //songList1.img = t11_ic_Music3;
-  songList1.img = "assets/changedotorg/pwVloeFFNSvsiIH-800x450-noPad.jpg";
+  songList1.img = "assets/initiatives/initiative_1.jpg";
   list.add(songList1);
 
   var songList2 = Theme11SongsList();
