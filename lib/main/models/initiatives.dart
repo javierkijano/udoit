@@ -18,7 +18,7 @@ class Initiative {
   Map<String, dynamic> toJSON() {
     return {
       'dateTime': dateTime,
-      'category': category.type,
+      'category': category.id,
       'title': title,
       'destinatary': destinatary,
       'request': request

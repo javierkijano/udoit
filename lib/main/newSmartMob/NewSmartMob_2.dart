@@ -4,7 +4,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'package:udoit/main/newSmartMob/NewSmartMob_5.dart';
 //import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
-import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
 
 class NewSmartMob2 extends StatefulWidget {
   static String tag = '/NewSmartMob2';

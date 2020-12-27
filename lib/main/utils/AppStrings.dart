@@ -7,3 +7,6 @@ const walkThrough_d2 =
 const walkThrough_t3 = "Make friends and have fun";
 const walkThrough_d3 =
     "Meeting new people with similar interests is in the DNA of udoit. Enjoy it";
+
+const t1_lbl_sign_in = "Sign In";
+const t1_lbl_already_have_account = "Already have an account?";

@@ -10,31 +10,48 @@ import 'T1Constant.dart';
 
 //-------------------------------------------Form-------------------------------------------------------------------------
 // EditText rounded Style
-Padding editTextStyle(var hintText,
-    {isPassword = true, TextEditingController controller}) {
-  return Padding(
-    padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-    child: TextFormField(
-      style: TextStyle(fontSize: textSizeLargeMedium, fontFamily: fontRegular),
-      obscureText: isPassword,
-      controller: controller,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(24, 18, 24, 18),
-        hintText: hintText,
-        filled: true,
-        fillColor: t1_edit_text_background,
-        enabledBorder: OutlineInputBorder(
+class EditTextStyle extends StatelessWidget {
+  var hintText;
+  bool isPassword;
+  TextEditingController controller;
+
+  EditTextStyle(this.hintText, {this.isPassword = true, this.controller}) {
+    if (controller == null) {
+      controller = TextEditingController();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+      child: TextFormField(
+        style:
+            TextStyle(fontSize: textSizeLargeMedium, fontFamily: fontRegular),
+        obscureText: isPassword,
+        controller: controller,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(24, 18, 24, 18),
+          hintText: hintText,
+          filled: true,
+          fillColor: t1_edit_text_background,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(40),
+              borderSide:
+                  const BorderSide(color: t1_edit_text_background, width: 0.0)),
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(40),
             borderSide:
-                const BorderSide(color: t1_edit_text_background, width: 0.0)),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40),
-          borderSide:
-              const BorderSide(color: t1_edit_text_background, width: 0.0),
+                const BorderSide(color: t1_edit_text_background, width: 0.0),
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
+
+  getText() {
+    return controller.text;
+  }
 }
 
 // EditText

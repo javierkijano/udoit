@@ -2,17 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:udoit/main/login_signup/utils/T1Colors.dart';
-import 'package:udoit/main/login_signup/utils/T1Constant.dart';
+//import 'package:udoit/main/login_signup/utils/T1Constant.dart';
+import 'package:udoit/main/utils/AppConstant.dart';
 //import 'package:udoit/main/login_signup/utils/T1Images.dart';
-import 'package:udoit/main/login_signup/utils/T1Strings.dart';
+//import 'package:udoit/main/login_signup/utils/T1Strings.dart';
 import 'package:udoit/main/login_signup/utils/T1Widget.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
 import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/utils/AppImages.dart';
+import 'package:udoit/main/login_signup/screens/signin.dart';
 
 class T1Signup extends StatelessWidget {
   static var tag = "/T1SignUp";
+  SignIn signIn = SignIn();
+
+  EditTextStyle editTextStyle_fullName;
+  EditTextStyle editTextStyle_emailOrPhone;
+  EditTextStyle editTextStyle_password;
+  EditTextStyle editTextStyle_repassword;
 
   @override
   Widget build(BuildContext context) {
@@ -32,33 +40,48 @@ class T1Signup extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      formHeading(t1_lbl_sign_up_header),
-                      formSubHeadingForm(t1_lbl_sign_in),
+                      formHeading("Sign Up/"),
+                      formSubHeadingForm("Sign In"),
                     ],
                   ),
                   SizedBox(height: 40),
-                  editTextStyle(t1_hint_fullName, isPassword: false),
+                  editTextStyle_fullName =
+                      EditTextStyle("Full Name", isPassword: false),
                   SizedBox(height: 16),
-                  editTextStyle(t1_email_phone_no, isPassword: false),
+                  editTextStyle_emailOrPhone = EditTextStyle(
+                      "Email Id / Phone Number",
+                      isPassword: false),
                   SizedBox(height: 16),
-                  editTextStyle(t1_hint_password, isPassword: true),
+                  editTextStyle_password =
+                      EditTextStyle("Password", isPassword: false),
                   SizedBox(height: 16),
-                  editTextStyle(t1_hint_re_password, isPassword: true),
+                  editTextStyle_repassword =
+                      EditTextStyle("Re-Password", isPassword: false),
                   SizedBox(height: 20),
                   Padding(
                       padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                      child: shadowButton(
-                          "Sign up", () => {Navigator.pop(context)})),
+                      child: shadowButton("Sign up", () {
+                        assert(editTextStyle_password.getText() ==
+                            editTextStyle_repassword.getText());
+                        signIn.webSignUp(
+                          SignInProvider.Own,
+                          email: editTextStyle_emailOrPhone.getText(),
+                          password: editTextStyle_password.getText(),
+                        );
+                      })),
                   SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      text(t1_lbl_already_have_account,
+                      text("Already have an account?",
                           textColor: Globals.appStore.textSecondaryColor,
                           fontSize: textSizeLargeMedium),
                       SizedBox(width: 8),
-                      text(t1_lbl_sign_in,
-                          fontFamily: fontMedium, textColor: t1_blue)
+                      GestureDetector(
+                        child: text("Sign In",
+                            fontFamily: fontMedium, textColor: t1_blue),
+                        onTap: () => Navigator.pop(context),
+                      ),
                     ],
                   ),
                   SizedBox(height: 30),

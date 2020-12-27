@@ -19,7 +19,7 @@ import 'package:udoit/main/newSmartMob/NewSmartMob_4.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_5.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_6.dart';
 
-import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
+//import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
 import 'package:udoit/main/login_signup/model/T1_model.dart';
 import 'package:udoit/main/login_signup/screens/T1Login.dart';
 import 'package:udoit/main/models/initiatives.dart';

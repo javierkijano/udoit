@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:nb_utils/nb_utils.dart';
 
-import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
-
 class NewSmartMob6 extends StatefulWidget {
   static String tag = '/NewSmartMob6';
   final String title = 'Add a new iniative';

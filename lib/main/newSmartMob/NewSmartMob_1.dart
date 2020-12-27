@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'package:udoit/main/newSmartMob/NewSmartMob_2.dart';
 //import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
-import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
+//import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
 import 'package:udoit/main/models/configuration.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -100,14 +100,14 @@ class NewSmartMob1State extends State<NewSmartMob1>
 
                           iconSize: 120,
                           tooltip:
-                              'Escoge esta categoría para empezar a luchas por ${categoriesNames[index]}',
+                              'Escoge esta categoría para empezar a luchas por ${categories[index].name}',
                           //style: Theme.of(context).textTheme.headline5,
                           onPressed: () {
                             setState(() async {
                               category = categories[index];
                             });
                           }),
-                      Text(categoriesNames[index]),
+                      Text(categories[index].name),
                     ]);
                   }),
                 ),

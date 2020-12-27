@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:udoit/main/login_signup/utils/T1Constant.dart';
-import 'package:udoit/main/login_signup/utils/T1Strings.dart';
+//import 'package:udoit/main/login_signup/utils/T1Constant.dart';
+import 'package:udoit/main/utils/AppConstant.dart';
+//import 'package:udoit/main/login_signup/utils/T1Strings.dart';
 import 'package:udoit/main/login_signup/utils/T1Widget.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
@@ -14,8 +15,9 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/login_signup/screens/T1Signup.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:udoit/main/login_signup/screens/signin_page.dart';
+import 'package:udoit/main/login_signup/screens/signin.dart';
 import 'package:udoit/main/login_signup/screens/register_page.dart';
+import 'package:udoit/main/utils/AppColors.dart';
 
 class T1Login extends StatefulWidget {
   static var tag = "/T1SignIn";
@@ -27,11 +29,20 @@ class T1Login extends StatefulWidget {
 
 class _T1LoginState extends State<T1Login> {
   bool rememberMe = false;
+  EditTextStyle editTextStyle_fullName;
+  EditTextStyle editTextStyle_email;
+  EditTextStyle editTextStyle_password;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    setState(() {
+      editTextStyle_fullName = EditTextStyle("John Villa", isPassword: false);
+      editTextStyle_email =
+          EditTextStyle("john.villa@gmail.com", isPassword: false);
+      editTextStyle_password = EditTextStyle("Password", isPassword: true);
+    });
   }
 
   VoidCallback OnPressedCallback_signin() {
@@ -39,6 +50,11 @@ class _T1LoginState extends State<T1Login> {
     //Dashboard().launch(context, isNewTask: true);
     //LoginRoutes loginRoutes = ModalRoute.of(context).settings.arguments;
     //Navigator.pushNamed(context, loginRoutes.nextRoute);
+
+    //_pushPage(context, SignIn());
+    SignIn signIn = SignIn();
+    signIn.webSignIn(SignInProvider.Own,
+        email: 'javierkijano@gmail.com', password: 'waimea1%');
     Globals.loggedIn = true;
     Navigator.pop(context);
   }
@@ -48,15 +64,8 @@ class _T1LoginState extends State<T1Login> {
     //Dashboard().launch(context, isNewTask: true);
     //LoginRoutes loginRoutes = ModalRoute.of(context).settings.arguments;
     //Navigator.pushNamed(context, loginRoutes.nextRoute, arguments: loginRoutes);
-    Navigator.popAndPushNamed(context, T1Signup.tag);
-  }
-
-  void _showButtonPressDialog(BuildContext context, String provider) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text('$provider Button Pressed!'),
-      backgroundColor: Colors.black26,
-      duration: Duration(milliseconds: 2000),
-    ));
+    //Navigator.popAndPushNamed(context, T1Signup.tag);
+    Navigator.pushNamed(context, T1Signup.tag);
   }
 
   void _pushPage(BuildContext context, Widget page) {
@@ -82,20 +91,22 @@ class _T1LoginState extends State<T1Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      formHeading(t1_lbl_sign_in_header),
-                      formSubHeadingForm(t1_lbl_sign_up),
+                      formHeading("Sign In/"),
+                      formSubHeadingForm("Sign Up"),
                     ],
                   ),
                   SizedBox(height: 50),
-                  editTextStyle(t1_user_name, isPassword: false),
+                  editTextStyle_fullName,
                   SizedBox(height: 16),
-                  editTextStyle(t1_hint_password, isPassword: true),
+                  editTextStyle_email,
+                  SizedBox(height: 16),
+                  editTextStyle_password,
                   SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                     child: CustomTheme(
                       child: CheckboxListTile(
-                        title: text(t1_lbl_remember,
+                        title: text("Remember",
                             textColor: Globals.appStore.textSecondaryColor),
                         value: rememberMe,
                         onChanged: (newValue) {
@@ -109,39 +120,42 @@ class _T1LoginState extends State<T1Login> {
                   SizedBox(height: 8),
                   Padding(
                       padding: EdgeInsets.fromLTRB(40, 16, 40, 16),
-                      child: shadowButton(
-                          t1_lbl_sign_in, OnPressedCallback_signin)),
+                      child: shadowButton("Sign In", OnPressedCallback_signin)),
                   SizedBox(height: 24),
                   text("Forgot password?",
                       textColor: Globals.appStore.textPrimaryColor,
                       fontFamily: fontMedium),
-                  text("Create new account",
-                      textColor: Globals.appStore.textPrimaryColor,
-                      fontFamily: fontMedium),
-                  SizedBox(height: 24),
-                  SignInButtonBuilder(
-                    text: 'Get going with Email',
-                    icon: Icons.email,
-                    onPressed: () {
-                      _showButtonPressDialog(context, 'Email');
-                    },
-                    backgroundColor: Colors.blueGrey[700],
-                    width: 220.0,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      text("Don't have an account?",
+                          textColor: Globals.appStore.textSecondaryColor,
+                          fontSize: textSizeLargeMedium),
+                      SizedBox(width: 8),
+                      GestureDetector(
+                        child: text("Create new account",
+                            fontFamily: fontMedium, textColor: t1_blue),
+                        onTap: OnPressedCallback_createNewAccount,
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 24),
                   Divider(),
                   SignInButton(
                     Buttons.Google,
                     onPressed: () {
                       //_showButtonPressDialog(context, 'Google');
                       int a = 0;
-                      _pushPage(context, SignInPage());
+                      SignIn signIn = SignIn();
+                      signIn.webSignIn(SignInProvider.Google);
                     },
                   ),
                   Divider(),
                   SignInButton(
                     Buttons.Facebook,
                     onPressed: () {
-                      _showButtonPressDialog(context, 'Facebook (mini)');
+                      SignIn signIn = SignIn();
+                      signIn.webSignIn(SignInProvider.Facebook);
                     },
                   ),
                   Divider(),
@@ -149,7 +163,8 @@ class _T1LoginState extends State<T1Login> {
                     Buttons.Twitter,
                     text: "Use Twitter",
                     onPressed: () {
-                      _showButtonPressDialog(context, 'Twitter');
+                      SignIn signIn = SignIn();
+                      signIn.webSignIn(SignInProvider.Twitter);
                     },
                   ),
                 ],

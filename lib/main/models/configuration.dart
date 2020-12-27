@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-enum CategoryType { animales, politica }
+//enum CategoryType { animales, politica }
 
 class Category {
-  CategoryType type;
+  String id;
   String name;
   String iconUrl;
   Image iconImage;
 
-  Category({this.type, this.name, this.iconUrl});
+  Category({this.id, this.name, this.iconUrl});
 
   @override
   String toString() {
-    return "{type: $type, name: $name , iconUrl: $iconUrl}";
+    return "{id: $id, name: $name, iconUrl: $iconUrl}";
   }
 }
 
@@ -29,6 +29,7 @@ class Categories {
       for (final cat in value.data()['categories']) {
         _categories.add(Category(
           name: cat['name'],
+          id: cat['id'],
           iconUrl: cat['icon'],
         ));
       }

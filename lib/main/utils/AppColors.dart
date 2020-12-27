@@ -77,6 +77,7 @@ var t2lightStatusBar = materialColor(0XFFEAEAF9);
 var t2White = materialColor(0XFFFFFFFF);
 var t2TextColorPrimary = materialColor(0XFF212121);
 const shadow_color = Color(0XFFECECEC);
+const t1_blue = Color(0XFF1D36C0);
 
 Map<int, Color> color = {
   50: Color.fromRGBO(136, 14, 79, .1),

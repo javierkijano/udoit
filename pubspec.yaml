@@ -1,6 +1,7 @@
 name: udoit
 description: A new Flutter application.
 version: 1.0.0+1
+publish_to: none
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -89,6 +90,13 @@ dependencies:
   #ext_video_player: ^0.0.3
   youtube_player_iframe: ^1.1.0
   english_words: ^3.1.5
+  flutter_signin_button: ^1.1.0
+  firebase_auth: ^0.18.4+1
+  flutter_facebook_login:
+    git:
+      url: https://github.com/romulojjunior/flutter_facebook_login.git
+      ref: v1.3.0-web
+  #flutter_twitter_login
 
   flutter_localizations:
     sdk: flutter
@@ -111,6 +119,7 @@ flutter:
     - assets/walkthrough/
     - assets/logo/
     - assets/categories/
+    - assets/signinup/
     - assets/newSmartMob/
     - assets/icons/
     - assets/profiles/

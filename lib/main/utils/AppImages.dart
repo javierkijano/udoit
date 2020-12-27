@@ -1,5 +1,5 @@
-const t1_ic_ring = "images/theme1/t1_ic_ring.png";
-const t4_walk_bg = "images/walkthrough/t4_walk_bg.png";
+const t1_ic_ring = "assets/signinup/t1_ic_ring.png";
+const t4_walk_bg = "assets/walkthrough/t4_walk_bg.png";
 const t4_walk1 = "assets/walkthrough/t4_walk1.png";
 const t4_walk2 = "assets/walkthrough/t4_walk2.png";
 const t4_walk3 = "assets/walkthrough/t4_walk3.png";
