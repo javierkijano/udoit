@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:udoit/main/dashboard/screens/Dashboard.dart';
+import 'package:udoit/main/dashboard/Dashboard.dart';
 import 'package:udoit/main/utils/AppStrings.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/utils/dots_indicator/dots_indicator.dart';
@@ -13,8 +13,8 @@ import 'package:udoit/main/utils/AppImages.dart';
 import 'package:udoit/main/walkthrough/utils/widgets/T4Button.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 
-import 'package:udoit/main/login_signup/screens/T1Login.dart';
-import 'package:udoit/main/login_signup/model/T1_model.dart';
+import 'package:udoit/main/login/T1Login.dart';
+import 'package:udoit/main/login/T1_model.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class T4WalkThrough extends StatefulWidget {
@@ -58,7 +58,7 @@ class T4WalkThroughState extends State<T4WalkThrough> {
         currentIndexPage = currentIndexPage + 1;
         _controller.jumpToPage(currentIndexPage);
       } else {
-        if (!Globals.loggedIn) {
+        if (!Globals.user.loggedIn) {
           Navigator.pushNamed(context, T1Login.tag,
               arguments: LoginRoutes(Dashboard.tag));
         } else

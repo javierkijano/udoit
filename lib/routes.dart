@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 //import 'package:udoit/main/model/AppModel.dart';
 //import 'package:udoit/main/screens/ProKitScreenListing.dart';
 import 'package:udoit/main/AppSplashScreen/AppSplashScreen.dart';
-import 'package:udoit/main/login_signup/screens/T1Login.dart';
-import 'package:udoit/main/dashboard/screens/Dashboard.dart';
-import 'package:udoit/main/login_signup/screens/T1Signup.dart';
+import 'package:udoit/main/login/T1Login.dart';
+import 'package:udoit/main/dashboard/Dashboard.dart';
+import 'package:udoit/main/login/T1Signup.dart';
 import 'package:udoit/main/profile/Profile.dart';
-import 'package:udoit/main/walkthrough/screens/T4Walkthrough.dart';
+import 'package:udoit/main/walkthrough/T4Walkthrough.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
 import 'package:udoit/main/showInitiatives/ShowInitiatives.dart';
 

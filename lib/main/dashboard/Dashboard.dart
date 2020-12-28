@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
-import 'package:udoit/main/dashboard/models/T11Models.dart';
+import 'package:udoit/main/dashboard/T11Models.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
 
-import 'package:udoit/main/dashboard/utils/T11DataGenerator.dart';
+import 'package:udoit/main/dashboard/T11DataGenerator.dart';
 //import 'package:udoit/main/dashboard/utils/T11Images.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 

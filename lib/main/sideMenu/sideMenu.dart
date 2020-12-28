@@ -46,11 +46,12 @@ class SideMenuState extends State<SideMenu> {
                             borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(24.0),
                                 topRight: Radius.circular(24.0))),
-                        /*User Profile*/
+                        //User Profile
                         child: Row(
                           children: <Widget>[
                             CircleAvatar(
-                                backgroundImage: NetworkImage(profile_1),
+                                backgroundImage:
+                                    Globals.user.profileImageProvider,
                                 radius: 40),
                             SizedBox(width: 16),
                             Expanded(
@@ -59,11 +60,11 @@ class SideMenuState extends State<SideMenu> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text(Globals.userName,
+                                    Text(Globals.user.name,
                                         style: boldTextStyle(
                                             color: white, size: 20)),
                                     SizedBox(height: 8),
-                                    Text(Globals.userEmail,
+                                    Text(Globals.user.email,
                                         style: primaryTextStyle(color: white)),
                                   ],
                                 ),

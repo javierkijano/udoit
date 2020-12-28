@@ -20,8 +20,8 @@ import 'package:udoit/main/newSmartMob/NewSmartMob_5.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_6.dart';
 
 //import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
-import 'package:udoit/main/login_signup/model/T1_model.dart';
-import 'package:udoit/main/login_signup/screens/T1Login.dart';
+import 'package:udoit/main/login/T1_model.dart';
+import 'package:udoit/main/login/T1Login.dart';
 import 'package:udoit/main/models/initiatives.dart';
 
 class NewSmartMob extends StatefulWidget {
@@ -60,7 +60,7 @@ class NewSmartMobState extends State<NewSmartMob> {
     currentIndexPage = 0;
 
     // TODO: remove this
-    Globals.loggedIn = false;
+    Globals.user.loggedIn = false;
 
     newSmartMob1 = NewSmartMob1(key: _keyNewSmartMob1State);
     newSmartMob2 = NewSmartMob2(key: _keyNewSmartMob2State);
@@ -82,7 +82,7 @@ class NewSmartMobState extends State<NewSmartMob> {
 
   void _onPageChanged(value) {
     setState(() => currentIndexPage = value);
-    if (currentIndexPage == 4 && !Globals.loggedIn) {
+    if (currentIndexPage == 4 && !Globals.user.loggedIn) {
       Navigator.pushNamed(context, T1Login.tag,
           arguments: LoginRoutes("/NewSmartMob"));
     }

@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:udoit/main/utils/AppGlobals.dart';
+import 'package:flutter/material.dart';
 
 enum SignInProvider { Own, Facebook, Google, Twitter }
 
@@ -62,34 +65,58 @@ class SignIn {
     return await _login();
   }
 
-  void webSignUp(SignInProvider signInProvider,
-      {String email, String password}) {
+  Future<void> webSignUp(SignInProvider signInProvider,
+      {String email, String password}) async {
     _auth.authStateChanges().listen((event) {
-      int a = 0;
       _auth.currentUser;
     });
     _auth
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((value) {})
-        .catchError((onError) {
-      int a = 0;
+        .then((value) {
+      print('... user created');
+    }).catchError((onError) {
+      print('...error creating user');
     });
-    webSignIn(SignInProvider.Own, email: email, password: password);
-    int a = 0;
+    await webSignIn(SignInProvider.Own, email: email, password: password);
+    return;
   }
 
-  void webSignIn(SignInProvider signInProvider,
-      {String email, String password}) {
+  Future<bool> webSignIn(SignInProvider signInProvider,
+      {String email, String password}) async {
+    _auth.setLanguageCode('es');
+    //_auth.useDeviceLanguage();
     FirebaseAuth.instance.setPersistence(Persistence.NONE);
-    signOut().then((x) {
+    await signOut().then((x) {
       FirebaseAuth.instance.setPersistence(Persistence.NONE);
 
       var provider;
       switch (signInProvider) {
-        case SignInProvider.Facebook:
+        case SignInProvider.Own:
           {
             provider = FacebookAuthProvider();
             provider.addScope('user_birthday');
+          }
+          break;
+        case SignInProvider.Facebook:
+          {
+            provider = FacebookAuthProvider();
+            provider.setCustomParameters({
+              'lang': 'es',
+              'display': 'popup',
+              'login_hint': 'user@example.com'
+            });
+            provider.addScope('public_profile');
+            provider.addScope('email');
+            provider.addScope('user_birthday');
+            provider.addScope('user_about_me');
+            provider.addScope('user_work_history');
+            provider.addScope('user_education_history');
+            provider.addScope('user_age_range');
+            provider.addScope('user_friends');
+            provider.addScope('user_gender');
+            provider.addScope('user_likes');
+            provider.addScope('user_link');
+            provider.addScope('user_location');
           }
           break;
         case SignInProvider.Twitter:
@@ -109,8 +136,9 @@ class SignIn {
             print('method not implemented');
           }
       }
+
+      //signin without provider
       if (signInProvider == SignInProvider.Own) {
-        // loquesea
         _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((user) {
@@ -121,62 +149,52 @@ class SignIn {
           var errorMessage = error.message;
           print('hola2');
         });
-      } else {
-        _auth.setLanguageCode('es');
-        //_auth.useDeviceLanguage();
-        provider.setCustomParameters({
-          'lang': 'es',
-          'display': 'popup',
-          'login_hint': 'user@example.com'
-        });
-
-        provider.addScope('public_profile');
-        provider.addScope('email');
-        provider.addScope('user_birthday');
-        provider.addScope('user_about_me');
-        provider.addScope('user_work_history');
-        provider.addScope('user_education_history');
-        provider.addScope('user_age_range');
-        provider.addScope('user_friends');
-        provider.addScope('user_gender');
-        provider.addScope('user_likes');
-        provider.addScope('user_link');
-        provider.addScope('user_location');
-
+      }
+      // sign in with provider (Facebook, Google or Twitter)
+      else {
         _auth.signInWithPopup(provider).then((result) {
           var token = result.credential.token;
           var user = result.user;
-          String photo = result.user.providerData[0].photoURL +
+          Globals.user.loggedIn = true;
+          String photoURL = result.user.providerData[0].photoURL +
               '?type=square&width=500&access_token=' +
               result.credential.asMap()['accessToken'];
+          Globals.user.profileImageProvider =
+              CachedNetworkImageProvider(photoURL);
+          Globals.user.email = result.user.providerData[0].email;
+          Globals.user.name = result.user.providerData[0].displayName;
+          Globals.user.phoneNumber =
+              result.user.providerData[0].phoneNumber != null
+                  ? result.user.providerData[0].phoneNumber
+                  : 'unknown phone number';
 
-          user.updateEmail(result.user.providerData[0].email).then((value) {
-            int a = 0;
-            user.sendEmailVerification().then((vale) {
-              int a = 0;
-            }).catchError((onError) {
-              int a = 0;
-            });
-          }).catchError((onError) {
-            int a = 0;
-          });
-
-          /*user.getIdTokenResult().then((value) {
-            int a = 0;
-          }).catchError((onError) {
-            int a = 0;
-          });*/
-          return user;
+          if (result.additionalUserInfo.isNewUser == true) {
+            if (user.email == null) {
+              user.updateEmail(result.user.providerData[0].email).then((value) {
+                user.sendEmailVerification().then((vale) {
+                  print('... email verification sent');
+                  return true;
+                }).catchError((onError) {
+                  print('... error sending email verification');
+                  return false;
+                });
+              }).catchError((onError) {
+                print('... error updating mail');
+                return false;
+              });
+            }
+          }
         }).catchError((error) {
+          print('...error sigin in with facebook');
           var errorCode = error.code;
           var errorMessage = error.message;
           var email = error.email;
           var credential = error.credential;
-          return null;
+          return false;
         });
       }
-      int a = 0;
     });
+    return null;
   }
 
   // Example code of how to sign in with Twitter.

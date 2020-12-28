@@ -1,4 +1,4 @@
-import 'package:udoit/main/walkthrough/models/T4Models.dart';
+import 'package:udoit/main/walkthrough/T4Models.dart';
 import 'package:udoit/main/walkthrough/utils/T4Images.dart';
 
 import 'T4Colors.dart';

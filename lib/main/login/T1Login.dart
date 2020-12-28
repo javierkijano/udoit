@@ -6,17 +6,17 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 //import 'package:udoit/main/login_signup/utils/T1Constant.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
 //import 'package:udoit/main/login_signup/utils/T1Strings.dart';
-import 'package:udoit/main/login_signup/utils/T1Widget.dart';
+import 'package:udoit/main/login/utils/T1Widget.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
 import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import 'package:udoit/main/login_signup/screens/T1Signup.dart';
+import 'package:udoit/main/login/T1Signup.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:udoit/main/login_signup/screens/signin.dart';
-import 'package:udoit/main/login_signup/screens/register_page.dart';
+import 'package:udoit/main/login/authentification.dart';
+import 'package:udoit/main/login/old_register_page.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 
 class T1Login extends StatefulWidget {
@@ -32,6 +32,7 @@ class _T1LoginState extends State<T1Login> {
   EditTextStyle editTextStyle_fullName;
   EditTextStyle editTextStyle_email;
   EditTextStyle editTextStyle_password;
+  SignIn signIn;
 
   @override
   void initState() {
@@ -43,20 +44,7 @@ class _T1LoginState extends State<T1Login> {
           EditTextStyle("john.villa@gmail.com", isPassword: false);
       editTextStyle_password = EditTextStyle("Password", isPassword: true);
     });
-  }
-
-  VoidCallback OnPressedCallback_signin() {
-    setState(() {});
-    //Dashboard().launch(context, isNewTask: true);
-    //LoginRoutes loginRoutes = ModalRoute.of(context).settings.arguments;
-    //Navigator.pushNamed(context, loginRoutes.nextRoute);
-
-    //_pushPage(context, SignIn());
-    SignIn signIn = SignIn();
-    signIn.webSignIn(SignInProvider.Own,
-        email: 'javierkijano@gmail.com', password: 'waimea1%');
-    Globals.loggedIn = true;
-    Navigator.pop(context);
+    signIn = SignIn();
   }
 
   VoidCallback OnPressedCallback_createNewAccount() {
@@ -120,7 +108,17 @@ class _T1LoginState extends State<T1Login> {
                   SizedBox(height: 8),
                   Padding(
                       padding: EdgeInsets.fromLTRB(40, 16, 40, 16),
-                      child: shadowButton("Sign In", OnPressedCallback_signin)),
+                      child: shadowButton("Sign In", () {
+                        signIn
+                            .webSignIn(SignInProvider.Own,
+                                email: 'javierkijano@gmail.com',
+                                password: 'waimea1%')
+                            .then((value) {
+                          Navigator.pop(context);
+                        }).catchError((onError) {
+                          print('... error in custom sign in');
+                        });
+                      })),
                   SizedBox(height: 24),
                   text("Forgot password?",
                       textColor: Globals.appStore.textPrimaryColor,
@@ -144,18 +142,22 @@ class _T1LoginState extends State<T1Login> {
                   SignInButton(
                     Buttons.Google,
                     onPressed: () {
-                      //_showButtonPressDialog(context, 'Google');
-                      int a = 0;
-                      SignIn signIn = SignIn();
-                      signIn.webSignIn(SignInProvider.Google);
+                      signIn.webSignIn(SignInProvider.Google).then((value) {
+                        Navigator.pop(context);
+                      }).catchError((onError) {
+                        print('... error in Google sign in');
+                      });
                     },
                   ),
                   Divider(),
                   SignInButton(
                     Buttons.Facebook,
                     onPressed: () {
-                      SignIn signIn = SignIn();
-                      signIn.webSignIn(SignInProvider.Facebook);
+                      signIn.webSignIn(SignInProvider.Facebook).then((value) {
+                        Navigator.pop(context);
+                      }).catchError((onError) {
+                        print('... error in Facebook sign in');
+                      });
                     },
                   ),
                   Divider(),
@@ -163,8 +165,11 @@ class _T1LoginState extends State<T1Login> {
                     Buttons.Twitter,
                     text: "Use Twitter",
                     onPressed: () {
-                      SignIn signIn = SignIn();
-                      signIn.webSignIn(SignInProvider.Twitter);
+                      signIn.webSignIn(SignInProvider.Twitter).then((value) {
+                        Navigator.pop(context);
+                      }).catchError((onError) {
+                        print('... error in Twitter sign in');
+                      });
                     },
                   ),
                 ],

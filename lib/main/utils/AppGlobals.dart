@@ -1,14 +1,22 @@
 import 'package:udoit/main/store/AppStore.dart';
 import 'package:udoit/main/models/configuration.dart';
 import 'package:udoit/main/models/initiatives.dart';
+import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+class _User {
+  bool loggedIn = false;
+  String name;
+  String email;
+  String phoneNumber;
+  CachedNetworkImageProvider profileImageProvider;
+}
 
 class Globals {
   static var appStore = AppStore();
-  static bool loggedIn = false;
-  static String userName = 'Javier G.';
-  static String userEmail = 'javierkijano@gmail.com';
-  static String userPhoneNumber = 'javierkijano@gmail.com';
+
   static var fbApp;
   static Configuration appConf = Configuration(version: 'v0.1');
   static Initiatives appInitiatives = Initiatives();
+  static var user = _User();
 }

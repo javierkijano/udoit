@@ -7,7 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 //import 'package:udoit/main/screens/ProKitLauncher.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
 
-import 'package:udoit/main/walkthrough/screens/T4Walkthrough.dart';
+import 'package:udoit/main/walkthrough/T4Walkthrough.dart';
 
 class AppSplashScreen extends StatefulWidget {
   static String tag = '/ProkitSplashScreen';

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:udoit/main/login_signup/utils/T1Colors.dart';
+import 'package:udoit/main/login/utils/T1Colors.dart';
 //import 'package:udoit/main/login_signup/utils/T1Constant.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
 //import 'package:udoit/main/login_signup/utils/T1Images.dart';
 //import 'package:udoit/main/login_signup/utils/T1Strings.dart';
-import 'package:udoit/main/login_signup/utils/T1Widget.dart';
+import 'package:udoit/main/login/utils/T1Widget.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
 import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/utils/AppImages.dart';
-import 'package:udoit/main/login_signup/screens/signin.dart';
+import 'package:udoit/main/login/authentification.dart';
 
 class T1Signup extends StatelessWidget {
   static var tag = "/T1SignUp";
@@ -63,11 +63,17 @@ class T1Signup extends StatelessWidget {
                       child: shadowButton("Sign up", () {
                         assert(editTextStyle_password.getText() ==
                             editTextStyle_repassword.getText());
-                        signIn.webSignUp(
+                        signIn
+                            .webSignUp(
                           SignInProvider.Own,
                           email: editTextStyle_emailOrPhone.getText(),
                           password: editTextStyle_password.getText(),
-                        );
+                        )
+                            .then((value) {
+                          //continue to next page
+                        }).catchError((onError) {
+                          print('... error signing up ');
+                        });
                       })),
                   SizedBox(height: 24),
                   Row(
