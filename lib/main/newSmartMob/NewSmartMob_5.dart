@@ -19,7 +19,7 @@ class NewSmartMob5 extends StatefulWidget {
 class NewSmartMob5State extends State<NewSmartMob5>
     with AutomaticKeepAliveClientMixin<NewSmartMob5> {
   String videoUrl;
-  List<ImageProvider> images;
+  List<Uint8image> uint8images = [];
   bool showVideo = false;
 
   @override
@@ -33,15 +33,15 @@ class NewSmartMob5State extends State<NewSmartMob5>
       Image.asset('assets/newSmartMob/uploadImageIcon.png', height: 100);
 
   void _onPressedUploadImage() async {
-    Map<String, dynamic> _image;
+    Uint8image _uint8image;
 
-    _image = await generic_gallery_image_picker();
+    _uint8image = await generic_gallery_image_picker();
 
     setState(() {
       currentImage =
-          Image.memory(_image['imageData'], semanticLabel: _image['imageName']);
+          Image.memory(_uint8image.data, semanticLabel: _uint8image.name);
     });
-    //images.add(_image.image);
+    uint8images.add(_uint8image);
   }
 
   @override

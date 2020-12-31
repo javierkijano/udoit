@@ -93,7 +93,7 @@ class NewSmartMobState extends State<NewSmartMob> {
           title: _keyNewSmartMob2State.currentState.title,
           destinatary: _keyNewSmartMob3State.currentState.destinatary,
           request: _keyNewSmartMob4State.currentState.request,
-          images: _keyNewSmartMob5State.currentState.images,
+          uint8images: _keyNewSmartMob5State.currentState.uint8images,
           youtubeVideoUrl: _keyNewSmartMob5State.currentState.videoUrl));
       int a = 0;
     }

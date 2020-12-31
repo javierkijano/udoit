@@ -46,7 +46,7 @@ class _FlutterWebImagePicker {
     final imageName = data['name'];
     final imageData = base64.decode(data['data']);
     //return Image.memory(imageData, semanticLabel: imageName);
-    return {'imageName': imageName, 'imageData': imageData};
+    return {'name': imageName, 'data': imageData};
   }
 }
 

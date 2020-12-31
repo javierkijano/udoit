@@ -1,17 +1,19 @@
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/rendering.dart';
 import 'package:udoit/main/models/configuration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:udoit/main/utils/gallery_image_picker/generic_gallery_image_picker.dart';
+import 'package:udoit/main/utils/hash.dart';
+import 'dart:async';
 
 class Initiative {
+  String id;
   DateTime dateTime;
   Category category;
   String title;
   String destinatary;
   String request;
-  List<ImageProvider> images;
-  List<ImageProvider> imagesUrl;
+  List<Uint8image> uint8images;
+  List<String> imagesUrls = [];
   String youtubeVideoUrl;
 
   Initiative(
@@ -20,12 +22,10 @@ class Initiative {
       this.title,
       this.destinatary,
       this.request,
-      this.images,
+      this.uint8images,
       this.youtubeVideoUrl}) {
-    List<firebase_storage.UploadTask> _uploadTasks = [];
-    /*for (ImageProvider image in images) {
-          FirebaseStorage.instance.
-        }*/
+    this.id = generateMD5fromStringList(
+        [this.dateTime.toIso8601String(), this.title.toString()]);
   }
 
   Map<String, dynamic> toJSON() {
@@ -35,21 +35,36 @@ class Initiative {
       'title': title,
       'destinatary': destinatary,
       'request': request,
-      'imagesUrl': imagesUrl,
+      'imagesUrls': imagesUrls,
       'youtubeVideoUrl': youtubeVideoUrl,
     };
   }
 }
 
 class Initiatives {
-  CollectionReference _ref;
+  CollectionReference _refStore;
+  firebase_storage.Reference _refStorage;
 
   Initiatives() {
-    _ref = FirebaseFirestore.instance.collection('initiatives');
+    _refStore = FirebaseFirestore.instance.collection('initiatives');
+    _refStorage =
+        firebase_storage.FirebaseStorage.instance.ref().child('initiatives');
   }
 
   Future add(Initiative initiative) async {
-    return await _ref.add(initiative.toJSON()).then((value) {
+    List<Future<firebase_storage.UploadTask>> _uploadTasks = [];
+    for (Uint8image uint8image in initiative.uint8images) {
+      final metadata = firebase_storage.SettableMetadata(
+          contentType: 'image/jpeg', customMetadata: {'test': 'hola'});
+      _uploadTasks.add(Future.value(_refStorage
+          .child(initiative.id)
+          .child('/' + uint8image.name)
+          .putData(uint8image.data, metadata)));
+    }
+
+    Future.wait(_uploadTasks);
+
+    await _refStore.add(initiative.toJSON()).then((value) {
       int a = 0;
     }).catchError((error) => print("...: $error"));
   }
@@ -59,25 +74,6 @@ class Initiatives {
   popular() {}
 
   trending() {}
-}
-
-/*
-import 'dart:async';
-import 'dart:io' as io;
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:flutter/material.dart';
-
-import 'save_as/save_as.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await firebase_core.Firebase.initializeApp();
-  runApp(StorageExampleApp());
 }
 
 /// Enum representing the upload task types the example app supports.
@@ -91,140 +87,3 @@ enum UploadType {
   /// Clears any tasks from the list.
   clear,
 }
-
-/// The entry point of the application.
-///
-/// Returns a [MaterialApp].
-class StorageExampleApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Storage Example App',
-        theme: ThemeData.dark(),
-        home: Scaffold(
-          body: TaskManager(),
-        ));
-  }
-}
-
-
-class FirebaseStorageInterface {
-
-
-  List<firebase_storage.UploadTask> _uploadTasks = [];
-
-  Future<firebase_storage.UploadTask> uploadImage(ImageProvider image, imageDestinationUrl, {Map<String,String> customMetadata}) async {
-    if (image == null) {
-      print("...No file was selected");
-    }
-
-    firebase_storage.UploadTask uploadTask;
-
-
-
-    // Create a Reference to the file
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref()
-        .child('playground')
-        .child('/some-image.jpg');
-
-    final metadata = firebase_storage.SettableMetadata(
-        contentType: 'image/jpeg',
-        customMetadata: customMetadata);
-
-    if (kIsWeb) {
-      uploadTask = ref.putData(await image., metadata);
-      ref.putBlob(blob)
-    } else {
-      
-      uploadTask = ref.putFile(io.File(file.path), metadata);
-    }
-
-    return Future.value(uploadTask);
-  }
-
-  /// A new string is uploaded to storage.
-  firebase_storage.UploadTask uploadString() {
-    const String putStringText =
-        'This upload has been generated using the putString method! Check the metadata too!';
-
-    // Create a Reference to the file
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-        .ref()
-        .child('playground')
-        .child('/put-string-example.txt');
-
-    // Start upload of putString
-    return ref.putString(putStringText,
-        metadata: firebase_storage.SettableMetadata(
-            contentLanguage: 'en',
-            customMetadata: <String, String>{'example': 'putString'}));
-  }
-
-  /// Handles the user pressing the PopupMenuItem item.
-  void handleUploadType(UploadType type) async {
-    switch (type) {
-      case UploadType.string:
-        setState(() {
-          _uploadTasks = [..._uploadTasks, uploadString()];
-        });
-        break;
-      case UploadType.file:
-        PickedFile file =
-            await ImagePicker().getImage(source: ImageSource.gallery);
-        firebase_storage.UploadTask task = await uploadFile(file);
-        if (task != null) {
-          setState(() {
-            _uploadTasks = [..._uploadTasks, task];
-          });
-        }
-        break;
-      case UploadType.clear:
-        setState(() {
-          _uploadTasks = [];
-        });
-        break;
-    }
-  }
-
-  _removeTaskAtIndex(int index) {
-    setState(() {
-      _uploadTasks = _uploadTasks..removeAt(index);
-    });
-  }
-
-  Future<void> _downloadBytes(firebase_storage.Reference ref) async {
-    final bytes = await ref.getData();
-    // Download...
-    await saveAsBytes(bytes, 'some-image.jpg');
-  }
-
-  Future<void> _downloadLink(firebase_storage.Reference ref) async {
-    final link = await ref.getDownloadURL();
-
-    await Clipboard.setData(ClipboardData(
-      text: link,
-    ));
-
-    Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-      'Success!\n Copied download URL to Clipboard!',
-    )));
-  }
-
-  Future<void> _downloadFile(firebase_storage.Reference ref) async {
-    final io.Directory systemTempDir = io.Directory.systemTemp;
-    final io.File tempFile = io.File('${systemTempDir.path}/temp-${ref.name}');
-    if (tempFile.existsSync()) await tempFile.delete();
-
-    await ref.writeToFile(tempFile);
-
-    Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-      'Success!\n Downloaded ${ref.name} \n from bucket: ${ref.bucket}\n '
-      'at path: ${ref.fullPath} \n'
-      'Wrote "${ref.fullPath}" to tmp-${ref.name}.txt',
-    )));
-  }
-
-*/
