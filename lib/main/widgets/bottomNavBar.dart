@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:udoit/main/dashboard/Dashboard.dart';
-import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
+import 'package:udoit/main/newSmartMob/NewSmartMob_0.dart';
 import 'package:udoit/main/profile/Profile.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 import 'package:udoit/main/utils/AppConstant.dart';

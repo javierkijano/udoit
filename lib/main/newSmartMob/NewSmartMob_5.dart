@@ -19,6 +19,7 @@ class NewSmartMob5 extends StatefulWidget {
 class NewSmartMob5State extends State<NewSmartMob5>
     with AutomaticKeepAliveClientMixin<NewSmartMob5> {
   String videoUrl;
+  List<ImageProvider> images;
   bool showVideo = false;
 
   @override
@@ -28,17 +29,19 @@ class NewSmartMob5State extends State<NewSmartMob5>
   //creating Key for container
   //GlobalKey _keyContainer = GlobalKey();
 
-  Image image =
+  Image currentImage =
       Image.asset('assets/newSmartMob/uploadImageIcon.png', height: 100);
 
   void _onPressedUploadImage() async {
-    Image _image;
+    Map<String, dynamic> _image;
 
     _image = await generic_gallery_image_picker();
 
     setState(() {
-      image = _image;
+      currentImage =
+          Image.memory(_image['imageData'], semanticLabel: _image['imageName']);
     });
+    //images.add(_image.image);
   }
 
   @override
@@ -84,7 +87,7 @@ class NewSmartMob5State extends State<NewSmartMob5>
                       SizedBox(height: 20),
                       ConstrainedBox(
                           constraints: BoxConstraints(maxHeight: 100),
-                          child: image),
+                          child: currentImage),
                       SizedBox(height: 20),
                       T4Button(
                         textContent: "Subir",
@@ -97,16 +100,20 @@ class NewSmartMob5State extends State<NewSmartMob5>
                           return Image.asset(
                               'assets/newSmartMob/uploadVideoIcon.png',
                               height: 100);
-                        else
-                          return YoutubeApp();
+                        else {
+                          return YoutubeApp(videoUrl);
+                        }
                       }),
                       SizedBox(height: 20),
-                      TextField(
+                      TextFormField(
                         decoration: new InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'http://',
                           labelText: 'dirección web del video',
                         ),
+                        onChanged: (text) {
+                          videoUrl = text;
+                        },
                       ),
                       SizedBox(height: 20),
                       T4Button(

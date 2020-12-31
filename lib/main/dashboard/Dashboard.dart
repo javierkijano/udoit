@@ -10,7 +10,7 @@ import 'package:udoit/main/dashboard/T11DataGenerator.dart';
 //import 'package:udoit/main/dashboard/utils/T11Images.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 
-import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
+import 'package:udoit/main/newSmartMob/NewSmartMob_0.dart';
 
 import 'package:udoit/main/sideMenu/sideMenu.dart';
 import 'package:udoit/main/widgets/bottomNavBar.dart';

@@ -92,7 +92,9 @@ class NewSmartMobState extends State<NewSmartMob> {
           category: _keyNewSmartMob1State.currentState.category,
           title: _keyNewSmartMob2State.currentState.title,
           destinatary: _keyNewSmartMob3State.currentState.destinatary,
-          request: _keyNewSmartMob4State.currentState.request));
+          request: _keyNewSmartMob4State.currentState.request,
+          images: _keyNewSmartMob5State.currentState.images,
+          youtubeVideoUrl: _keyNewSmartMob5State.currentState.videoUrl));
       int a = 0;
     }
   }

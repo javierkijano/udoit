@@ -86,7 +86,7 @@ dependencies:
   dots_indicator: ^0.0.4
   #firebase_picture_uploader: ^1.1.2
   image_picker: ^0.6.7+14
-  flutter_web_image_picker: ^0.0.2
+  #flutter_web_image_picker: ^0.0.2
   #ext_video_player: ^0.0.3
   youtube_player_iframe: ^1.1.0
   english_words: ^3.1.5

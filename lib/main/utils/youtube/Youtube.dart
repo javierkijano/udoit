@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import 'dart:developer';
@@ -12,6 +13,12 @@ import 'package:flutter/services.dart';
 
 ///
 class YoutubeApp extends StatefulWidget {
+  String videoID;
+  YoutubeApp(videoURL) {
+    videoID = RegExp(r"(?<=v=).*(?=&)|(?<=v=).*").stringMatch(videoURL);
+    int a = 0;
+  }
+
   @override
   _YoutubeAppState createState() => _YoutubeAppState();
 }
@@ -23,18 +30,11 @@ class _YoutubeAppState extends State<YoutubeApp> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'tcodrIK2P_I',
+      initialVideoId: widget.videoID,
       params: const YoutubePlayerParams(
         playlist: [
           'nPt8bK2gbaU',
           'K18cpp_-gP8',
-          'iLnmTe5Q2Qw',
-          '_WoCV4c6XOE',
-          'KmzdUe0RSJo',
-          '6jZDSSZZxjQ',
-          'p2lYr3vM_1w',
-          '7QUtEmBT_-w',
-          '34_PXCzGw1M',
         ],
         startAt: const Duration(minutes: 1, seconds: 36),
         showControls: true,
