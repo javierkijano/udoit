@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const t4_colorPrimary = Color(0XFF4600D9);
+const t4_white = Color(0XFFffffff);
+const t4_view_color = Color(0XFFDADADA);
+
 // Light Theme Colors
 const appColorPrimary = Color(0xFF0A79DF);
 const appColorPrimaryDark = Color(0xFF0A79DF);

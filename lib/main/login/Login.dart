@@ -12,27 +12,27 @@ import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import 'package:udoit/main/login/T1Signup.dart';
+import 'package:udoit/main/login/Signup.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:udoit/main/login/authentification.dart';
 import 'package:udoit/main/login/old_register_page.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 
-class T1Login extends StatefulWidget {
-  static var tag = "/T1SignIn";
+class Login extends StatefulWidget {
+  static var tag = "/SignIn";
   //final String afterLoginRoute;
 
   @override
-  _T1LoginState createState() => _T1LoginState();
+  _LoginState createState() => _LoginState();
 }
 
-class _T1LoginState extends State<T1Login> {
+class _LoginState extends State<Login> {
   bool rememberMe = false;
   EditTextStyle editTextStyle_fullName;
   EditTextStyle editTextStyle_email;
   EditTextStyle editTextStyle_password;
-  SignIn signIn;
+  SignInUp signInUp;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _T1LoginState extends State<T1Login> {
           EditTextStyle("john.villa@gmail.com", isPassword: false);
       editTextStyle_password = EditTextStyle("Password", isPassword: true);
     });
-    signIn = SignIn();
+    signInUp = SignInUp();
   }
 
   VoidCallback OnPressedCallback_createNewAccount() {
@@ -53,7 +53,7 @@ class _T1LoginState extends State<T1Login> {
     //LoginRoutes loginRoutes = ModalRoute.of(context).settings.arguments;
     //Navigator.pushNamed(context, loginRoutes.nextRoute, arguments: loginRoutes);
     //Navigator.popAndPushNamed(context, T1Signup.tag);
-    Navigator.pushNamed(context, T1Signup.tag);
+    Navigator.pushNamed(context, Signup.tag);
   }
 
   void _pushPage(BuildContext context, Widget page) {
@@ -109,7 +109,7 @@ class _T1LoginState extends State<T1Login> {
                   Padding(
                       padding: EdgeInsets.fromLTRB(40, 16, 40, 16),
                       child: shadowButton("Sign In", () {
-                        signIn
+                        signInUp
                             .webSignIn(SignInProvider.Own,
                                 email: 'javierkijano@gmail.com',
                                 password: 'waimea1%')
@@ -142,7 +142,7 @@ class _T1LoginState extends State<T1Login> {
                   SignInButton(
                     Buttons.Google,
                     onPressed: () {
-                      signIn.webSignIn(SignInProvider.Google).then((value) {
+                      signInUp.webSignIn(SignInProvider.Google).then((value) {
                         Navigator.pop(context);
                       }).catchError((onError) {
                         print('... error in Google sign in');
@@ -153,7 +153,7 @@ class _T1LoginState extends State<T1Login> {
                   SignInButton(
                     Buttons.Facebook,
                     onPressed: () {
-                      signIn.webSignIn(SignInProvider.Facebook).then((value) {
+                      signInUp.webSignIn(SignInProvider.Facebook).then((value) {
                         Navigator.pop(context);
                       }).catchError((onError) {
                         print('... error in Facebook sign in');
@@ -165,7 +165,7 @@ class _T1LoginState extends State<T1Login> {
                     Buttons.Twitter,
                     text: "Use Twitter",
                     onPressed: () {
-                      signIn.webSignIn(SignInProvider.Twitter).then((value) {
+                      signInUp.webSignIn(SignInProvider.Twitter).then((value) {
                         Navigator.pop(context);
                       }).catchError((onError) {
                         print('... error in Twitter sign in');

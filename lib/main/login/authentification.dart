@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 
 enum SignInProvider { Own, Facebook, Google, Twitter }
 
-class SignIn {
+class SignInUp {
   FacebookLogin facebookSignIn = new FacebookLogin();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  SignIn();
+  SignInUp();
 
 // Example code for sign out.
   Future signOut() async {
@@ -162,6 +162,7 @@ class SignIn {
           Globals.user.profileImageProvider =
               CachedNetworkImageProvider(photoURL);
           Globals.user.email = result.user.providerData[0].email;
+          Globals.user.uid = result.user.uid;
           Globals.user.name = result.user.providerData[0].displayName;
           Globals.user.phoneNumber =
               result.user.providerData[0].phoneNumber != null

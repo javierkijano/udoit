@@ -6,25 +6,24 @@ import 'package:udoit/main/dashboard/Dashboard.dart';
 import 'package:udoit/main/utils/AppStrings.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:udoit/main/walkthrough/utils/T4Colors.dart';
-import 'package:udoit/main/walkthrough/utils/T4Constant.dart';
 //import 'package:udoit/main/walkthrough/utils/T4Images.dart';
 import 'package:udoit/main/utils/AppImages.dart';
-import 'package:udoit/main/walkthrough/utils/widgets/T4Button.dart';
+import 'package:udoit/main/widgets/Button1.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 
-import 'package:udoit/main/login/T1Login.dart';
-import 'package:udoit/main/login/T1_model.dart';
+import 'package:udoit/main/login/Login.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:udoit/main/utils/AppColors.dart';
+import 'package:udoit/main/utils/AppConstant.dart';
 
-class T4WalkThrough extends StatefulWidget {
-  static var tag = "/T4WalkThrough";
+class WalkThrough extends StatefulWidget {
+  static var tag = "/WalkThrough";
 
   @override
-  T4WalkThroughState createState() => T4WalkThroughState();
+  WalkThroughState createState() => WalkThroughState();
 }
 
-class T4WalkThroughState extends State<T4WalkThrough> {
+class WalkThroughState extends State<WalkThrough> {
   int currentIndexPage = 0;
 
   PageController _controller = new PageController();
@@ -47,8 +46,8 @@ class T4WalkThroughState extends State<T4WalkThrough> {
   VoidCallback onSkip() {
     setState(() {
       //T4WalkThrough().launch(context, isNewTask: true);
-      Navigator.pushNamed(context, T1Login.tag,
-          arguments: LoginRoutes("/Dashboard"));
+      Navigator.pushNamed(context, Login.tag);
+      //arguments: LoginRoutes("/Dashboard"));
     });
   }
 
@@ -59,8 +58,8 @@ class T4WalkThroughState extends State<T4WalkThrough> {
         _controller.jumpToPage(currentIndexPage);
       } else {
         if (!Globals.user.loggedIn) {
-          Navigator.pushNamed(context, T1Login.tag,
-              arguments: LoginRoutes(Dashboard.tag));
+          Navigator.pushNamed(context, Login.tag);
+          //arguments: LoginRoutes(Dashboard.tag));
         } else
           Navigator.pushNamed(context, Dashboard.tag);
       }
@@ -95,15 +94,15 @@ class T4WalkThroughState extends State<T4WalkThrough> {
             child: PageView(
               controller: _controller,
               children: <Widget>[
-                WalkThrough(
+                WalkThroughPage(
                     title: walkThrough_t1,
                     description: walkThrough_d1,
                     walkImg: walkthrough_fg),
-                WalkThrough(
+                WalkThroughPage(
                     title: walkThrough_t2,
                     description: walkThrough_d2,
                     walkImg: walkthrough_fg),
-                WalkThrough(
+                WalkThroughPage(
                     title: walkThrough_t3,
                     description: walkThrough_d3,
                     walkImg: walkthrough_fg),
@@ -122,7 +121,7 @@ class T4WalkThroughState extends State<T4WalkThrough> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Align(
-                      child: T4Button(
+                      child: Button1(
                           textContent: "Prev",
                           onPressed: onPrev,
                           isStroked: false)),
@@ -136,12 +135,12 @@ class T4WalkThroughState extends State<T4WalkThrough> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      T4Button(
+                      Button1(
                         textContent: "Skip",
                         onPressed: onSkip,
                         isStroked: true,
                       ),
-                      T4Button(
+                      Button1(
                         textContent: "Next",
                         onPressed: onNext,
                         isStroked: true,
@@ -158,13 +157,13 @@ class T4WalkThroughState extends State<T4WalkThrough> {
   }
 }
 
-class WalkThrough extends StatelessWidget {
+class WalkThroughPage extends StatelessWidget {
   final String title;
   final String description;
 
   final String walkImg;
 
-  WalkThrough({Key key, this.title, this.description, this.walkImg})
+  WalkThroughPage({Key key, this.title, this.description, this.walkImg})
       : super(key: key);
 
   @override

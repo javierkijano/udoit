@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import 'package:udoit/main/newSmartMob/NewSmartMob_5.dart';
-//import 'package:udoit/main/newSmartMob/NewSmartMob.dart';
 
 class NewSmartMob2 extends StatefulWidget {
   static String tag = '/NewSmartMob2';
@@ -31,7 +27,7 @@ class NewSmartMob2State extends State<NewSmartMob2>
       ),
       body: Container(
         margin: const EdgeInsets.all(20.0),
-        height: MediaQuery.of(context).size.height,
+        //height: MediaQuery.of(context).size.height,
         //child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

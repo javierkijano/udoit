@@ -1,3 +1,4 @@
+/*
 /*fonts*/
 const fontRegular = 'Regular';
 const fontMedium = 'Medium';
@@ -16,3 +17,4 @@ const textSizeXXLarge = 30.0;
 const profileImage = 'assets/images/profile.png';
 
 const app_bottomNavBarIconsSize = 25;
+*/

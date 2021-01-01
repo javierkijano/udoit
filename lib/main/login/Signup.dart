@@ -13,9 +13,9 @@ import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:udoit/main/login/authentification.dart';
 
-class T1Signup extends StatelessWidget {
-  static var tag = "/T1SignUp";
-  SignIn signIn = SignIn();
+class Signup extends StatelessWidget {
+  static var tag = "/SignUp";
+  SignInUp signIn = SignInUp();
 
   EditTextStyle editTextStyle_fullName;
   EditTextStyle editTextStyle_emailOrPhone;

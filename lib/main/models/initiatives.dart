@@ -6,6 +6,7 @@ import 'package:udoit/main/utils/hash.dart';
 import 'dart:async';
 
 class Initiative {
+  String publisherUserId;
   String id;
   DateTime dateTime;
   Category category;
@@ -17,19 +18,24 @@ class Initiative {
   String youtubeVideoUrl;
 
   Initiative(
-      {this.dateTime,
+      {this.publisherUserId,
+      this.dateTime,
       this.category,
       this.title,
       this.destinatary,
       this.request,
       this.uint8images,
       this.youtubeVideoUrl}) {
+    assert(publisherUserId != null);
+    //id generated from user user uuid and dateTime
     this.id = generateMD5fromStringList(
-        [this.dateTime.toIso8601String(), this.title.toString()]);
+        [this.dateTime.toIso8601String(), this.publisherUserId]);
   }
 
   Map<String, dynamic> toJSON() {
     return {
+      'id': id,
+      'publisherUserId': publisherUserId,
       'dateTime': dateTime,
       'category': category.id,
       'title': title,
@@ -56,7 +62,8 @@ class Initiatives {
 
     for (Uint8image uint8image in initiative.uint8images) {
       final metadata = firebase_storage.SettableMetadata(
-          contentType: 'image/jpeg', customMetadata: {'test': 'hola'});
+          contentType: 'image/${uint8image.name.split(".").last}',
+          customMetadata: {'test': 'hola'});
       _uploadTasks.add(_refStorage
           .child(initiative.id)
           .child(uint8image.name)

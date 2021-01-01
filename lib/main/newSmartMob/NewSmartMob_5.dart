@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:udoit/main/walkthrough/utils/widgets/T4Button.dart';
+import 'package:udoit/main/widgets/Button1.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:udoit/main/utils/youtube/Youtube.dart';
@@ -90,7 +90,7 @@ class NewSmartMob5State extends State<NewSmartMob5>
                           constraints: BoxConstraints(maxHeight: 100),
                           child: currentImage),
                       SizedBox(height: 20),
-                      T4Button(
+                      Button1(
                         textContent: "Subir",
                         onPressed: _onPressedUploadImage,
                         isStroked: true,
@@ -117,7 +117,7 @@ class NewSmartMob5State extends State<NewSmartMob5>
                         },
                       ),
                       SizedBox(height: 20),
-                      T4Button(
+                      Button1(
                           textContent: "Subir",
                           onPressed: () {
                             setState(() {

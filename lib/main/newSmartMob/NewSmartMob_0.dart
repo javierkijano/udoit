@@ -8,7 +8,7 @@ import 'package:udoit/main/utils/dots_indicator/dots_indicator.dart';
 import 'package:udoit/main/walkthrough/utils/T4Colors.dart';
 import 'package:udoit/main/walkthrough/utils/T4Constant.dart';
 import 'package:udoit/main/walkthrough/utils/T4Images.dart';
-import 'package:udoit/main/walkthrough/utils/widgets/T4Button.dart';
+import 'package:udoit/main/widgets/Button1.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 
 import 'package:nb_utils/nb_utils.dart';
@@ -20,9 +20,11 @@ import 'package:udoit/main/newSmartMob/NewSmartMob_5.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_6.dart';
 
 //import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
-import 'package:udoit/main/login/T1_model.dart';
-import 'package:udoit/main/login/T1Login.dart';
+import 'package:udoit/main/login/old_T1_model.dart';
+import 'package:udoit/main/login/Login.dart';
 import 'package:udoit/main/models/initiatives.dart';
+import 'package:udoit/main/utils/AppColors.dart';
+import 'package:udoit/main/utils/AppImages.dart';
 
 class NewSmartMob extends StatefulWidget {
   static var tag = "/NewSmartMob";
@@ -84,12 +86,12 @@ class NewSmartMobState extends State<NewSmartMob> {
 
   void _onPageChanged(value) {
     setState(() => currentIndexPage = value);
-    if (currentIndexPage == 4 && !Globals.user.loggedIn) {
-      Navigator.pushNamed(context, T1Login.tag,
-          arguments: LoginRoutes("/NewSmartMob"));
-    }
     if (currentIndexPage == 5) {
+      if (!Globals.user.loggedIn) {
+        Navigator.pushNamed(context, Login.tag);
+      }
       Globals.appInitiatives.add(Initiative(
+          publisherUserId: Globals.user.uid,
           dateTime: _initiativeDateTime,
           category: _keyNewSmartMob1State.currentState.category,
           title: _keyNewSmartMob2State.currentState.title,
@@ -137,7 +139,7 @@ class NewSmartMobState extends State<NewSmartMob> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Align(
-                      child: T4Button(
+                      child: Button1(
                           textContent: "Prev",
                           onPressed: onPrev,
                           isStroked: false)),
@@ -160,7 +162,7 @@ class NewSmartMobState extends State<NewSmartMob> {
                         onPressed: onSkip,
                         isStroked: true,
                       ),*/
-                      T4Button(
+                      Button1(
                         textContent: "Next",
                         onPressed: onNext,
                         isStroked: true,

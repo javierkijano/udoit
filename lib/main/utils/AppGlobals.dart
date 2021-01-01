@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class _User {
   bool loggedIn = false;
+  String uid;
   String name;
   String email;
   String phoneNumber;

@@ -7,7 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 //import 'package:udoit/main/screens/ProKitLauncher.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
 
-import 'package:udoit/main/walkthrough/T4Walkthrough.dart';
+import 'package:udoit/main/walkthrough/Walkthrough.dart';
 
 class AppSplashScreen extends StatefulWidget {
   static String tag = '/ProkitSplashScreen';
@@ -39,7 +39,7 @@ class _AppSplashScreenState extends State<AppSplashScreen>
       ProKitLauncher().launch(context, isNewTask: true);
     }
     */
-    T4WalkThrough().launch(context, isNewTask: true);
+    WalkThrough().launch(context, isNewTask: true);
   }
 
   Widget build(BuildContext context) {

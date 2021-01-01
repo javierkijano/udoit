@@ -1,3 +1,4 @@
+/*
 const t4_lbl_home = "Home";
 const t4_lbl_video = "Video";
 const t4_lbl_fav = "Favourite";
@@ -36,3 +37,4 @@ const t4_samplelong_text =
 const latest_news_daily = "Latest News Daily";
 const regularNotifications = "Regular Notifications";
 const awardWinningApp = "Award Winning App";
+*/
