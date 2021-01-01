@@ -85,6 +85,7 @@ class NewSmartMob5State extends State<NewSmartMob5>
                   child: new Column(
                     children: <Widget>[
                       SizedBox(height: 20),
+                      Row(children: <Widget>[]),
                       ConstrainedBox(
                           constraints: BoxConstraints(maxHeight: 100),
                           child: currentImage),

@@ -54,6 +54,8 @@ class NewSmartMobState extends State<NewSmartMob> {
 
   Initiative initiative;
 
+  DateTime _initiativeDateTime = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -88,7 +90,7 @@ class NewSmartMobState extends State<NewSmartMob> {
     }
     if (currentIndexPage == 5) {
       Globals.appInitiatives.add(Initiative(
-          dateTime: DateTime.now(),
+          dateTime: _initiativeDateTime,
           category: _keyNewSmartMob1State.currentState.category,
           title: _keyNewSmartMob2State.currentState.title,
           destinatary: _keyNewSmartMob3State.currentState.destinatary,

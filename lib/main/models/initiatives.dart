@@ -52,21 +52,30 @@ class Initiatives {
   }
 
   Future add(Initiative initiative) async {
-    List<Future<firebase_storage.UploadTask>> _uploadTasks = [];
+    List<Future<firebase_storage.TaskSnapshot>> _uploadTasks = [];
+
     for (Uint8image uint8image in initiative.uint8images) {
       final metadata = firebase_storage.SettableMetadata(
           contentType: 'image/jpeg', customMetadata: {'test': 'hola'});
-      _uploadTasks.add(Future.value(_refStorage
+      _uploadTasks.add(_refStorage
           .child(initiative.id)
-          .child('/' + uint8image.name)
-          .putData(uint8image.data, metadata)));
+          .child(uint8image.name)
+          .putData(uint8image.data, metadata)
+          .whenComplete(() {
+        int a = 0;
+      }));
     }
 
-    Future.wait(_uploadTasks);
-
-    await _refStore.add(initiative.toJSON()).then((value) {
-      int a = 0;
-    }).catchError((error) => print("...: $error"));
+    await Future.wait(_uploadTasks);
+    List<Future<String>> _imagesUrls = [];
+    for (Uint8image uint8image in initiative.uint8images) {
+      _imagesUrls.add(_refStorage
+          .child(initiative.id)
+          .child(uint8image.name)
+          .getDownloadURL());
+    }
+    initiative.imagesUrls.addAll(await Future.wait(_imagesUrls));
+    await _refStore.add(initiative.toJSON());
   }
 
   latest() {}
