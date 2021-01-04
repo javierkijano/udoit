@@ -17,7 +17,12 @@ class HtmlVisualizer extends StatefulWidget {
 class HtmlVisualizerState extends State<HtmlVisualizer> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
+      //margin: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.blue, width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(5))),
       child: Html(
         data: widget.htmlData,
         //Optional parameters:

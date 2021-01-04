@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class NewSmartMob2 extends StatefulWidget {
@@ -26,7 +27,7 @@ class NewSmartMob2State extends State<NewSmartMob2>
         title: new Text(widget.title),
       ),
       body: Container(
-        margin: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         //height: MediaQuery.of(context).size.height,
         //child: Center(
         child: Column(
@@ -52,8 +53,11 @@ class NewSmartMob2State extends State<NewSmartMob2>
                 border: OutlineInputBorder(),
                 icon: const Icon(Icons.person),
                 hintText: '¿Qué quieres conseguir?',
-                labelText: 'Título de la petición',
+                labelText: 'Título de la petición (max. 100 caracteres )',
               ),
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(100),
+              ],
               onChanged: (text) {
                 title = text;
               },

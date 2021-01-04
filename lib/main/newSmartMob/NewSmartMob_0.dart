@@ -1,13 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/utils/dots_indicator/dots_indicator.dart';
-import 'package:udoit/main/walkthrough/utils/T4Colors.dart';
-import 'package:udoit/main/walkthrough/utils/T4Constant.dart';
-import 'package:udoit/main/walkthrough/utils/T4Images.dart';
 import 'package:udoit/main/widgets/Button1.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 
@@ -19,8 +15,6 @@ import 'package:udoit/main/newSmartMob/NewSmartMob_4.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_5.dart';
 import 'package:udoit/main/newSmartMob/NewSmartMob_6.dart';
 
-//import 'package:udoit/main/newSmartMob/models/NewSmartMobModel.dart';
-import 'package:udoit/main/login/old_T1_model.dart';
 import 'package:udoit/main/login/Login.dart';
 import 'package:udoit/main/models/initiatives.dart';
 import 'package:udoit/main/utils/AppColors.dart';
@@ -39,6 +33,8 @@ class NewSmartMobState extends State<NewSmartMob> {
   //ewSmartMobData newSmartMobData = NewSmartMobData();
 
   PageController _controller = new PageController();
+
+  //ValueKey<Button1> prev_button1key = GlobalKey();
 
   GlobalKey<NewSmartMob1State> _keyNewSmartMob1State = GlobalKey();
   GlobalKey<NewSmartMob2State> _keyNewSmartMob2State = GlobalKey();
@@ -85,7 +81,6 @@ class NewSmartMobState extends State<NewSmartMob> {
   }
 
   void _onPageChanged(value) {
-    setState(() => currentIndexPage = value);
     if (currentIndexPage == 5) {
       if (!Globals.user.loggedIn) {
         Navigator.pushNamed(context, Login.tag);
@@ -96,11 +91,13 @@ class NewSmartMobState extends State<NewSmartMob> {
           category: _keyNewSmartMob1State.currentState.category,
           title: _keyNewSmartMob2State.currentState.title,
           destinatary: _keyNewSmartMob3State.currentState.destinatary,
+          summary: _keyNewSmartMob4State.currentState.summary,
           request: _keyNewSmartMob4State.currentState.request,
           uint8images: _keyNewSmartMob5State.currentState.uint8images,
           youtubeVideoUrl: _keyNewSmartMob5State.currentState.videoUrl));
       int a = 0;
     }
+    setState(() => currentIndexPage = value);
   }
 
   @override

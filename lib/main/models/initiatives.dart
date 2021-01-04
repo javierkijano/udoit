@@ -12,6 +12,7 @@ class Initiative {
   Category category;
   String title;
   String destinatary;
+  String summary;
   String request;
   List<Uint8image> uint8images;
   List<String> imagesUrls = [];
@@ -23,6 +24,7 @@ class Initiative {
       this.category,
       this.title,
       this.destinatary,
+      this.summary,
       this.request,
       this.uint8images,
       this.youtubeVideoUrl}) {
@@ -40,6 +42,7 @@ class Initiative {
       'category': category.id,
       'title': title,
       'destinatary': destinatary,
+      'summary': summary,
       'request': request,
       'imagesUrls': imagesUrls,
       'youtubeVideoUrl': youtubeVideoUrl,

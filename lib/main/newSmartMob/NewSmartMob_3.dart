@@ -26,7 +26,7 @@ class NewSmartMob3State extends State<NewSmartMob3>
         title: new Text(widget.title),
       ),
       body: Container(
-        margin: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         height: MediaQuery.of(context).size.height,
         //child: Center(
         child: Column(

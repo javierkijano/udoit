@@ -54,7 +54,7 @@ class NewSmartMob5State extends State<NewSmartMob5>
           scrollDirection: Axis.vertical,
           reverse: false,
           child: Container(
-            margin: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             //height: MediaQuery.of(context).size.height,
             //child: Center(
             child: Column(
