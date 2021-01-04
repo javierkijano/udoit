@@ -15,13 +15,15 @@ class Button1 extends StatefulWidget {
       {@required this.textContent,
       @required this.onPressed,
       this.isStroked = false,
-      this.height = 45.0});
+      this.height = 45.0,
+      Key key})
+      : super(key: key);
 
   @override
-  ButtonState createState() => ButtonState();
+  Button1State createState() => Button1State();
 }
 
-class ButtonState extends State<Button1> {
+class Button1State extends State<Button1> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
