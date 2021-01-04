@@ -15,6 +15,7 @@ import 'package:udoit/main/login/Login.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/utils/AppColors.dart';
 import 'package:udoit/main/utils/AppConstant.dart';
+import 'package:udoit/main/widgets/NavigationButtons.dart';
 
 class WalkThrough extends StatefulWidget {
   static var tag = "/WalkThrough";
@@ -25,45 +26,15 @@ class WalkThrough extends StatefulWidget {
 
 class WalkThroughState extends State<WalkThrough> {
   int currentIndexPage = 0;
+  GlobalKey<NavigationButtonsState> _navigationButtonsStateKey;
 
   PageController _controller = new PageController();
 
   @override
   void initState() {
-    super.initState();
+    _navigationButtonsStateKey = GlobalKey();
     currentIndexPage = 0;
-  }
-
-  VoidCallback onPrev() {
-    setState(() {
-      if (currentIndexPage >= 1) {
-        currentIndexPage = currentIndexPage - 1;
-        _controller.jumpToPage(currentIndexPage);
-      }
-    });
-  }
-
-  VoidCallback onSkip() {
-    setState(() {
-      //T4WalkThrough().launch(context, isNewTask: true);
-      Navigator.pushNamed(context, Login.tag);
-      //arguments: LoginRoutes("/Dashboard"));
-    });
-  }
-
-  VoidCallback onNext() {
-    setState(() {
-      if (currentIndexPage < 2) {
-        currentIndexPage = currentIndexPage + 1;
-        _controller.jumpToPage(currentIndexPage);
-      } else {
-        if (!Globals.user.loggedIn) {
-          Navigator.pushNamed(context, Login.tag);
-          //arguments: LoginRoutes(Dashboard.tag));
-        } else
-          Navigator.pushNamed(context, Dashboard.tag);
-      }
-    });
+    super.initState();
   }
 
   @override
@@ -107,50 +78,44 @@ class WalkThroughState extends State<WalkThrough> {
                     description: walkThrough_d3,
                     walkImg: walkthrough_fg),
               ],
-              onPageChanged: (value) {
-                setState(() => currentIndexPage = value);
+              onPageChanged: (value) async {
+                if (await _navigationButtonsStateKey.currentState
+                    .setPageIndex(value))
+                  setState(() {
+                    currentIndexPage = value;
+                    print("..onPageChanged.index${value.toString()}");
+                  });
               },
             ),
           ),
           Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 80,
-              padding: EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Align(
-                      child: Button1(
-                          textContent: "Prev",
-                          onPressed: onPrev,
-                          isStroked: false)),
-                  DotsIndicator(
-                      dotsCount: 3,
-                      position: currentIndexPage,
-                      decorator: DotsDecorator(
-                        color: t4_view_color,
-                        activeColor: t4_colorPrimary,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Button1(
-                        textContent: "Skip",
-                        onPressed: onSkip,
-                        isStroked: true,
-                      ),
-                      Button1(
-                        textContent: "Next",
-                        onPressed: onNext,
-                        isStroked: true,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+              alignment: Alignment.bottomCenter,
+              child: NavigationButtons(
+                key: _navigationButtonsStateKey,
+                numPages: 3,
+                cancelButtonText: 'Skip',
+                afterCancelRouteName: Dashboard.tag,
+                afterFinishRouteName: Dashboard.tag,
+                onCancelCallback: () async {
+                  if (!Globals.user.loggedIn)
+                    await Navigator.pushNamed(context,
+                        Login.tag); //arguments: LoginRoutes(Dashboard.tag));
+                },
+                onFinishCallback: () async {
+                  if (!Globals.user.loggedIn)
+                    await Navigator.pushNamed(context,
+                        Login.tag); //arguments: LoginRoutes(Dashboard.tag));
+                },
+                onNavigateCallback: (pageIndex) async {
+                  await _controller.animateToPage(pageIndex,
+                      duration: Duration(milliseconds: 1000),
+                      curve: Curves.linear);
+                  setState(() {
+                    currentIndexPage = pageIndex;
+                    print("...onNavigateIndex${pageIndex.toString()}");
+                  });
+                },
+              )),
         ],
       ),
     );
