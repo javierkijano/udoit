@@ -20,13 +20,13 @@ class IniativesListItem extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Container(
           decoration: BoxDecoration(
-              color: Globals.appStore.scaffoldBackground,
+              color: scaffoldBackground,
               borderRadius: BorderRadius.circular(10),
               boxShadow: defaultBoxShadow()),
           child: Card(
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            color: Globals.appStore.scaffoldBackground,
+            color: scaffoldBackground,
             child: Row(
               children: <Widget>[
                 CachedNetworkImage(
@@ -67,8 +67,7 @@ class IniativesListItem extends StatelessWidget {
                           children: <Widget>[
                             Text(initiativeData.name,
                                 style: primaryTextStyle(
-                                    color: Globals.appStore.textPrimaryColor,
-                                    size: 18)),
+                                    color: textPrimaryColor, size: 18)),
                             SizedBox(height: 4),
                             Text(initiativeData.duration,
                                 style: primaryTextStyle(size: 14)),

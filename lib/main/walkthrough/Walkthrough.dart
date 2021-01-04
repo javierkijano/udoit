@@ -10,10 +10,11 @@ import 'package:udoit/main/utils/dots_indicator/dots_indicator.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:udoit/main/widgets/Button1.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
+import 'package:udoit/main/utils/AppColors.dart';
 
 import 'package:udoit/main/login/Login.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:udoit/main/utils/AppColors.dart';
+import 'package:udoit/main/utils/AppColors.dart' as udoitColors;
 import 'package:udoit/main/utils/AppConstant.dart';
 import 'package:udoit/main/widgets/NavigationButtons.dart';
 
@@ -145,7 +146,7 @@ class WalkThroughPage extends StatelessWidget {
         Column(children: <Widget>[
           SizedBox(height: h * 0.15),
           text(title,
-              textColor: Globals.appStore.textPrimaryColor,
+              textColor: appTextColorPrimary,
               fontSize: textSizeNormal,
               fontFamily: fontMedium),
           Padding(

@@ -9,6 +9,7 @@ import 'country_code.dart';
 import 'country_codes.dart';
 
 export 'country_code.dart';
+import 'package:udoit/main/utils/AppColors.dart';
 
 class CountryCodePicker extends StatefulWidget {
   final ValueChanged<CountryCode> onChanged;
@@ -122,7 +123,7 @@ class _CountryCodePickerState extends State<CountryCodePicker> {
             Flexible(
               fit: widget.alignLeft ? FlexFit.tight : FlexFit.loose,
               child: text(selectedItem.toCountryCodeString(),
-                  textColor: Globals.appStore.textPrimaryColor, fontSize: 16.0),
+                  textColor: appTextColorPrimary, fontSize: 16.0),
             ),
           ],
         ),

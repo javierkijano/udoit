@@ -4,7 +4,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/main/widgets/AppWidget.dart';
 
 import 'package:udoit/main/utils/AppGlobals.dart';
-import 'T1Colors.dart';
+import 'package:udoit/main/utils/AppColors.dart' as udoitColors;
+//import 'T1Colors.dart';
 import 'T1Constant.dart';
 //import 'dart:ui';
 
@@ -34,15 +35,15 @@ class EditTextStyle extends StatelessWidget {
           contentPadding: EdgeInsets.fromLTRB(24, 18, 24, 18),
           hintText: hintText,
           filled: true,
-          fillColor: t1_edit_text_background,
+          fillColor: udoitColors.t1_edit_text_background,
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(40),
-              borderSide:
-                  const BorderSide(color: t1_edit_text_background, width: 0.0)),
+              borderSide: const BorderSide(
+                  color: udoitColors.t1_edit_text_background, width: 0.0)),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(40),
-            borderSide:
-                const BorderSide(color: t1_edit_text_background, width: 0.0),
+            borderSide: const BorderSide(
+                color: udoitColors.t1_edit_text_background, width: 0.0),
           ),
         ),
       ),
@@ -70,26 +71,22 @@ Padding editTextCard(var hintText) {
 // Login/SignUp HeadingElement
 Text formHeading(var label) {
   return Text(label,
-      style: TextStyle(
-          color: Globals.appStore.textPrimaryColor,
-          fontSize: 30,
-          fontFamily: 'Bold'),
+      style:
+          TextStyle(color: textPrimaryColor, fontSize: 30, fontFamily: 'Bold'),
       textAlign: TextAlign.center);
 }
 
 Text formSubHeadingForm(var label) {
   return Text(label,
       style: TextStyle(
-          color: Globals.appStore.textSecondaryColor,
-          fontSize: 20,
-          fontFamily: 'Bold'),
+          color: textSecondaryColor, fontSize: 20, fontFamily: 'Bold'),
       textAlign: TextAlign.center);
 }
 
 // Other Text
 Text formLink(var label) {
   return Text(label,
-      style: TextStyle(color: t1_blue, fontSize: 18),
+      style: TextStyle(color: udoitColors.t1_blue, fontSize: 18),
       textAlign: TextAlign.center);
 }
 
@@ -101,9 +98,9 @@ SizedBox buttonStyle(var text) {
     height: 60,
     child: MaterialButton(
       child: Text(text, style: TextStyle(fontSize: 18)),
-      textColor: t1_white,
+      textColor: udoitColors.t1_white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
-      color: t1_colorPrimary,
+      color: udoitColors.t1_colorPrimary,
       onPressed: () => {},
     ),
   );
@@ -115,11 +112,11 @@ Widget shadowButton(String name, VoidCallback onPressedCallback) {
     minWidth: double.infinity,
     child: text(name,
         fontSize: textSizeLargeMedium,
-        textColor: t1_white,
+        textColor: udoitColors.t1_white,
         fontFamily: fontMedium),
-    textColor: t1_white,
+    textColor: udoitColors.t1_white,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.0)),
-    color: t1_colorPrimary,
+    color: udoitColors.t1_colorPrimary,
     onPressed: onPressedCallback,
   );
 }
@@ -132,9 +129,7 @@ Row rowHeading(var label) {
         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Text(label,
             style: TextStyle(
-                color: Globals.appStore.textPrimaryColor,
-                fontSize: 18,
-                fontFamily: 'Bold'),
+                color: textPrimaryColor, fontSize: 18, fontFamily: 'Bold'),
             textAlign: TextAlign.left),
       ),
     ],
@@ -143,10 +138,8 @@ Row rowHeading(var label) {
 
 Text Heading(var label) {
   return Text(label,
-      style: TextStyle(
-          color: Globals.appStore.textPrimaryColor,
-          fontSize: 18,
-          fontFamily: 'Bold'),
+      style:
+          TextStyle(color: textPrimaryColor, fontSize: 18, fontFamily: 'Bold'),
       textAlign: TextAlign.left);
 }
 
@@ -157,7 +150,7 @@ Row profileText(var label, {var maxline = 1}) {
           padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
           child: text(label,
               fontSize: textSizeLargeMedium,
-              textColor: Globals.appStore.textPrimaryColor,
+              textColor: textPrimaryColor,
               maxLine: maxline)),
     ],
   );
@@ -165,39 +158,37 @@ Row profileText(var label, {var maxline = 1}) {
 
 Text profile(var label) {
   return Text(label,
-      style:
-          TextStyle(color: t1_colorPrimary, fontSize: 18, fontFamily: 'Medium'),
+      style: TextStyle(
+          color: udoitColors.t1_colorPrimary,
+          fontSize: 18,
+          fontFamily: 'Medium'),
       textAlign: TextAlign.center);
 }
 
 //-------------------------------------------View-------------------------------------------------------------------------
 Divider view() {
-  return Divider(color: t1_view_color, height: 0.5);
+  return Divider(color: udoitColors.t1_view_color, height: 0.5);
 }
 //-----------------------------------------------List------------------------------------------------------------
 
 Text listHeading(var label) {
   return Text(label,
-      style: TextStyle(
-          color: Globals.appStore.textPrimaryColor,
-          fontSize: 20,
-          fontFamily: 'Bold'),
+      style:
+          TextStyle(color: textPrimaryColor, fontSize: 20, fontFamily: 'Bold'),
       textAlign: TextAlign.left);
 }
 
 Text listDesignationHeading(var label) {
   return Text(label,
       style: TextStyle(
-          color: Globals.appStore.textPrimaryColor,
-          fontSize: 16,
-          fontFamily: 'Medium'),
+          color: textPrimaryColor, fontSize: 16, fontFamily: 'Medium'),
       textAlign: TextAlign.left);
 }
 
 Text listOther(var label) {
   return Text(
     label,
-    style: TextStyle(color: Globals.appStore.textSecondaryColor, fontSize: 16),
+    style: TextStyle(color: textSecondaryColor, fontSize: 16),
     textAlign: TextAlign.left,
   );
 }
@@ -206,19 +197,15 @@ Text headerText(var text) {
   return Text(
     text,
     maxLines: 2,
-    style: TextStyle(
-        fontFamily: fontBold,
-        fontSize: 22,
-        color: Globals.appStore.textPrimaryColor),
+    style:
+        TextStyle(fontFamily: fontBold, fontSize: 22, color: textPrimaryColor),
   );
 }
 
 Text subHeadingText(var text) {
   return Text(text,
       style: TextStyle(
-          fontFamily: fontBold,
-          fontSize: 17.5,
-          color: Globals.appStore.textSecondaryColor));
+          fontFamily: fontBold, fontSize: 17.5, color: textSecondaryColor));
 }
 
 class AppButton extends StatefulWidget {
@@ -238,14 +225,16 @@ class AppButtonState extends State<AppButton> {
   Widget build(BuildContext context) {
     return RaisedButton(
       onPressed: widget.onPressed,
-      textColor: t1_white,
+      textColor: udoitColors.t1_white,
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
       padding: const EdgeInsets.all(0.0),
       child: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: <Color>[t1_colorPrimary, t1_colorPrimaryDark]),
+          gradient: LinearGradient(colors: <Color>[
+            udoitColors.t1_colorPrimary,
+            udoitColors.t1_colorPrimaryDark
+          ]),
           borderRadius: BorderRadius.all(Radius.circular(80.0)),
         ),
         child: Center(
@@ -316,12 +305,12 @@ Widget ring(String description) {
         height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(150.0),
-          border: Border.all(width: 16.0, color: t1_colorPrimary),
+          border: Border.all(width: 16.0, color: udoitColors.t1_colorPrimary),
         ),
       ),
       SizedBox(height: 16),
       text(description,
-          textColor: Globals.appStore.textPrimaryColor,
+          textColor: textPrimaryColor,
           fontSize: textSizeNormal,
           fontFamily: fontSemibold,
           isCentered: true,

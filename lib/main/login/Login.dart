@@ -94,8 +94,8 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                     child: CustomTheme(
                       child: CheckboxListTile(
-                        title: text("Remember",
-                            textColor: Globals.appStore.textSecondaryColor),
+                        title:
+                            text("Remember", textColor: t2_textColorSecondary),
                         value: rememberMe,
                         onChanged: (newValue) {
                           rememberMe = newValue;
@@ -121,13 +121,12 @@ class _LoginState extends State<Login> {
                       })),
                   SizedBox(height: 24),
                   text("Forgot password?",
-                      textColor: Globals.appStore.textPrimaryColor,
-                      fontFamily: fontMedium),
+                      textColor: t2_textColorPrimary, fontFamily: fontMedium),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       text("Don't have an account?",
-                          textColor: Globals.appStore.textSecondaryColor,
+                          textColor: t2_textColorPrimary,
                           fontSize: textSizeLargeMedium),
                       SizedBox(width: 8),
                       GestureDetector(

@@ -14,7 +14,7 @@ class _User {
 }
 
 class Globals {
-  static var appStore = AppStore();
+  //static var appStore = AppStore();
 
   static var fbApp;
   static Configuration appConf = Configuration(version: 'v0.1');

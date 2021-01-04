@@ -54,7 +54,7 @@ class ShowInitiativesState extends State<ShowInitiatives> {
   @override
   Widget build(BuildContext context) {
     //var width = MediaQuery.of(context).size.width;
-    changeStatusColor(Globals.appStore.appBarColor);
+    changeStatusColor(appBarColor);
 
     return DefaultTabController(
       length: 3,

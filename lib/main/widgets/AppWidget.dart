@@ -13,8 +13,8 @@ import 'package:udoit/main//utils/common.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 //import 'package:udoit/main/model/ListModels.dart';
 
-import '../utils/AppColors.dart';
-import '../utils/AppConstant.dart';
+import 'package:udoit/main/utils/AppColors.dart';
+import 'package:udoit/main/utils/AppConstant.dart';
 
 Widget text(
   String text, {
@@ -51,7 +51,7 @@ BoxDecoration boxDecoration(
     Color bgColor,
     var showShadow = false}) {
   return BoxDecoration(
-    color: bgColor ?? Globals.appStore.scaffoldBackground,
+    color: bgColor ?? scaffoldBackground,
     boxShadow: showShadow
         ? defaultBoxShadow(shadowColor: shadowColorGlobal)
         : [BoxShadow(color: Colors.transparent)],
@@ -133,14 +133,13 @@ Widget settingItem(context, String text,
               Text(text,
                       style: primaryTextStyle(
                           size: textSize ?? 18,
-                          color:
-                              textColor ?? Globals.appStore.textPrimaryColor))
+                          color: textColor ?? textPrimaryColor))
                   .expand(),
             ],
           ).expand(),
           detail ??
               Icon(Icons.arrow_forward_ios,
-                  size: 16, color: Globals.appStore.textSecondaryColor),
+                  size: 16, color: textSecondaryColor),
         ],
       ).paddingOnly(left: 16, right: 16, top: 8, bottom: 8),
     ),
@@ -151,14 +150,13 @@ Widget appBarTitleWidget(context, String title, {Color color}) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 60,
-    color: color ?? Globals.appStore.appBarColor,
+    color: color ?? appBarColor,
     child: Row(
       children: <Widget>[
         Expanded(
           child: Text(
             title,
-            style: boldTextStyle(
-                color: Globals.appStore.textPrimaryColor, size: 20),
+            style: boldTextStyle(color: textPrimaryColor, size: 20),
             maxLines: 1,
           ),
         ),
@@ -174,7 +172,7 @@ Widget appBar(BuildContext context, String title,
     Color iconColor}) {
   return AppBar(
     automaticallyImplyLeading: false,
-    backgroundColor: color ?? Globals.appStore.appBarColor,
+    backgroundColor: color ?? appBarColor,
     leading: showBack
         ? IconButton(
             onPressed: () {
@@ -200,7 +198,7 @@ class ExampleItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Globals.appStore.appBarColor,
+      color: appBarColor,
       margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
       elevation: 2.0,
       shadowColor: Colors.black,
@@ -209,7 +207,7 @@ class ExampleItemWidget extends StatelessWidget {
         title: Text(tabBarType.name, style: boldTextStyle()),
         trailing: showTrailing
             ? Icon(Icons.arrow_forward_ios,
-                size: 15, color: Globals.appStore.textPrimaryColor)
+                size: 15, color: textPrimaryColor)
             : null,
       ),
     );
@@ -236,12 +234,7 @@ class CustomTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Globals.appStore.isDarkModeOn
-          ? ThemeData.dark().copyWith(
-              accentColor: appColorPrimary,
-              backgroundColor: Globals.appStore.scaffoldBackground,
-            )
-          : ThemeData.light(),
+      data: ThemeData.light(),
       child: child,
     );
   }

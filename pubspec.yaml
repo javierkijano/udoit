@@ -109,13 +109,18 @@ dependencies:
 
 dependency_overrides:
 #  webview_flutter: ^1.0.7
+  #important as there is a bug related to nullables that have multiple
+  #consquences: nullables anoying messages and overall impossibility
+  # to run webdev or build_run
+  #analyzer: 0.39.14
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mobx_codegen:
-  build_runner: ^1.9.0
-  #flutter packages pub run build_runner build
+
+  build_runner: ^1.6.2
+  build_web_compilers: ^2.0.0
+  
 
 flutter:
 

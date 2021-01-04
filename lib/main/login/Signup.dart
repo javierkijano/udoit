@@ -12,6 +12,8 @@ import 'package:udoit/main/widgets/AppWidget.dart';
 import 'package:udoit/main/utils/AppGlobals.dart';
 import 'package:udoit/main/utils/AppImages.dart';
 import 'package:udoit/main/login/authentification.dart';
+import 'package:udoit/main/utils/AppColors.dart';
+import 'package:udoit/main/utils/AppConstant.dart';
 
 class Signup extends StatelessWidget {
   static var tag = "/SignUp";
@@ -80,7 +82,7 @@ class Signup extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       text("Already have an account?",
-                          textColor: Globals.appStore.textSecondaryColor,
+                          textColor: t2_textColorSecondary,
                           fontSize: textSizeLargeMedium),
                       SizedBox(width: 8),
                       GestureDetector(

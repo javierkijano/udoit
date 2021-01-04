@@ -54,9 +54,8 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        localeResolutionCallback: (locale, supportedLocales) =>
-            Locale(Globals.appStore.selectedLanguage),
-        locale: Locale(Globals.appStore.selectedLanguage),
+        localeResolutionCallback: (locale, supportedLocales) => Locale('es'),
+        locale: Locale('es'),
         supportedLocales: [Locale('en', '')],
         initialRoute: '/ProkitSplashScreen',
         routes: routes(),

@@ -30,11 +30,11 @@ class SideMenuState extends State<SideMenu> {
         builder: (_) => Drawer(
           elevation: 8,
           child: Container(
-            color: Globals.appStore.scaffoldBackground,
+            color: scaffoldBackground,
             child: SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                color: Globals.appStore.scaffoldBackground,
+                color: scaffoldBackground,
                 child: Column(
                   children: <Widget>[
                     Padding(
@@ -108,9 +108,7 @@ class SideMenuState extends State<SideMenu> {
         });
       },
       child: Container(
-        color: selectedItem == pos
-            ? t2_colorPrimaryLight
-            : Globals.appStore.scaffoldBackground,
+        color: selectedItem == pos ? t2_colorPrimaryLight : scaffoldBackground,
         padding: EdgeInsets.fromLTRB(20, 16, 20, 16),
         child: Row(
           children: <Widget>[
@@ -132,7 +130,7 @@ class SideMenuState extends State<SideMenu> {
                 style: primaryTextStyle(
                     color: selectedItem == pos
                         ? t2_colorPrimary
-                        : Globals.appStore.textPrimaryColor,
+                        : textPrimaryColor,
                     size: 18))
           ],
         ),
