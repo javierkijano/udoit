@@ -1,16 +1,16 @@
 //import 'dart:js';
 
 import 'package:flutter/material.dart';
-//import 'package:udoit/main/model/AppModel.dart';
-//import 'package:udoit/main/screens/ProKitScreenListing.dart';
-import 'package:udoit/main/AppSplashScreen/AppSplashScreen.dart';
-import 'package:udoit/main/login/Login.dart';
-import 'package:udoit/main/dashboard/Dashboard.dart';
-import 'package:udoit/main/login/Signup.dart';
-import 'package:udoit/main/profile/Profile.dart';
-import 'package:udoit/main/walkthrough/Walkthrough.dart';
-import 'package:udoit/main/newSmartMob/NewSmartMob_0.dart';
-import 'package:udoit/main/showInitiatives/ShowInitiatives.dart';
+//import 'package:udoit/model/AppModel.dart';
+//import 'package:udoit/screens/ProKitScreenListing.dart';
+import 'package:udoit/AppSplashScreen/AppSplashScreen.dart';
+import 'package:udoit/login/Login.dart';
+import 'package:udoit/dashboard/Dashboard.dart';
+import 'package:udoit/login/Signup.dart';
+import 'package:udoit/profile/Profile.dart';
+import 'package:udoit/walkthrough/Walkthrough.dart';
+import 'package:udoit/newSmartMob/NewSmartMob_0.dart';
+import 'package:udoit/showInitiatives/ShowInitiatives.dart';
 
 Map<String, WidgetBuilder> routes() {
   return <String, WidgetBuilder>{
