@@ -86,7 +86,7 @@ class SignInUp {
     _auth.setLanguageCode('es');
     //_auth.useDeviceLanguage();
     FirebaseAuth.instance.setPersistence(Persistence.NONE);
-    await signOut().then((x) {
+    await signOut().then((x) async {
       FirebaseAuth.instance.setPersistence(Persistence.NONE);
 
       var provider;
@@ -152,7 +152,7 @@ class SignInUp {
       }
       // sign in with provider (Facebook, Google or Twitter)
       else {
-        _auth.signInWithPopup(provider).then((result) {
+        await _auth.signInWithPopup(provider).then((result) async {
           var token = result.credential.token;
           var user = result.user;
           Globals.user.loggedIn = true;
@@ -171,8 +171,10 @@ class SignInUp {
 
           if (result.additionalUserInfo.isNewUser == true) {
             if (user.email == null) {
-              user.updateEmail(result.user.providerData[0].email).then((value) {
-                user.sendEmailVerification().then((vale) {
+              await user
+                  .updateEmail(result.user.providerData[0].email)
+                  .then((value) async {
+                await user.sendEmailVerification().then((vale) {
                   print('... email verification sent');
                   return true;
                 }).catchError((onError) {
