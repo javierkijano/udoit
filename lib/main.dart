@@ -12,7 +12,7 @@ import 'package:udoit/utils/flix_app_localizations.dart';
 import 'package:udoit/routes.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/utils/AppConstant.dart';
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -31,14 +31,7 @@ void main() async {
   }
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
-  print(await Globals.appConf.categories);
-
-  // Create a reference with an initial file path and name
-  /*var imageUrl = await FirebaseStorage.instance
-      .refFromURL(
-          'gs://smartmobs-8bebb.appspot.com/configuration/categories/animales.png')
-      .getDownloadURL();
-      */
+  await Globals.init();
 
   runApp(MyApp());
 }
@@ -54,10 +47,10 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        localeResolutionCallback: (locale, supportedLocales) => Locale('es'),
-        locale: Locale('es'),
+        localeResolutionCallback: (locale, supportedLocales) => Locale('en'),
+        locale: Locale('en'),
         supportedLocales: [Locale('en', '')],
-        initialRoute: '/ProkitSplashScreen',
+        initialRoute: '/splashScreen',
         routes: routes(),
         title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
 

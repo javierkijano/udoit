@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/utils/AppColors.dart';

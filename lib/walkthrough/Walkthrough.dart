@@ -9,7 +9,7 @@ import 'package:udoit/utils/dots_indicator/dots_indicator.dart';
 //import 'package:udoit/walkthrough/utils/T4Images.dart';
 import 'package:udoit/utils/AppImages.dart';
 import 'package:udoit/widgets/Button1.dart';
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/utils/AppColors.dart';
 
 import 'package:udoit/login/Login.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 import 'package:udoit/utils/dots_indicator/dots_indicator.dart';
 import 'package:udoit/widgets/Button1.dart';
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/newSmartMob/NewSmartMob_1.dart';

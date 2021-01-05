@@ -6,7 +6,7 @@ import 'package:udoit/newSmartMob/NewSmartMob_2.dart';
 //import 'package:udoit/newSmartMob/NewSmartMob.dart';
 //import 'package:udoit/newSmartMob/models/NewSmartMobModel.dart';
 import 'package:udoit/models/configuration.dart';
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_image/firebase_image.dart';
 

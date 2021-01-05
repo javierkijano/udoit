@@ -1,20 +1,13 @@
 targets:
   $default:
     builders:
-      build_web_compilers|app_core:
+      build_web_compilers:entrypoint:
+        # These are globs for the entrypoints you want to compile.
         generate_for:
-          exclude:
-            - lib/src/blocs/service/user_chat_bloc.dart
-            - lib/mqtt_client.dart
-            - lib/theme*
-            - lib/quiz
-            - lib/shopHop
-            - lib/integrations
-            - lib/learner
-            - lib/qibus
-            - lib/quiz
-            - lib/shopHop
-            - lib/smartDeck
-            - lib/social
-            - lib/webApps
-            
+        - test/**.browser_test.dart
+        - lib/**.dart
+        options:
+          compiler: dart2js
+          # List any dart2js specific args here, or omit it.
+          dart2js_args:
+          - -O2

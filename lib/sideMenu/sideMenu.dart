@@ -1,4 +1,4 @@
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/utils/AppIcons.dart';
 import 'package:udoit/utils/AppColors.dart';
 import 'package:udoit/utils/AppProfiles.dart';
@@ -54,22 +54,25 @@ class SideMenuState extends State<SideMenu> {
                                     Globals.user.profileImageProvider,
                                 radius: 40),
                             SizedBox(width: 16),
-                            Expanded(
-                              child: Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(Globals.user.name,
-                                        style: boldTextStyle(
-                                            color: white, size: 20)),
-                                    SizedBox(height: 8),
-                                    Text(Globals.user.email,
-                                        style: primaryTextStyle(color: white)),
-                                  ],
+                            if (Globals.user.loggedIn)
+                              Expanded(
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(Globals.user.name,
+                                          style: boldTextStyle(
+                                              color: white, size: 20)),
+                                      SizedBox(height: 8),
+                                      Text(Globals.user.email,
+                                          style:
+                                              primaryTextStyle(color: white)),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
+                              )
                           ],
                         ),
                       ),

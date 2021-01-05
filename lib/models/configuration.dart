@@ -17,37 +17,47 @@ class Category {
   }
 }
 
-class Categories {
-  final DocumentReference _confDocRef;
+class Configuration {
+  String version;
+  List<Category> categories = <Category>[];
+  Map<String, String> defaultAvatars = Map<String, String>();
 
-  // constructor
-  Categories(this._confDocRef);
+  Configuration({this.version = 'v0.1'});
 
-  Future<List<Category>> loadFromFirestore() async {
-    List<Category> _categories = <Category>[];
-    await _confDocRef.get().then((value) {
+  Future _loadCategoriesFromFirestore() async {
+    await FirebaseFirestore.instance
+        .collection('configuration')
+        .doc(version)
+        .get()
+        .then((value) {
       for (final cat in value.data()['categories']) {
-        _categories.add(Category(
+        categories.add(Category(
           name: cat['name'],
           id: cat['id'],
           iconUrl: cat['icon'],
         ));
       }
     }).catchError((error) => print("...getting configuration: $error"));
-    return _categories;
-  }
-}
-
-class Configuration {
-  Categories _categories;
-
-  Future<List<Category>> get categories async {
-    return _categories.loadFromFirestore();
   }
 
-  Configuration({String version = 'v0.1'}) {
-    //get categories
-    _categories = Categories(
-        FirebaseFirestore.instance.collection('configuration').doc(version));
+  Future _loadDefaultAvatarsFromFirestore() async {
+    await FirebaseFirestore.instance
+        .collection('configuration')
+        .doc(version)
+        .get()
+        .then((value) {
+      defaultAvatars['boy'] = value.data()['login']['defaultAvatar']['boy'];
+      defaultAvatars['girl'] = value.data()['login']['defaultAvatar']['girl'];
+      defaultAvatars['man'] = value.data()['login']['defaultAvatar']['man'];
+      defaultAvatars['woman'] = value.data()['login']['defaultAvatar']['woman'];
+      defaultAvatars['undefined'] =
+          value.data()['login']['defaultAvatar']['undefined'];
+    }).catchError((error) => print("...getting configuration: $error"));
+    return;
+  }
+
+  Future loadConfiguration() async {
+    await _loadCategoriesFromFirestore();
+    await _loadDefaultAvatarsFromFirestore();
   }
 }

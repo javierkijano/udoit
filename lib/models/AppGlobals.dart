@@ -20,4 +20,12 @@ class Globals {
   static Configuration appConf = Configuration(version: 'v0.1');
   static Initiatives appInitiatives = Initiatives();
   static var user = _User();
+
+  static Future init() async {
+    // load global configuration
+    await appConf.loadConfiguration();
+    user.profileImageProvider =
+        CachedNetworkImageProvider(appConf.defaultAvatars['undefined']);
+    int a = 0;
+  }
 }

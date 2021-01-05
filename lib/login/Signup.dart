@@ -9,7 +9,7 @@ import 'package:udoit/utils/AppConstant.dart';
 import 'package:udoit/login/utils/T1Widget.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 
-import 'package:udoit/utils/AppGlobals.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/utils/AppImages.dart';
 import 'package:udoit/login/authentification.dart';
 import 'package:udoit/utils/AppColors.dart';

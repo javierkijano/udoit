@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:udoit/utils/AppGlobals.dart';
-import 'package:flutter/material.dart';
+import 'package:udoit/models/AppGlobals.dart';
+//import 'package:flutter/material.dart';
 
 enum SignInProvider { Own, Facebook, Google, Twitter }
 

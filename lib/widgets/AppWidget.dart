@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 
 //import 'package:admob_flutter/admob_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,7 +10,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/utils/common.dart';
-import 'package:udoit/utils/AppGlobals.dart';
 //import 'package:udoit/model/ListModels.dart';
 
 import 'package:udoit/utils/AppColors.dart';
@@ -276,6 +275,7 @@ double dynamicWidth(BuildContext context) {
   }
 }*/
 
+/*
 String getBannerAdUnitId() {
   if (kReleaseMode) {
     if (Platform.isIOS) {
@@ -293,6 +293,7 @@ String getBannerAdUnitId() {
   return null;
 }
 
+
 String getInterstitialAdUnitId() {
   if (kReleaseMode) {
     if (Platform.isIOS) {
@@ -309,6 +310,7 @@ String getInterstitialAdUnitId() {
   }
   return null;
 }
+*/
 
 /*
 class AdMobAdWidget extends StatefulWidget {

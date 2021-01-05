@@ -9,14 +9,14 @@ import 'package:udoit/utils/AppConstant.dart';
 import 'package:udoit/login/utils/T1Widget.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 
-import 'package:udoit/utils/AppGlobals.dart';
+//import 'package:udoit/models/AppGlobals.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:udoit/login/Signup.dart';
 import 'package:udoit/utils/AppImages.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:udoit/login/authentification.dart';
-import 'package:udoit/login/old_register_page.dart';
+//import 'package:udoit/login/old_register_page.dart';
 import 'package:udoit/utils/AppColors.dart';
 
 class Login extends StatefulWidget {

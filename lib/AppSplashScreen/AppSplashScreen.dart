@@ -10,7 +10,7 @@ import 'package:udoit/utils/AppConstant.dart';
 import 'package:udoit/walkthrough/Walkthrough.dart';
 
 class AppSplashScreen extends StatefulWidget {
-  static String tag = '/ProkitSplashScreen';
+  static String tag = '/splashScreen';
 
   @override
   _AppSplashScreenState createState() => _AppSplashScreenState();
