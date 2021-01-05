@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:udoit/dashboard/Dashboard.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 import 'package:udoit/utils/dots_indicator/dots_indicator.dart';
 import 'package:udoit/widgets/Button1.dart';
@@ -41,14 +42,14 @@ class NewSmartMobState extends State<NewSmartMob> {
   GlobalKey<NewSmartMob3State> _keyNewSmartMob3State = GlobalKey();
   GlobalKey<NewSmartMob4State> _keyNewSmartMob4State = GlobalKey();
   GlobalKey<NewSmartMob5State> _keyNewSmartMob5State = GlobalKey();
-  GlobalKey<NewSmartMob6State> _keyNewSmartMob6State = GlobalKey();
+  //GlobalKey<NewSmartMob6State> _keyNewSmartMob6State = GlobalKey();
 
   NewSmartMob1 newSmartMob1;
   NewSmartMob2 newSmartMob2;
   NewSmartMob3 newSmartMob3;
   NewSmartMob4 newSmartMob4;
   NewSmartMob5 newSmartMob5;
-  NewSmartMob6 newSmartMob6;
+  //NewSmartMob6 newSmartMob6;
 
   Initiative initiative;
 
@@ -67,7 +68,7 @@ class NewSmartMobState extends State<NewSmartMob> {
     newSmartMob3 = NewSmartMob3(key: _keyNewSmartMob3State);
     newSmartMob4 = NewSmartMob4(key: _keyNewSmartMob4State);
     newSmartMob5 = NewSmartMob5(key: _keyNewSmartMob5State);
-    newSmartMob6 = NewSmartMob6(key: _keyNewSmartMob6State);
+    //newSmartMob6 = NewSmartMob6(key: _keyNewSmartMob6State);
   }
 
   VoidCallback onPrev() {
@@ -84,6 +85,8 @@ class NewSmartMobState extends State<NewSmartMob> {
     if (currentIndexPage == 5) {
       if (!Globals.user.loggedIn) {
         Navigator.pushNamed(context, Login.tag);
+        Navigator.pushNamedAndRemoveUntil(
+            context, Login.tag, ModalRoute.withName(Dashboard.tag));
       }
       Globals.appInitiatives.add(Initiative(
           publisherUserId: Globals.user.uid,
@@ -122,7 +125,7 @@ class NewSmartMobState extends State<NewSmartMob> {
                 NewSmartMob3(key: _keyNewSmartMob3State),
                 NewSmartMob4(key: _keyNewSmartMob4State),
                 NewSmartMob5(key: _keyNewSmartMob5State),
-                NewSmartMob6(key: _keyNewSmartMob6State),
+                //NewSmartMob6(key: _keyNewSmartMob6State),
               ],
               onPageChanged: _onPageChanged,
             ),
@@ -141,7 +144,7 @@ class NewSmartMobState extends State<NewSmartMob> {
                           onPressed: onPrev,
                           isStroked: false)),
                   DotsIndicator(
-                      dotsCount: 6,
+                      dotsCount: 5,
                       position: currentIndexPage,
                       decorator: DotsDecorator(
                         size: const Size.fromRadius(5.0),

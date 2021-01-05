@@ -16,13 +16,16 @@ import 'package:udoit/utils/AppColors.dart';
 import 'package:udoit/utils/AppConstant.dart';
 
 class Signup extends StatelessWidget {
+  Signup() {
+    int a = 0;
+  }
   static var tag = "/SignUp";
   SignInUp signIn = SignInUp();
 
-  EditTextStyle editTextStyle_fullName;
-  EditTextStyle editTextStyle_emailOrPhone;
-  EditTextStyle editTextStyle_password;
-  EditTextStyle editTextStyle_repassword;
+  EditTextStyle editTextStylFullName;
+  EditTextStyle editTextStyleEmailOrPhone;
+  EditTextStyle editTextStylePassword;
+  EditTextStyle editTextStyleRepassword;
 
   @override
   Widget build(BuildContext context) {
@@ -47,32 +50,33 @@ class Signup extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 40),
-                  editTextStyle_fullName =
+                  editTextStylFullName =
                       EditTextStyle("Full Name", isPassword: false),
                   SizedBox(height: 16),
-                  editTextStyle_emailOrPhone = EditTextStyle(
+                  editTextStyleEmailOrPhone = EditTextStyle(
                       "Email Id / Phone Number",
                       isPassword: false),
                   SizedBox(height: 16),
-                  editTextStyle_password =
+                  editTextStylePassword =
                       EditTextStyle("Password", isPassword: false),
                   SizedBox(height: 16),
-                  editTextStyle_repassword =
+                  editTextStyleRepassword =
                       EditTextStyle("Re-Password", isPassword: false),
                   SizedBox(height: 20),
                   Padding(
                       padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
                       child: shadowButton("Sign up", () {
-                        assert(editTextStyle_password.getText() ==
-                            editTextStyle_repassword.getText());
-                        signIn
+                        assert(editTextStylePassword.getText() ==
+                            editTextStyleRepassword.getText());
+                        /*signIn
                             .webSignUp(
                           SignInProvider.Own,
-                          email: editTextStyle_emailOrPhone.getText(),
-                          password: editTextStyle_password.getText(),
-                        )
+                          email: editTextStyleEmailOrPhone.getText(),
+                          password: editTextStylePassword.getText(),
+                        */
+                        Future.delayed(new Duration(milliseconds: 1))
                             .then((value) {
-                          //continue to next page
+                          Navigator.pop(context);
                         }).catchError((onError) {
                           print('... error signing up ');
                         });

@@ -98,14 +98,18 @@ class WalkThroughState extends State<WalkThrough> {
                 afterCancelRouteName: Dashboard.tag,
                 afterFinishRouteName: Dashboard.tag,
                 onCancelCallback: () async {
-                  if (!Globals.user.loggedIn)
-                    await Navigator.pushNamed(context,
-                        Login.tag); //arguments: LoginRoutes(Dashboard.tag));
+                  if (!Globals.user.alreadyRequestedToLogIn) {
+                    Globals.user.alreadyRequestedToLogIn = true;
+                    await Navigator.pushNamed(context, Login.tag);
+                    Navigator.pushNamed(context, Dashboard.tag);
+                  }
                 },
                 onFinishCallback: () async {
-                  if (!Globals.user.loggedIn)
-                    await Navigator.pushNamed(context,
-                        Login.tag); //arguments: LoginRoutes(Dashboard.tag));
+                  if (!Globals.user.alreadyRequestedToLogIn) {
+                    Globals.user.alreadyRequestedToLogIn = true;
+                    await Navigator.pushNamed(context, Login.tag);
+                    Navigator.pushNamed(context, Dashboard.tag);
+                  }
                 },
                 onNavigateCallback: (pageIndex) async {
                   await _controller.animateToPage(pageIndex,

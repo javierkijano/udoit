@@ -197,7 +197,7 @@ class SignInUp {
         });
       }
     });
-    return null;
+    return true;
   }
 
   // Example code of how to sign in with Twitter.
@@ -221,7 +221,7 @@ class SignInUp {
         _auth.setLanguageCode('es');
         //firebase.auth().useDeviceLanguage();
         twitterProvider.setCustomParameters({'lang': 'es'});
-        _auth.signInWithPopup(twitterProvider).then((value) {
+        await _auth.signInWithPopup(twitterProvider).then((value) {
           var token = value.credential.token;
           var secret = value.credential.providerId;
           // The signed-in user info.
@@ -264,7 +264,7 @@ class SignInUp {
         _auth.setLanguageCode('es');
         //firebase.auth().useDeviceLanguage();
         googleProvider.setCustomParameters({'lang': 'es'});
-        _auth.signInWithPopup(googleProvider).then((value) {
+        await _auth.signInWithPopup(googleProvider).then((value) {
           var token = value.credential.token;
           var secret = value.credential.providerId;
           // The signed-in user info.

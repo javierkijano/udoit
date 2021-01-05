@@ -18,6 +18,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:udoit/login/authentification.dart';
 //import 'package:udoit/login/old_register_page.dart';
 import 'package:udoit/utils/AppColors.dart';
+import 'package:flutter/scheduler.dart';
 
 class Login extends StatefulWidget {
   static var tag = "/SignIn";
@@ -47,21 +48,6 @@ class _LoginState extends State<Login> {
     signInUp = SignInUp();
   }
 
-  VoidCallback OnPressedCallback_createNewAccount() {
-    setState(() {});
-    //Dashboard().launch(context, isNewTask: true);
-    //LoginRoutes loginRoutes = ModalRoute.of(context).settings.arguments;
-    //Navigator.pushNamed(context, loginRoutes.nextRoute, arguments: loginRoutes);
-    //Navigator.popAndPushNamed(context, T1Signup.tag);
-    Navigator.pushNamed(context, Signup.tag);
-  }
-
-  void _pushPage(BuildContext context, Widget page) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => page),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +70,6 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   SizedBox(height: 50),
-                  editTextStyle_fullName,
-                  SizedBox(height: 16),
                   editTextStyle_email,
                   SizedBox(height: 16),
                   editTextStyle_password,
@@ -132,7 +116,15 @@ class _LoginState extends State<Login> {
                       GestureDetector(
                         child: text("Create new account",
                             fontFamily: fontMedium, textColor: t1_blue),
-                        onTap: OnPressedCallback_createNewAccount,
+                        onTap: () async {
+                          await Navigator.pushNamed(context, Signup.tag)
+                              .then((value) {
+                            int a = 0;
+                          }).catchError((onError) {
+                            int a = 0;
+                          });
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),
@@ -144,7 +136,7 @@ class _LoginState extends State<Login> {
                       signInUp.webSignIn(SignInProvider.Google).then((value) {
                         Navigator.pop(context);
                       }).catchError((onError) {
-                        print('... error in Google sign in');
+                        print('... error in Google sign in $onError');
                       });
                     },
                   ),
@@ -152,10 +144,11 @@ class _LoginState extends State<Login> {
                   SignInButton(
                     Buttons.Facebook,
                     onPressed: () {
-                      signInUp.webSignIn(SignInProvider.Facebook).then((value) {
-                        Navigator.pop(context);
-                      }).catchError((onError) {
-                        print('... error in Facebook sign in');
+                      signInUp
+                          .webSignIn(SignInProvider.Facebook)
+                          .then((value) => Navigator.pop(context))
+                          .catchError((onError) {
+                        print('... error in Facebook sign in $onError');
                       });
                     },
                   ),
@@ -167,7 +160,7 @@ class _LoginState extends State<Login> {
                       signInUp.webSignIn(SignInProvider.Twitter).then((value) {
                         Navigator.pop(context);
                       }).catchError((onError) {
-                        print('... error in Twitter sign in');
+                        print('... error in Twitter sign in $onError');
                       });
                     },
                   ),

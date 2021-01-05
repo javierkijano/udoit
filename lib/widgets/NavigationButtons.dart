@@ -81,20 +81,24 @@ class NavigationButtonsState extends State<NavigationButtons> {
     setPageIndex(currentPageIndex + 1);
   }
 
-  void onCancel() {
-    if (widget.onCancelCallback != null) widget.onCancelCallback();
+  void onCancel() async {
+    if (widget.onCancelCallback != null) await widget.onCancelCallback();
+    /*
     if (widget.afterCancelRouteName != null)
       Navigator.pushNamed(context, widget.afterCancelRouteName);
     else
       Navigator.pop(context);
+    */
   }
 
   void onFinish() async {
     if (widget.onFinishCallback != null) await widget.onFinishCallback();
+    /*
     if (widget.afterFinishRouteName != null)
       await Navigator.pushNamed(context, widget.afterFinishRouteName);
     else
       Navigator.pop(context);
+    */
   }
 
   @override
