@@ -1,41 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:udoit/widgets/IniativesListItem.dart';
-
-abstract class ItemFetcher {
-  //int count = 103;
-  int itemsPerPage = 5;
-  int currentPage = 0;
-
-  ItemFetcher(
-      {/*this.count,*/ this.itemsPerPage = 10} /*, this.currentPage=0}*/);
-
-  Future<List<dynamic>> fetch() async {
-    List<dynamic> list;
-    //final n = min(itemsPerPage, count - currentPage * itemsPerPage);
-    final n = itemsPerPage;
-
-    // Uncomment the following line to see in real time now items are loaded lazily.
-    // print('Now on page $_currentPage');
-    list = await fetchFcn(n);
-    currentPage++;
-    return list;
-  }
-
-  //abstract method
-  Future<List<dynamic>> fetchFcn(n);
-}
 
 class ListScreen extends StatefulWidget {
-  final _itemFetcher;
+  //ListScreenItemFetcherBase _itemFetcher;
+  Future<List<Widget>> Function(int, int) _itemFetcher;
+  int numItemsPerPage;
 
-  ListScreen(this._itemFetcher);
+  ListScreen(
+      {@required Future<List<Widget>> Function(int, int) itemFetcher,
+      this.numItemsPerPage = 10}) {
+    _itemFetcher = itemFetcher;
+  }
 
   @override
   _ListScreenState createState() => _ListScreenState();
 }
 
 class _ListScreenState extends State<ListScreen> {
-  List<dynamic> _itemList;
+  List<Widget> _itemList;
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   bool _isLoading = true;
@@ -46,14 +27,17 @@ class _ListScreenState extends State<ListScreen> {
     super.initState();
     _isLoading = true;
     _hasMore = true;
-    _itemList = <dynamic>[];
+    _itemList = <Widget>[];
     _loadMore();
   }
 
   // Triggers fecth() and then add new items or change _hasMore flag
   void _loadMore() {
     _isLoading = true;
-    widget._itemFetcher.fetch().then((List<dynamic> fetchedList) {
+    widget
+        ._itemFetcher(
+            _itemList.length, _itemList.length + widget.numItemsPerPage)
+        .then((List<Widget> fetchedList) {
       if (fetchedList.isEmpty) {
         setState(() {
           _isLoading = false;
@@ -89,7 +73,7 @@ class _ListScreenState extends State<ListScreen> {
             ),
           );
         }
-        return IniativesListItem(_itemList[index], index: index);
+        return _itemList[index];
       },
     );
   }

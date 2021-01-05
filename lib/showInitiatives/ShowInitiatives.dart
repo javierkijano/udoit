@@ -9,24 +9,36 @@ import 'package:udoit/utils/AppColors.dart';
 import 'package:udoit/utils/AppStrings.dart';
 import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/widgets/ListScreen.dart';
+import './IniativesListItem.dart';
 
-class MyItemFetcher extends ItemFetcher {
-  // This async function simulates fetching results from Internet, etc.
-  @override
-  Future<List<ListModel>> fetchFcn(n) async {
-    List<ListModel> list = <ListModel>[];
-    await Future.delayed(Duration(seconds: 1), () {
-      for (int i = 0; i < n; i++) {
-        list.add(ListModel(
-            name: "Javier",
-            description: "asdfafd",
-            icon: "assets/initiatives/initiative_1.jpg",
-            duration: "10",
-            type: "new"));
-      }
-    });
-    return list;
-  }
+Future<List<IniativesListItem>> iniativesListItemFetcher_new(
+    int start, int end) async {
+  List<IniativesListItem> list = <IniativesListItem>[];
+  await Future.delayed(Duration(seconds: 1), () {
+    for (int i = start; i < end; i++) {
+      list.add(IniativesListItem(
+          imageUrl:
+              'https://firebasestorage.googleapis.com/v0/b/smartmobs-8bebb.appspot.com/o/configuration%2Fcategories%2Fanimales.png?alt=media&token=52279f8d-f8a7-497b-8007-4d32b74f75ac',
+          title: 'titulo_$i',
+          category: 'titulo_$i',
+          date: 'titulo_$i',
+          summary: 'titulo_$i',
+          index: i));
+    }
+  });
+  return list;
+}
+
+Future<List<IniativesListItem>> iniativesListItemFetcher_trend(
+    int start, int end) async {
+  List<IniativesListItem> list = <IniativesListItem>[];
+  return list;
+}
+
+Future<List<IniativesListItem>> iniativesListItemFetcher_popular(
+    int start, int end) async {
+  List<IniativesListItem> list = <IniativesListItem>[];
+  return list;
 }
 
 class ShowInitiatives extends StatefulWidget {
@@ -38,17 +50,11 @@ class ShowInitiatives extends StatefulWidget {
 
 class ShowInitiativesState extends State<ShowInitiatives> {
   int selectedPos = 1;
-  MyItemFetcher myItemFetcher_new;
-  MyItemFetcher myItemFetcher_trend;
-  MyItemFetcher myItemFetcher_popular;
 
   @override
   void initState() {
     super.initState();
     selectedPos = 1;
-    myItemFetcher_new = MyItemFetcher();
-    myItemFetcher_trend = MyItemFetcher();
-    myItemFetcher_popular = MyItemFetcher();
   }
 
   @override
@@ -101,14 +107,9 @@ class ShowInitiativesState extends State<ShowInitiatives> {
             builder: (_) => Container(
                 width: MediaQuery.of(context).size.width,
                 child: TabBarView(children: <Widget>[
-                  /*
-                  ListIniatives(mListings: mListings_new),
-                  ListIniatives(mListings: mListings_trend),
-                  ListIniatives(mListings: mListings_new),
-                  */
-                  ListScreen(myItemFetcher_new),
-                  ListScreen(myItemFetcher_trend),
-                  ListScreen(myItemFetcher_popular),
+                  ListScreen(itemFetcher: iniativesListItemFetcher_new),
+                  ListScreen(itemFetcher: iniativesListItemFetcher_trend),
+                  ListScreen(itemFetcher: iniativesListItemFetcher_popular),
                 ]))),
       ),
     );

@@ -4,13 +4,23 @@ import 'package:udoit/widgets/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/utils/AppColors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:udoit/showInitiatives/models/models.dart';
+//import 'package:udoit/showInitiatives/models/models.dart';
 
 class IniativesListItem extends StatelessWidget {
-  IniativesListItem(this.initiativeData, {this.index = 0});
-  //final Widget child;
-  final ListModel initiativeData;
-  final int index;
+  int index;
+  String imageUrl;
+  String title;
+  String category;
+  String date;
+  String summary;
+
+  IniativesListItem(
+      {@required this.imageUrl,
+      @required this.title,
+      @required this.category,
+      @required this.date,
+      @required this.summary,
+      this.index = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,7 @@ class IniativesListItem extends StatelessWidget {
               children: <Widget>[
                 CachedNetworkImage(
                     placeholder: placeholderWidgetFn(),
-                    imageUrl: initiativeData.icon,
+                    imageUrl: imageUrl,
                     width: width / 3,
                     height: width / 2.8,
                     fit: BoxFit.fill),
@@ -51,7 +61,7 @@ class IniativesListItem extends StatelessWidget {
                                   topRight: Radius.circular(16.0)),
                             ),
                             padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
-                            child: Text(index % 2 == 0 ? "New" : "Popular",
+                            child: Text(index % 2 == 0 ? "Par" : "Impar",
                                 style:
                                     primaryTextStyle(color: white, size: 12)),
                           ),
@@ -65,16 +75,28 @@ class IniativesListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(initiativeData.name,
-                                style: primaryTextStyle(
-                                    color: textPrimaryColor, size: 18)),
+                            Text(
+                              title,
+                              overflow: TextOverflow.ellipsis,
+                              style: primaryTextStyle(
+                                  color: textPrimaryColor, size: 18),
+                              maxLines: 2,
+                            ),
                             SizedBox(height: 4),
-                            Text(initiativeData.duration,
-                                style: primaryTextStyle(size: 14)),
+                            Text(category,
+                                overflow: TextOverflow.ellipsis,
+                                style: primaryTextStyle(size: 10),
+                                maxLines: 1),
                             SizedBox(height: 4),
-                            Text(initiativeData.description,
-                                style: primaryTextStyle(size: 14), maxLines: 1),
+                            Text(date,
+                                overflow: TextOverflow.ellipsis,
+                                style: primaryTextStyle(size: 10),
+                                maxLines: 1),
                             SizedBox(height: 4),
+                            Text(summary,
+                                overflow: TextOverflow.ellipsis,
+                                style: primaryTextStyle(size: 14),
+                                maxLines: 3),
                           ],
                         ),
                       )

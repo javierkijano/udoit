@@ -193,7 +193,7 @@ class _DashboardState extends State<Dashboard> {
                         _scaffoldKey.currentState.openDrawer();
                       }),
                   SizedBox(width: spacing_large),
-                  text("Store",
+                  text("udoit.org",
                       textColor: appWhite,
                       fontFamily: fontBold,
                       fontSize: textSizeLargeMedium),
