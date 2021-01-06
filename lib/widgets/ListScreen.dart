@@ -15,7 +15,11 @@ class ListScreen extends StatefulWidget {
   _ListScreenState createState() => _ListScreenState();
 }
 
-class _ListScreenState extends State<ListScreen> {
+class _ListScreenState extends State<ListScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   List<Widget> _itemList;
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
@@ -54,6 +58,7 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ListView.builder(
       // Need to display a loading tile if more items are coming
       itemCount: _hasMore ? _itemList.length + 1 : _itemList.length,

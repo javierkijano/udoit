@@ -10,7 +10,7 @@ import 'package:udoit/login/Signup.dart';
 import 'package:udoit/profile/Profile.dart';
 import 'package:udoit/walkthrough/Walkthrough.dart';
 import 'package:udoit/newSmartMob/NewSmartMob_0.dart';
-import 'package:udoit/showInitiatives/ShowInitiatives.dart';
+import 'package:udoit/showInitiatives/ShowInitiativesList.dart';
 
 Map<String, WidgetBuilder> routes() {
   return <String, WidgetBuilder>{

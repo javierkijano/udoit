@@ -4,12 +4,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 //import 'package:prokit_flutter/main.dart';
 import 'package:udoit/widgets/AppWidget.dart';
-import 'package:udoit/showInitiatives/models/models.dart';
 import 'package:udoit/utils/AppColors.dart';
 import 'package:udoit/utils/AppStrings.dart';
 import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/widgets/ListScreen.dart';
-import './IniativesListItem.dart';
+import 'IniativesListItem.dart';
 
 Future<List<IniativesListItem>> iniativesListItemFetcher_new(
     int start, int end) async {
