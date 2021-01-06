@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import 'package:udoit/newSmartMob/NewSmartMob_2.dart';
+//import 'package:udoit/newSmartMob/NewSmartMob_2.dart';
 //import 'package:udoit/newSmartMob/NewSmartMob.dart';
 //import 'package:udoit/newSmartMob/models/NewSmartMobModel.dart';
 import 'package:udoit/models/configuration.dart';

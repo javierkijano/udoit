@@ -39,30 +39,28 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
-          MuviAppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        ],
-        localeResolutionCallback: (locale, supportedLocales) => Locale('en'),
-        locale: Locale('en'),
-        supportedLocales: [Locale('en', '')],
-        initialRoute: '/splashScreen',
-        routes: routes(),
-        title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        MuviAppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      localeResolutionCallback: (locale, supportedLocales) => Locale('en'),
+      locale: Locale('en'),
+      supportedLocales: [Locale('en', '')],
+      initialRoute: '/splashScreen',
+      routes: routes(),
+      title: '$mainAppName${!isMobile ? ' ${platformName()}' : ''}',
 
-        //home: AppSplashScreen(),
+      //home: AppSplashScreen(),
 
-        /*
+      /*
         theme: !Globals.appStore.isDarkModeOn
             ? AppThemeData.lightTheme
             : AppThemeData.darkTheme,
         */
-        builder: scrollBehaviour(),
-      ),
+      builder: scrollBehaviour(),
     );
   }
 }

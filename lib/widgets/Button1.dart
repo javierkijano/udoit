@@ -33,11 +33,11 @@ class Button1State extends State<Button1> {
         padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
         alignment: Alignment.center,
         child: text(widget.textContent,
-            textColor: widget.isStroked ? t4_colorPrimary : t4_white,
+            textColor: !widget.isStroked ? t4_colorPrimary : t4_white,
             isCentered: true,
             fontFamily: fontMedium,
             textAllCaps: true),
-        decoration: widget.isStroked
+        decoration: !widget.isStroked
             ? boxDecoration(bgColor: Colors.transparent, color: t4_colorPrimary)
             : boxDecoration(bgColor: t4_colorPrimary, radius: 4),
       ),

@@ -60,7 +60,7 @@ class Initiatives {
         firebase_storage.FirebaseStorage.instance.ref().child('initiatives');
   }
 
-  Future add(Initiative initiative) async {
+  Future addToFirestore(Initiative initiative) async {
     List<Future<firebase_storage.TaskSnapshot>> _uploadTasks = [];
 
     for (Uint8image uint8image in initiative.uint8images) {

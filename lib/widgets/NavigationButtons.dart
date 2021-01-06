@@ -28,8 +28,10 @@ class NavigationButtons extends StatefulWidget {
 
   NavigationButtons(
       {@required this.numPages,
+      /*
       this.afterCancelRouteName,
       this.afterFinishRouteName,
+      */
       this.prevButtonText = 'Prev',
       this.cancelButtonText = 'Cancel',
       this.nextButtonText = 'Next',
@@ -140,6 +142,7 @@ class NavigationButtonsState extends State<NavigationButtons> {
                 isStroked: true,
                 key: button1cancel_key,
               ),
+              SizedBox(width: 4),
               if (currentPageIndex < widget.numPages - 1)
                 Button1(
                   textContent: widget.nextButtonText,

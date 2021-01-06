@@ -8,6 +8,8 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/utils/AppConstant.dart';
 
 import 'package:udoit/walkthrough/Walkthrough.dart';
+import 'package:flutter/services.dart';
+import 'package:udoit/utils/AppImages.dart';
 
 class AppSplashScreen extends StatefulWidget {
   static String tag = '/splashScreen';
@@ -21,36 +23,42 @@ class _AppSplashScreenState extends State<AppSplashScreen>
   @override
   void initState() {
     super.initState();
-    navigationPage();
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    navigationPage(context);
   }
 
-  void navigationPage() async {
-    await setInt(appOpenCount, (await getInt(appOpenCount)) + 1);
-
-    if (!await isNetworkAvailable()) {
-      toastLong(errorInternetNotAvailable);
-    }
-
-    await Future.delayed(Duration(seconds: 1));
-    /*
-    if (!isMobile) {
-      ProKitWebLauncher().launch(context, isNewTask: true);
-    } else {
-      ProKitLauncher().launch(context, isNewTask: true);
-    }
-    */
-    WalkThrough().launch(context, isNewTask: true);
-  }
-
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: getColorFromHex('#FFFDF1'),
-      body: Container(
-        alignment: Alignment.center,
-        //child: Image.asset('images/app/app_icon.png',
-        //    height: 200, fit: BoxFit.fitHeight),
-        child: Image.asset('assets/splashscreen/splashscreen_2.jpeg'),
-      ),
-    );
+    return Container(
+        color: Colors.white70,
+        child: Column(children: <Widget>[
+          Expanded(child: Container()),
+          Container(
+            //color: Colors.white,
+            child: Image.asset(
+              logo_text,
+              width: MediaQuery.of(context).size.width * 0.6,
+              alignment: Alignment.bottomCenter,
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          SizedBox(
+            child: CircularProgressIndicator(),
+            height: MediaQuery.of(context).size.width * 0.3,
+            width: MediaQuery.of(context).size.width * 0.3,
+          ),
+          Expanded(child: Container()),
+        ]));
   }
+}
+
+void navigationPage(BuildContext context) async {
+  await setInt(appOpenCount, (await getInt(appOpenCount)) + 1);
+
+  if (!await isNetworkAvailable()) {
+    toastLong(errorInternetNotAvailable);
+  }
+
+  await Future.delayed(Duration(seconds: 2));
+  WalkThrough().launch(context, isNewTask: true);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:udoit/dashboard/Dashboard.dart';
-import 'package:udoit/newSmartMob/NewSmartMob_0.dart';
+import 'package:udoit/newInitiative/NewInitiative.dart';
 import 'package:udoit/profile/Profile.dart';
 import 'package:udoit/utils/AppColors.dart';
 import 'package:udoit/utils/AppConstant.dart';
@@ -24,7 +24,7 @@ Widget bottomNavBar(BuildContext context, selectedIndex) {
         }
       case 2:
         {
-          Navigator.pushNamed(context, NewSmartMob.tag);
+          Navigator.pushNamed(context, NewInitiative.tag);
           break;
         }
       case 3:

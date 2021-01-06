@@ -95,8 +95,6 @@ class WalkThroughState extends State<WalkThrough> {
                 key: _navigationButtonsStateKey,
                 numPages: 3,
                 cancelButtonText: 'Skip',
-                afterCancelRouteName: Dashboard.tag,
-                afterFinishRouteName: Dashboard.tag,
                 onCancelCallback: () async {
                   if (!Globals.user.alreadyRequestedToLogIn) {
                     Globals.user.alreadyRequestedToLogIn = true;

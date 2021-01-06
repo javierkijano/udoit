@@ -11,7 +11,7 @@ import 'package:udoit/dashboard/T11DataGenerator.dart';
 //import 'package:udoit/dashboard/utils/T11Images.dart';
 import 'package:udoit/utils/AppColors.dart';
 
-import 'package:udoit/newSmartMob/NewSmartMob_0.dart';
+import 'package:udoit/newInitiative/NewInitiative.dart';
 
 import 'package:udoit/sideMenu/sideMenu.dart';
 import 'package:udoit/widgets/bottomNavBar.dart';
@@ -204,14 +204,14 @@ class _DashboardState extends State<Dashboard> {
                   GestureDetector(
                     child: Icon(Icons.add),
                     onTap: () {
-                      NewSmartMob().launch(context);
+                      Navigator.pushNamed(context, NewInitiative.tag);
                     },
                   ),
                   SizedBox(width: spacing_standard_new),
                   GestureDetector(
                     child: Icon(Icons.search),
                     onTap: () {
-                      NewSmartMob().launch(context);
+                      //NewInitiativePage1.dart
                     },
                   ),
                   SizedBox(width: spacing_standard_new),

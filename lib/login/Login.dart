@@ -59,6 +59,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Align(alignment: Alignment.topRight, child: CloseButton()),
                   SizedBox(height: 16),
                   Image.asset(t1_ic_ring, height: 100, width: 100),
                   SizedBox(height: 16),
@@ -69,7 +70,7 @@ class _LoginState extends State<Login> {
                       formSubHeadingForm("Sign Up"),
                     ],
                   ),
-                  SizedBox(height: 50),
+                  SizedBox(height: 30),
                   editTextStyle_email,
                   SizedBox(height: 16),
                   editTextStyle_password,
@@ -103,7 +104,7 @@ class _LoginState extends State<Login> {
                           print('... error in custom sign in');
                         });
                       })),
-                  SizedBox(height: 24),
+                  SizedBox(height: 14),
                   text("Forgot password?",
                       textColor: t2_textColorPrimary, fontFamily: fontMedium),
                   Row(
