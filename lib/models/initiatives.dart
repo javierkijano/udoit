@@ -14,7 +14,7 @@ class Initiative {
   String destinatary;
   String summary;
   String request;
-  List<Uint8image> uint8images;
+  List<dynamic> uint8images;
   List<String> imagesUrls = [];
   String youtubeVideoUrl;
 
@@ -63,29 +63,34 @@ class Initiatives {
   Future addToFirestore(Initiative initiative) async {
     List<Future<firebase_storage.TaskSnapshot>> _uploadTasks = [];
 
-    for (Uint8image uint8image in initiative.uint8images) {
+    for (Map<String, dynamic> uint8image in initiative.uint8images) {
       final metadata = firebase_storage.SettableMetadata(
-          contentType: 'image/${uint8image.name.split(".").last}',
+          contentType: 'image/${uint8image['name'].split(".").last}',
           customMetadata: {'test': 'hola'});
       _uploadTasks.add(_refStorage
           .child(initiative.id)
-          .child(uint8image.name)
-          .putData(uint8image.data, metadata)
+          .child(uint8image['name'])
+          .putData(uint8image['data'], metadata)
           .whenComplete(() {
         int a = 0;
+      }).catchError((onError) {
+        print('... ERROR uploading to firebase storage: $onError');
       }));
     }
 
     await Future.wait(_uploadTasks);
     List<Future<String>> _imagesUrls = [];
-    for (Uint8image uint8image in initiative.uint8images) {
+    for (Map<String, dynamic> uint8image in initiative.uint8images) {
       _imagesUrls.add(_refStorage
           .child(initiative.id)
-          .child(uint8image.name)
+          .child(uint8image['name'])
           .getDownloadURL());
     }
     initiative.imagesUrls.addAll(await Future.wait(_imagesUrls));
-    await _refStore.add(initiative.toJSON());
+    Map<String, dynamic> data = initiative.toJSON();
+    await _refStore.add(data).then((value) => null).catchError((onError) {
+      print('... ERROR uploading to firestore: $onError');
+    });
   }
 
   latest() {}

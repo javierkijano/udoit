@@ -20,8 +20,8 @@ class NewSmartMob4 extends StatefulWidget {
 
 class NewSmartMob4State extends State<NewSmartMob4>
     with AutomaticKeepAliveClientMixin<NewSmartMob4> {
-  String summary;
-  String request;
+  String summary = '';
+  String request = '';
   bool isRequestHtml = false;
 
   @override

@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 
 class ListScreen extends StatefulWidget {
   //ListScreenItemFetcherBase _itemFetcher;
-  Future<List<Widget>> Function(int, int) _itemFetcher;
+  Future<List<Widget>> Function(int, int) _itemFetcher =
+      (int start, int end) async {
+    List<Widget> empty = [];
+    return empty;
+  };
   int numItemsPerPage;
+  Axis scrollDirection;
 
   ListScreen(
-      {@required Future<List<Widget>> Function(int, int) itemFetcher,
-      this.numItemsPerPage = 10}) {
-    _itemFetcher = itemFetcher;
+      {Future<List<Widget>> Function(int, int) itemFetcher,
+      this.numItemsPerPage = 10,
+      this.scrollDirection = Axis.vertical,
+      Key key})
+      : super(key: key) {
+    if (itemFetcher != null) _itemFetcher = itemFetcher;
   }
 
   @override
-  _ListScreenState createState() => _ListScreenState();
+  ListScreenState createState() => ListScreenState();
 }
 
-class _ListScreenState extends State<ListScreen>
+class ListScreenState extends State<ListScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
@@ -33,6 +41,12 @@ class _ListScreenState extends State<ListScreen>
     _hasMore = true;
     _itemList = <Widget>[];
     _loadMore();
+  }
+
+  void add(List<Widget> itemList) {
+    setState(() {
+      _itemList.addAll(itemList);
+    });
   }
 
   // Triggers fecth() and then add new items or change _hasMore flag
@@ -60,6 +74,7 @@ class _ListScreenState extends State<ListScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return ListView.builder(
+      scrollDirection: widget.scrollDirection,
       // Need to display a loading tile if more items are coming
       itemCount: _hasMore ? _itemList.length + 1 : _itemList.length,
       itemBuilder: (BuildContext context, int index) {

@@ -14,6 +14,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 //import 'src/web_image_picker.dart';
 
+//TODO: refactor so we have different methods depending on the format that we want
 Future<Map<String, dynamic>> gallery_image_picker() async {
   return await _FlutterWebImagePicker._getImage;
 }
@@ -42,11 +43,10 @@ class _FlutterWebImagePicker {
   static Future<Map<String, dynamic>> get _getImage async {
     //final data =
     //    await _methodChannel.invokeMapMethod<String, dynamic>('pickImage');
-    final data = await _WebImagePicker().pickImage();
-    final imageName = data['name'];
-    final imageData = base64.decode(data['data']);
+    final image = await _WebImagePicker().pickImage();
+    final imageData = base64.decode(image['data']);
     //return Image.memory(imageData, semanticLabel: imageName);
-    return {'name': imageName, 'data': imageData};
+    return {'name': image['name'], 'data': imageData, 'path': image['path']};
   }
 }
 

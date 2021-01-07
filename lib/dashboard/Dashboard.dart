@@ -226,22 +226,6 @@ class _DashboardState extends State<Dashboard> {
             ],
           ),
         ),
-        /*
-        bottom: TabBar(
-          indicatorColor: grocery_color_white,
-          tabs: [
-            Tab(
-                icon: Image.asset(grocery_ic_shop,
-                    color: grocery_color_white, height: 20, width: 20)),
-            Tab(icon: Icon(Icons.shopping_basket)),
-            Tab(
-                icon: Image.asset(grocery_ic_outline_favourite,
-                    color: grocery_color_white, height: 20, width: 20)),
-            Tab(
-                icon: Image.asset(Grocery_ic_User,
-                    color: grocery_color_white, height: 20, width: 20))
-          ],
-        ),*/
       ),
       body: Container(
         color: app_gradientColor2,

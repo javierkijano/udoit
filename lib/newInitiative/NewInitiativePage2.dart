@@ -14,7 +14,7 @@ class NewSmartMob2 extends StatefulWidget {
 
 class NewSmartMob2State extends State<NewSmartMob2>
     with AutomaticKeepAliveClientMixin<NewSmartMob2> {
-  String title;
+  String title = '';
 
   @override
   // TODO: implement wantKeepAlive

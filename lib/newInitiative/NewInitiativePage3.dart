@@ -13,7 +13,7 @@ class NewSmartMob3 extends StatefulWidget {
 
 class NewSmartMob3State extends State<NewSmartMob3>
     with AutomaticKeepAliveClientMixin<NewSmartMob3> {
-  String destinatary;
+  String destinatary = '';
 
   @override
   // TODO: implement wantKeepAlive

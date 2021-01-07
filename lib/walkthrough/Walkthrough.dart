@@ -40,7 +40,7 @@ class WalkThroughState extends State<WalkThrough> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.transparent);
+    //changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(

@@ -69,7 +69,7 @@ class ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(t5DarkNavy);
+    //changeStatusColor(t5DarkNavy);
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: t5LayoutBackgroundWhite,

@@ -30,6 +30,7 @@ class NewInitiative extends StatefulWidget {
 class NewInitiativeState extends State<NewInitiative> {
   int currentIndexPage = 0;
   GlobalKey<NavigationButtonsState> _navigationButtonsStateKey;
+  List<bool> initiativeInfoCompleted = List.generate(5, (index) => false);
 
   PageController _controller = new PageController();
 
@@ -52,7 +53,7 @@ class NewInitiativeState extends State<NewInitiative> {
 
   @override
   Widget build(BuildContext context) {
-    changeStatusColor(Colors.transparent);
+    //changeStatusColor(Colors.transparent);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
@@ -92,9 +93,28 @@ class NewInitiativeState extends State<NewInitiative> {
                 cancelButtonText: 'Cancel',
                 finishButtonText: 'Save',
                 onFinishCallback: () async {
-                  if (!Globals.user.loggedIn) {
-                    Globals.user.alreadyRequestedToLogIn = true;
-                    await Navigator.pushNamed(context, Login.tag);
+                  if (_keyNewSmartMob5State.currentState.pickedImages.length >
+                      0) initiativeInfoCompleted[4] = true;
+                  if (_keyNewSmartMob5State.currentState.pickedImages.length ==
+                          0 ||
+                      initiativeInfoCompleted
+                          .sublist(0, 4)
+                          .any((element) => element == false)) {
+                    if (_keyNewSmartMob5State
+                            .currentState.pickedImages.length ==
+                        0)
+                      warnAboutMissingInformation(
+                          context, 'No has añadido ninguna foto');
+                    if (initiativeInfoCompleted
+                        .sublist(0, 4)
+                        .any((element) => element == false))
+                      warnAboutMissingInformation(context,
+                          'Fala información en alguna de los pasos anteriores');
+                  } else {
+                    if (!Globals.user.loggedIn) {
+                      Globals.user.alreadyRequestedToLogIn = true;
+                      await Navigator.pushNamed(context, Login.tag);
+                    }
                     await Globals.appInitiatives.addToFirestore(Initiative(
                         publisherUserId: Globals.user.uid,
                         dateTime: _initiativeDateTime,
@@ -104,8 +124,15 @@ class NewInitiativeState extends State<NewInitiative> {
                             _keyNewSmartMob3State.currentState.destinatary,
                         summary: _keyNewSmartMob4State.currentState.summary,
                         request: _keyNewSmartMob4State.currentState.request,
-                        uint8images:
-                            _keyNewSmartMob5State.currentState.uint8images,
+                        uint8images: List<dynamic>.generate(
+                            _keyNewSmartMob5State
+                                .currentState.pickedImages.length,
+                            (index) => {
+                                  'data': _keyNewSmartMob5State
+                                      .currentState.pickedImages[index]['data'],
+                                  'name': _keyNewSmartMob5State
+                                      .currentState.pickedImages[index]['name']
+                                }),
                         youtubeVideoUrl:
                             _keyNewSmartMob5State.currentState.videoUrl));
                     Navigator.popUntil(
@@ -145,9 +172,58 @@ class NewInitiativeState extends State<NewInitiative> {
                     );
                 },
                 onNavigateCallback: (pageIndex) async {
+                  switch (pageIndex) {
+                    case 1:
+                      {
+                        if (_keyNewSmartMob1State.currentState.category ==
+                            null) {
+                          initiativeInfoCompleted[0] = false;
+                          warnAboutMissingInformation(
+                              context, 'No has seleccionado la categoría');
+                        } else
+                          initiativeInfoCompleted[0] = true;
+                      }
+                      break;
+                    case 2:
+                      {
+                        if (_keyNewSmartMob2State.currentState.title == '') {
+                          initiativeInfoCompleted[1] = false;
+                          warnAboutMissingInformation(
+                              context, 'No has definido el titulo');
+                        } else
+                          initiativeInfoCompleted[1] = true;
+                      }
+                      break;
+                    case 3:
+                      {
+                        if (_keyNewSmartMob3State.currentState.destinatary ==
+                            '') {
+                          warnAboutMissingInformation(
+                              context, 'No has definido el destinatario');
+                          initiativeInfoCompleted[2] = false;
+                        } else
+                          initiativeInfoCompleted[2] = true;
+                      }
+                      break;
+                    case 4:
+                      {
+                        if (_keyNewSmartMob4State.currentState.summary == '' ||
+                            _keyNewSmartMob4State.currentState.request == '') {
+                          initiativeInfoCompleted[2] = false;
+                          warnAboutMissingInformation(context,
+                              'No has definido el resumen o la descripción');
+                        } else
+                          initiativeInfoCompleted[3] = true;
+                      }
+                      break;
+                    default:
+                      {}
+                  }
+
                   await _controller.animateToPage(pageIndex,
                       duration: Duration(milliseconds: 1000),
                       curve: Curves.linear);
+
                   setState(() {
                     currentIndexPage = pageIndex;
                     print("...onNavigateIndex${pageIndex.toString()}");
@@ -158,4 +234,29 @@ class NewInitiativeState extends State<NewInitiative> {
       ),
     );
   }
+}
+
+void warnAboutMissingInformation(BuildContext context, String missingInfo) {
+  showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) => AlertDialog(
+            title: Text('Alerta'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Para continuar, completaa toda la información'),
+                  Text(missingInfo),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Aceptar'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ));
 }

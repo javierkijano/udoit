@@ -5,6 +5,7 @@ import 'package:udoit/widgets/Button1.dart';
 import 'package:flutter/foundation.dart';
 import 'package:udoit/utils/youtube/Youtube.dart';
 import 'package:udoit/utils/gallery_image_picker/generic_gallery_image_picker.dart';
+import 'package:udoit/widgets/ListScreen.dart';
 
 class NewSmartMob5 extends StatefulWidget {
   static String tag = '/NewSmartMob5';
@@ -19,29 +20,46 @@ class NewSmartMob5 extends StatefulWidget {
 class NewSmartMob5State extends State<NewSmartMob5>
     with AutomaticKeepAliveClientMixin<NewSmartMob5> {
   String videoUrl;
-  List<Uint8image> uint8images = [];
+  List<dynamic> pickedImages = [];
   bool showVideo = false;
+  GlobalKey<ListScreenState> _keyListScreenState;
+  Widget _listScreen;
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 
+  @override
+  void initState() {
+    super.initState();
+    _keyListScreenState = GlobalKey();
+    _listScreen =
+        ListScreen(key: _keyListScreenState, scrollDirection: Axis.horizontal);
+    int a = 0;
+  }
+
   //creating Key for container
   //GlobalKey _keyContainer = GlobalKey();
 
-  Image currentImage =
+  Image defaultImage =
       Image.asset('assets/newSmartMob/uploadImageIcon.png', height: 100);
 
   void _onPressedUploadImage() async {
-    Uint8image _uint8image;
+    dynamic _pickedImage = await generic_gallery_image_picker();
 
-    _uint8image = await generic_gallery_image_picker();
-
-    setState(() {
+    /*setState(() {
       currentImage =
-          Image.memory(_uint8image.data, semanticLabel: _uint8image.name);
+          Image.memory(_pickedImage.data, semanticLabel: _pickedImage['name']);
     });
-    uint8images.add(_uint8image);
+    */
+    pickedImages.add(_pickedImage);
+    _keyListScreenState.currentState.add(List.filled(
+        1,
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: 5.0),
+            child: Image.memory(_pickedImage['data'],
+                semanticLabel: _pickedImage['name'], fit: BoxFit.fitHeight))));
+    setState(() {});
   }
 
   @override
@@ -85,10 +103,10 @@ class NewSmartMob5State extends State<NewSmartMob5>
                   child: new Column(
                     children: <Widget>[
                       SizedBox(height: 20),
-                      Row(children: <Widget>[]),
-                      ConstrainedBox(
-                          constraints: BoxConstraints(maxHeight: 100),
-                          child: currentImage),
+                      if (pickedImages.length == 0) defaultImage,
+                      Container(
+                          height: pickedImages.length == 0 ? 0 : 100,
+                          child: _listScreen),
                       SizedBox(height: 20),
                       Button1(
                         textContent: "Subir",
