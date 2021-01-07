@@ -34,6 +34,18 @@ class Initiative {
         [this.dateTime.toIso8601String(), this.publisherUserId]);
   }
 
+  Initiative.fromJSON(Map<String, dynamic> data) {
+    this.publisherUserId = data['publisherUserId'];
+    this.dateTime = data['dateTime'];
+    this.category = data['category'];
+    this.title = data['title'];
+    this.destinatary = data['destinatary'];
+    this.summary = data['summary'];
+    this.request = data['request'];
+    this.uint8images = data['uint8images'];
+    this.youtubeVideoUrl = data['youtubeVideoUrl'];
+  }
+
   Map<String, dynamic> toJSON() {
     return {
       'id': id,
@@ -53,6 +65,8 @@ class Initiative {
 class Initiatives {
   CollectionReference _refStore;
   firebase_storage.Reference _refStorage;
+  int _previousTrendingQuerySeed;
+  QueryDocumentSnapshot _lastDocFomPreviousQuery;
 
   Initiatives() {
     _refStore = FirebaseFirestore.instance.collection('initiatives');
@@ -97,7 +111,31 @@ class Initiatives {
 
   popular() {}
 
-  trending() {}
+  Future<List<Initiative>> trending(int numDocs, int seed) async {
+    List<Initiative> initiatives = [];
+    if (seed != _previousTrendingQuerySeed) {
+      _previousTrendingQuerySeed = seed;
+      QuerySnapshot querySnapshot =
+          await _refStore.orderBy('dateTime').limit(numDocs).get();
+      _lastDocFomPreviousQuery =
+          querySnapshot.docs[querySnapshot.docs.length - 1];
+      querySnapshot.docs.forEach((doc) {
+        initiatives.add(Initiative.fromJSON(doc.data()));
+      });
+    } else {
+      QuerySnapshot querySnapshot = await _refStore
+          .orderBy('dateTime')
+          .startAfterDocument(_lastDocFomPreviousQuery)
+          .limit(numDocs)
+          .get();
+      _lastDocFomPreviousQuery =
+          querySnapshot.docs[querySnapshot.docs.length - 1];
+      querySnapshot.docs.forEach((doc) {
+        initiatives.add(Initiative.fromJSON(doc.data()));
+      });
+    }
+    return initiatives;
+  }
 }
 
 /// Enum representing the upload task types the example app supports.

@@ -30,6 +30,7 @@ Future<List<IniativesListItem>> iniativesListItemFetcher_new(
 
 Future<List<IniativesListItem>> iniativesListItemFetcher_trend(
     int start, int end) async {
+  Globals.appInitiatives.trending(start, after);
   List<IniativesListItem> list = <IniativesListItem>[];
   return list;
 }
