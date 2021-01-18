@@ -15,7 +15,8 @@ import 'package:udoit/newInitiative/NewInitiativePage5.dart';
 //import 'package:udoit/newInitiative/NewInitiativePage6.dart';
 
 import 'package:udoit/login/Login.dart';
-import 'package:udoit/models/initiatives.dart';
+import 'package:udoit/models/initiative.dart';
+import 'package:udoit/models/fireManager.dart';
 import 'package:udoit/utils/AppColors.dart';
 import 'package:udoit/utils/AppImages.dart';
 import 'package:udoit/widgets/NavigationButtons.dart';
@@ -115,7 +116,7 @@ class NewInitiativeState extends State<NewInitiative> {
                       Globals.user.alreadyRequestedToLogIn = true;
                       await Navigator.pushNamed(context, Login.tag);
                     }
-                    await Globals.appInitiatives.addToFirestore(Initiative(
+                    await Globals.fireManager.addToFirestore(Initiative(
                         publisherUserId: Globals.user.uid,
                         dateTime: _initiativeDateTime,
                         category: _keyNewSmartMob1State.currentState.category,

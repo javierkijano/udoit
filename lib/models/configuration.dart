@@ -1,21 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:udoit/models/fireManager.dart';
+import 'package:udoit/models/initiative.dart';
 
 //enum CategoryType { animales, politica }
-
-class Category {
-  String id;
-  String name;
-  String iconUrl;
-  Image iconImage;
-
-  Category({this.id, this.name, this.iconUrl});
-
-  @override
-  String toString() {
-    return "{id: $id, name: $name, iconUrl: $iconUrl}";
-  }
-}
 
 class Configuration {
   String version;

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/login/Login.dart';
+import 'package:udoit/models/initiative.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 import 'package:udoit/dashboard/T11Models.dart';
 import 'package:udoit/utils/AppConstant.dart';
@@ -16,6 +17,10 @@ import 'package:udoit/newInitiative/NewInitiative.dart';
 import 'package:udoit/sideMenu/sideMenu.dart';
 import 'package:udoit/widgets/bottomNavBar.dart';
 import 'package:udoit/models/AppGlobals.dart';
+import 'package:udoit/models/fireManager.dart';
+import 'package:udoit/widgets/ListScreen.dart';
+import 'package:udoit/dashboard/IniativesListItem.dart';
+import 'dart:math';
 
 class Dashboard extends StatefulWidget {
   static String tag = '/Dashboard';
@@ -24,18 +29,50 @@ class Dashboard extends StatefulWidget {
 
   @override
   _DashboardState createState() => _DashboardState();
+
+  static _DashboardState of(BuildContext context) {
+    final _DashboardState result =
+        context.findAncestorStateOfType<_DashboardState>();
+    assert(result != null);
+    return result;
+  }
 }
 
 class _DashboardState extends State<Dashboard> {
+  Random rand = Random();
+  int _randomSeedTrendingQuery;
+  int _randomSeedPopularQuery;
+  List<Initiative> trendingInitiatives;
+
   List<Theme11SongType> mList1;
   List<Theme11SongsList> mList2;
 
   var selectedIndex = 0;
   var selectedSongType = 0;
 
+  Future<List<IniativesListItem>> iniativesListItemFetcher_trending(
+      int start, int end) async {
+    List<IniativesListItem> list = <IniativesListItem>[];
+    int numDocs = end - start + 1;
+    (await Globals.fireManager.trending(numDocs, _randomSeedTrendingQuery))
+        .forEach((element) {
+      list.add(IniativesListItem(
+          imageUrl: element.imagesUrls[0],
+          title: element.title,
+          category: element.category.id.toString(),
+          date: element.dateTime.toString(),
+          summary: element.summary));
+    });
+    return list;
+  }
+
   @override
   void initState() {
     super.initState();
+    _randomSeedTrendingQuery = rand.nextInt(1000000);
+    FireManager().trending(10, 0).then((value) {
+      trendingInitiatives = value;
+    });
     mList1 = theme11songTypeList();
     mList2 = theme11SongList();
   }
@@ -239,12 +276,19 @@ class _DashboardState extends State<Dashboard> {
               //songDetail,
               Divider(height: 25),
               songType,
-              songList,
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width,
+                child: ListScreen(
+                  itemFetcher: iniativesListItemFetcher_trending,
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavBar(context, 0),
+      bottomNavigationBar: BottomNavBar(selectedIndex: 0),
       drawer: SideMenu(),
     );
   }

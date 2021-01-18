@@ -243,7 +243,7 @@ Function(BuildContext, String) placeholderWidgetFn() =>
     (_, s) => placeholderWidget();
 
 Widget placeholderWidget() =>
-    Image.asset('assets/LikeButton/image/grey.jpg', fit: BoxFit.cover);
+    Image.asset('assets/placeHolders/grey.jpg', fit: BoxFit.cover);
 
 BoxConstraints dynamicBoxConstraints({double maxWidth}) {
   return BoxConstraints(maxWidth: maxWidth ?? applicationMaxWidth);

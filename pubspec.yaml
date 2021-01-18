@@ -139,7 +139,7 @@ flutter:
     - assets/profiles/
     - assets/initiatives/
 
-    - assets/prokit/LikeButton/image/grey.jpg
+    - assets/placeHolders/grey.jpg
     - assets/prokit/integrations/map_point.json
     - assets/prokit/defaultTheme/
     - lang/en.json

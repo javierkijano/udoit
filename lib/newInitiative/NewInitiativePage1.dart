@@ -9,6 +9,7 @@ import 'package:udoit/models/configuration.dart';
 import 'package:udoit/models/AppGlobals.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_image/firebase_image.dart';
+import 'package:udoit/models/initiative.dart';
 
 class NewSmartMob1 extends StatefulWidget {
   static String tag = '/NewSmartMob1';
@@ -25,18 +26,14 @@ class NewSmartMob1State extends State<NewSmartMob1>
   List<Category> categories;
   Category category;
 
-  Future<List<Category>> loadCategories() async {
-    return await Globals.appConf.categories;
+  List<Category> loadCategories() {
+    return Globals.appConf.categories;
   }
 
   @override
   void initState() {
     super.initState();
-    loadCategories().then((value) {
-      setState(() {
-        categories = value;
-      });
-    });
+    categories = loadCategories();
   }
 
   @override
@@ -103,7 +100,7 @@ class NewSmartMob1State extends State<NewSmartMob1>
                               'Escoge esta categoría para empezar a luchas por ${categories[index].name}',
                           //style: Theme.of(context).textTheme.headline5,
                           onPressed: () {
-                            setState(() async {
+                            setState(() {
                               category = categories[index];
                             });
                           }),

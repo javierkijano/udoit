@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:udoit/models/initiatives.dart';
+import 'package:udoit/models/fireManager.dart';
 import 'package:udoit/utils/flix_app_localizations.dart';
 //import 'package:udoit/store/Globals.appStore.dart';
 import 'package:udoit/routes.dart';

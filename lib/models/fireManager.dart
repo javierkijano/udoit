@@ -2,73 +2,18 @@ import 'package:udoit/models/configuration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:udoit/utils/gallery_image_picker/generic_gallery_image_picker.dart';
-import 'package:udoit/utils/hash.dart';
+
 import 'dart:async';
+import 'package:udoit/models/initiative.dart';
 
-class Initiative {
-  String publisherUserId;
-  String id;
-  DateTime dateTime;
-  Category category;
-  String title;
-  String destinatary;
-  String summary;
-  String request;
-  List<dynamic> uint8images;
-  List<String> imagesUrls = [];
-  String youtubeVideoUrl;
-
-  Initiative(
-      {this.publisherUserId,
-      this.dateTime,
-      this.category,
-      this.title,
-      this.destinatary,
-      this.summary,
-      this.request,
-      this.uint8images,
-      this.youtubeVideoUrl}) {
-    assert(publisherUserId != null);
-    //id generated from user user uuid and dateTime
-    this.id = generateMD5fromStringList(
-        [this.dateTime.toIso8601String(), this.publisherUserId]);
-  }
-
-  Initiative.fromJSON(Map<String, dynamic> data) {
-    this.publisherUserId = data['publisherUserId'];
-    this.dateTime = data['dateTime'];
-    this.category = data['category'];
-    this.title = data['title'];
-    this.destinatary = data['destinatary'];
-    this.summary = data['summary'];
-    this.request = data['request'];
-    this.uint8images = data['uint8images'];
-    this.youtubeVideoUrl = data['youtubeVideoUrl'];
-  }
-
-  Map<String, dynamic> toJSON() {
-    return {
-      'id': id,
-      'publisherUserId': publisherUserId,
-      'dateTime': dateTime,
-      'category': category.id,
-      'title': title,
-      'destinatary': destinatary,
-      'summary': summary,
-      'request': request,
-      'imagesUrls': imagesUrls,
-      'youtubeVideoUrl': youtubeVideoUrl,
-    };
-  }
-}
-
-class Initiatives {
+//TODO: confusing that we have a initiatives class and then we use initiatives list in other part of the code. Better change name for iniativesManager or similar
+class FireManager {
   CollectionReference _refStore;
   firebase_storage.Reference _refStorage;
   int _previousTrendingQuerySeed;
   QueryDocumentSnapshot _lastDocFomPreviousQuery;
 
-  Initiatives() {
+  FireManager() {
     _refStore = FirebaseFirestore.instance.collection('initiatives');
     _refStorage =
         firebase_storage.FirebaseStorage.instance.ref().child('initiatives');
@@ -111,6 +56,7 @@ class Initiatives {
 
   popular() {}
 
+/*
   Future<List<Initiative>> trending(int numDocs, int seed) async {
     List<Initiative> initiatives = [];
     if (seed != _previousTrendingQuerySeed) {
@@ -130,6 +76,37 @@ class Initiatives {
           .get();
       _lastDocFomPreviousQuery =
           querySnapshot.docs[querySnapshot.docs.length - 1];
+      querySnapshot.docs.forEach((doc) {
+        initiatives.add(Initiative.fromJSON(doc.data()));
+      });
+    }
+    return initiatives;
+  }
+  */
+
+  Future<List<Initiative>> trending(int numDocs, int seed) async {
+    List<Initiative> initiatives = [];
+    if (seed != _previousTrendingQuerySeed) {
+      _previousTrendingQuerySeed = seed;
+      QuerySnapshot querySnapshot = await _refStore
+          .orderBy('dateTime', descending: true)
+          .limit(numDocs)
+          .get();
+      if (querySnapshot.docs.length > 0)
+        _lastDocFomPreviousQuery =
+            querySnapshot.docs[querySnapshot.docs.length - 1];
+      querySnapshot.docs.forEach((doc) {
+        initiatives.add(Initiative.fromJSON(doc.data()));
+      });
+    } else {
+      QuerySnapshot querySnapshot = await _refStore
+          .orderBy('dateTime', descending: true)
+          .startAfterDocument(_lastDocFomPreviousQuery)
+          .limit(numDocs)
+          .get();
+      if (querySnapshot.docs.length > 0)
+        _lastDocFomPreviousQuery =
+            querySnapshot.docs[querySnapshot.docs.length - 1];
       querySnapshot.docs.forEach((doc) {
         initiatives.add(Initiative.fromJSON(doc.data()));
       });

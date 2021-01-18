@@ -9,37 +9,8 @@ import 'package:udoit/utils/AppStrings.dart';
 import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/widgets/ListScreen.dart';
 import 'IniativesListItem.dart';
-
-Future<List<IniativesListItem>> iniativesListItemFetcher_new(
-    int start, int end) async {
-  List<IniativesListItem> list = <IniativesListItem>[];
-  await Future.delayed(Duration(seconds: 1), () {
-    for (int i = start; i < end; i++) {
-      list.add(IniativesListItem(
-          imageUrl:
-              'https://firebasestorage.googleapis.com/v0/b/smartmobs-8bebb.appspot.com/o/configuration%2Fcategories%2Fanimales.png?alt=media&token=52279f8d-f8a7-497b-8007-4d32b74f75ac',
-          title: 'titulo_$i',
-          category: 'titulo_$i',
-          date: 'titulo_$i',
-          summary: 'titulo_$i',
-          index: i));
-    }
-  });
-  return list;
-}
-
-Future<List<IniativesListItem>> iniativesListItemFetcher_trend(
-    int start, int end) async {
-  Globals.appInitiatives.trending(start, after);
-  List<IniativesListItem> list = <IniativesListItem>[];
-  return list;
-}
-
-Future<List<IniativesListItem>> iniativesListItemFetcher_popular(
-    int start, int end) async {
-  List<IniativesListItem> list = <IniativesListItem>[];
-  return list;
-}
+import 'dart:math';
+import 'package:udoit/models/fireManager.dart';
 
 class ShowInitiatives extends StatefulWidget {
   static var tag = "/ShowInitiatives";
@@ -50,11 +21,63 @@ class ShowInitiatives extends StatefulWidget {
 
 class ShowInitiativesState extends State<ShowInitiatives> {
   int selectedPos = 1;
+  Random rand = Random();
+  int _randomSeedTrendingQuery;
+  int _randomSeedPopularQuery;
+
+  Future<List<IniativesListItem>> iniativesListItemFetcher_new(
+      int start, int end) async {
+    List<IniativesListItem> list = <IniativesListItem>[];
+    int numDocs = end - start + 1;
+    (await Globals.fireManager.trending(numDocs, _randomSeedTrendingQuery))
+        .forEach((element) {
+      list.add(IniativesListItem(
+          imageUrl: element.imagesUrls[0],
+          title: element.title,
+          category: element.category.id.toString(),
+          date: element.dateTime.toString(),
+          summary: element.summary));
+    });
+    return list;
+  }
+
+  Future<List<IniativesListItem>> iniativesListItemFetcher_trend(
+      int start, int end) async {
+    List<IniativesListItem> list = <IniativesListItem>[];
+    int numDocs = end - start + 1;
+    (await Globals.fireManager.trending(numDocs, _randomSeedTrendingQuery))
+        .forEach((element) {
+      list.add(IniativesListItem(
+          imageUrl: element.imagesUrls[0],
+          title: element.title,
+          category: element.category.id.toString(),
+          date: element.dateTime.toString(),
+          summary: element.summary));
+    });
+    return list;
+  }
+
+  Future<List<IniativesListItem>> iniativesListItemFetcher_popular(
+      int start, int end) async {
+    List<IniativesListItem> list = <IniativesListItem>[];
+    int numDocs = end - start + 1;
+    (await Globals.fireManager.trending(numDocs, _randomSeedPopularQuery))
+        .forEach((element) {
+      list.add(IniativesListItem(
+          imageUrl: element.imagesUrls[0],
+          title: element.title,
+          category: element.category.toString(),
+          date: element.dateTime.toString(),
+          summary: element.summary));
+    });
+    return list;
+  }
 
   @override
   void initState() {
     super.initState();
     selectedPos = 1;
+    _randomSeedTrendingQuery = rand.nextInt(1000000);
   }
 
   @override
