@@ -13,7 +13,7 @@ import 'package:udoit/widgets/AppWidget.dart';
 
 class UpNavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
-  Size get preferredSize => Size.fromHeight(100.0);
+  Size get preferredSize => Size.fromHeight(50.0);
 
   UpNavBar({Key key}) : super(key: key);
 
@@ -42,6 +42,12 @@ class UpNavBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             Row(
               children: <Widget>[
+                GestureDetector(
+                  child: Icon(Icons.share),
+                  onTap: () {
+                    //Navigator.pushNamed(context, ShareTest.tag);
+                  },
+                ),
                 GestureDetector(
                   child: Icon(Icons.add),
                   onTap: () {

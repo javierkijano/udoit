@@ -112,30 +112,32 @@ class NewInitiativeState extends State<NewInitiative> {
                       warnAboutMissingInformation(context,
                           'Fala información en alguna de los pasos anteriores');
                   } else {
-                    if (!Globals.user.loggedIn) {
-                      Globals.user.alreadyRequestedToLogIn = true;
+                    if (!Globals.appUser.loggedIn) {
+                      Globals.appUser.alreadyRequestedToLogIn = true;
                       await Navigator.pushNamed(context, Login.tag);
                     }
-                    await Globals.fireManager.addToFirestore(Initiative(
-                        publisherUserId: Globals.user.uid,
-                        dateTime: _initiativeDateTime,
-                        category: _keyNewSmartMob1State.currentState.category,
-                        title: _keyNewSmartMob2State.currentState.title,
-                        destinatary:
-                            _keyNewSmartMob3State.currentState.destinatary,
-                        summary: _keyNewSmartMob4State.currentState.summary,
-                        request: _keyNewSmartMob4State.currentState.request,
-                        uint8images: List<dynamic>.generate(
-                            _keyNewSmartMob5State
-                                .currentState.pickedImages.length,
-                            (index) => {
-                                  'data': _keyNewSmartMob5State
-                                      .currentState.pickedImages[index]['data'],
-                                  'name': _keyNewSmartMob5State
-                                      .currentState.pickedImages[index]['name']
-                                }),
-                        youtubeVideoUrl:
-                            _keyNewSmartMob5State.currentState.videoUrl));
+                    await Globals.fireManager.uploadInitiativeToFirestore(
+                        Initiative(
+                            userId: Globals.appUser.uid,
+                            dateTime: _initiativeDateTime,
+                            category:
+                                _keyNewSmartMob1State.currentState.category,
+                            title: _keyNewSmartMob2State.currentState.title,
+                            destinatary:
+                                _keyNewSmartMob3State.currentState.destinatary,
+                            summary: _keyNewSmartMob4State.currentState.summary,
+                            request: _keyNewSmartMob4State.currentState.request,
+                            uint8images: List<dynamic>.generate(
+                                _keyNewSmartMob5State
+                                    .currentState.pickedImages.length,
+                                (index) => {
+                                      'data': _keyNewSmartMob5State.currentState
+                                          .pickedImages[index]['data'],
+                                      'name': _keyNewSmartMob5State.currentState
+                                          .pickedImages[index]['name']
+                                    }),
+                            youtubeVideoUrl:
+                                _keyNewSmartMob5State.currentState.videoUrl));
                     Navigator.popUntil(
                         context, ModalRoute.withName(Dashboard.tag));
                   }

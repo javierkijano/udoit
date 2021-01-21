@@ -124,11 +124,11 @@ class ProfileState extends State<Profile> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        text(Globals.user.name,
+                        text(Globals.appUser.name,
                             textColor: t5TextColorPrimary,
                             fontFamily: fontMedium,
                             fontSize: textSizeNormal),
-                        text(Globals.user.phoneNumber,
+                        text(Globals.appUser.phoneNumber,
                             fontSize: textSizeLargeMedium),
                         Padding(
                           padding: EdgeInsets.all(24.0),

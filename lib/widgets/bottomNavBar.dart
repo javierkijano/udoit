@@ -42,7 +42,7 @@ class BottomNavBar extends StatelessWidget {
         {
           List<Initiative> temp =
               await Dashboard.of(context).trendingInitiatives;
-          Navigator.pushNamed(context, Description.tag, arguments: temp[0]);
+          Navigator.pushNamed(context, Description.tag, arguments: temp[1]);
           break;
         }
     }

@@ -34,7 +34,7 @@ class IniativesListItem extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.5,
           child: CachedNetworkImage(
             imageUrl: imageUrl,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ).cornerRadiusWithClipRRect(20).paddingTop(16),
         ),
         Container(

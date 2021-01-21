@@ -44,7 +44,7 @@ class IniativesListItem extends StatelessWidget {
                     imageUrl: imageUrl,
                     width: width / 3,
                     height: width / 2.8,
-                    fit: BoxFit.fill),
+                    fit: BoxFit.cover),
                 Container(
                   width: width - (width / 3) - 35,
                   child: Column(

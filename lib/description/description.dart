@@ -25,11 +25,19 @@ class Description extends StatefulWidget {
   String title = 'udoit.org';
 
   Description({Key key}) : super(key: key);
+
+  static _DescriptionState of(BuildContext context) {
+    final _DescriptionState result =
+        context.findAncestorStateOfType<_DescriptionState>();
+    assert(result != null);
+    return result;
+  }
+
   @override
-  DescriptionState createState() => DescriptionState();
+  _DescriptionState createState() => _DescriptionState();
 }
 
-class DescriptionState extends State<Description> {
+class _DescriptionState extends State<Description> {
   int currentIndexPage = 0;
   Initiative initiative;
 
@@ -102,7 +110,8 @@ class DescriptionState extends State<Description> {
                 else
                   UdoitProgressIndicator(widthFactor: 0.3),
                 if (initiative != null)
-                  PageComments(key: _keyPageCommentsState)
+                  PageComments(
+                      key: _keyPageCommentsState, initiative: initiative)
                 else
                   UdoitProgressIndicator(widthFactor: 0.3),
               ],

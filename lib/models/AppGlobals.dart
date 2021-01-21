@@ -3,16 +3,7 @@ import 'package:udoit/models/configuration.dart';
 import 'package:udoit/models/fireManager.dart';
 //import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-class _User {
-  bool loggedIn = false;
-  bool alreadyRequestedToLogIn = false;
-  String uid;
-  String name;
-  String email;
-  String phoneNumber;
-  CachedNetworkImageProvider profileImageProvider;
-}
+import 'package:udoit/models/user.dart';
 
 class Globals {
   //static var appStore = AppStore();
@@ -20,12 +11,12 @@ class Globals {
   static var fbApp;
   static Configuration appConf = Configuration(version: 'v0.1');
   static FireManager fireManager = FireManager();
-  static var user = _User();
+  static var appUser = User();
 
   static Future init() async {
     // load global configuration
     await appConf.loadConfiguration();
-    user.profileImageProvider =
+    appUser.profileImageProvider =
         CachedNetworkImageProvider(appConf.defaultAvatars['undefined']);
     int a = 0;
   }

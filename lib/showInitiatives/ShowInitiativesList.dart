@@ -29,7 +29,8 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager.trending(numDocs, _randomSeedTrendingQuery))
+    (await Globals.fireManager
+            .downloadTrendingInitiatives(numDocs, _randomSeedTrendingQuery))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -45,7 +46,8 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager.trending(numDocs, _randomSeedTrendingQuery))
+    (await Globals.fireManager
+            .downloadTrendingInitiatives(numDocs, _randomSeedTrendingQuery))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -61,7 +63,8 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager.trending(numDocs, _randomSeedPopularQuery))
+    (await Globals.fireManager
+            .downloadTrendingInitiatives(numDocs, _randomSeedPopularQuery))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],

@@ -155,16 +155,16 @@ class SignInUp {
         await _auth.signInWithPopup(provider).then((result) async {
           var token = result.credential.token;
           var user = result.user;
-          Globals.user.loggedIn = true;
+          Globals.appUser.loggedIn = true;
           String photoURL = result.user.providerData[0].photoURL +
               '?type=square&width=500&access_token=' +
               result.credential.asMap()['accessToken'];
-          Globals.user.profileImageProvider =
+          Globals.appUser.profileImageProvider =
               CachedNetworkImageProvider(photoURL);
-          Globals.user.email = result.user.providerData[0].email;
-          Globals.user.uid = result.user.uid;
-          Globals.user.name = result.user.providerData[0].displayName;
-          Globals.user.phoneNumber =
+          Globals.appUser.email = result.user.providerData[0].email;
+          Globals.appUser.uid = result.user.uid;
+          Globals.appUser.name = result.user.providerData[0].displayName;
+          Globals.appUser.phoneNumber =
               result.user.providerData[0].phoneNumber != null
                   ? result.user.providerData[0].phoneNumber
                   : 'unknown phone number';

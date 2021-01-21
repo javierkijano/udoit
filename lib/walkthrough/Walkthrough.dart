@@ -96,15 +96,15 @@ class WalkThroughState extends State<WalkThrough> {
                 numPages: 3,
                 cancelButtonText: 'Skip',
                 onCancelCallback: () async {
-                  if (!Globals.user.alreadyRequestedToLogIn) {
-                    Globals.user.alreadyRequestedToLogIn = true;
+                  if (!Globals.appUser.alreadyRequestedToLogIn) {
+                    Globals.appUser.alreadyRequestedToLogIn = true;
                     await Navigator.pushNamed(context, Login.tag);
                     Navigator.pushNamed(context, Dashboard.tag);
                   }
                 },
                 onFinishCallback: () async {
-                  if (!Globals.user.alreadyRequestedToLogIn) {
-                    Globals.user.alreadyRequestedToLogIn = true;
+                  if (!Globals.appUser.alreadyRequestedToLogIn) {
+                    Globals.appUser.alreadyRequestedToLogIn = true;
                     await Navigator.pushNamed(context, Login.tag);
                     Navigator.pushNamed(context, Dashboard.tag);
                   }

@@ -51,10 +51,10 @@ class SideMenuState extends State<SideMenu> {
                           children: <Widget>[
                             CircleAvatar(
                                 backgroundImage:
-                                    Globals.user.profileImageProvider,
+                                    Globals.appUser.profileImageProvider,
                                 radius: 40),
                             SizedBox(width: 16),
-                            if (Globals.user.loggedIn)
+                            if (Globals.appUser.loggedIn)
                               Expanded(
                                 child: Container(
                                   child: Column(
@@ -62,11 +62,11 @@ class SideMenuState extends State<SideMenu> {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(Globals.user.name,
+                                      Text(Globals.appUser.name,
                                           style: boldTextStyle(
                                               color: white, size: 20)),
                                       SizedBox(height: 8),
-                                      Text(Globals.user.email,
+                                      Text(Globals.appUser.email,
                                           style:
                                               primaryTextStyle(color: white)),
                                     ],

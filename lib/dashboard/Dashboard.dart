@@ -22,6 +22,8 @@ import 'package:udoit/widgets/ListScreen.dart';
 import 'package:udoit/dashboard/IniativesListItem.dart';
 import 'dart:math';
 
+import 'package:udoit/widgets/upNavBar.dart';
+
 class Dashboard extends StatefulWidget {
   static String tag = '/Dashboard';
 
@@ -54,7 +56,8 @@ class _DashboardState extends State<Dashboard> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager.trending(numDocs, _randomSeedTrendingQuery))
+    (await Globals.fireManager
+            .downloadTrendingInitiatives(numDocs, _randomSeedTrendingQuery))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -70,7 +73,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     _randomSeedTrendingQuery = rand.nextInt(1000000);
-    FireManager().trending(10, 0).then((value) {
+    FireManager().downloadTrendingInitiatives(10, 0).then((value) {
       trendingInitiatives = value;
     });
     mList1 = theme11songTypeList();
@@ -215,7 +218,8 @@ class _DashboardState extends State<Dashboard> {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
+      appBar: UpNavBar(),
+      /*AppBar(
         automaticallyImplyLeading: false,
         //backgroundColor: grocery_colorPrimary,
         title: Container(
@@ -264,6 +268,7 @@ class _DashboardState extends State<Dashboard> {
           ),
         ),
       ),
+      */
       body: Container(
         color: app_gradientColor2,
         height: MediaQuery.of(context).size.height,

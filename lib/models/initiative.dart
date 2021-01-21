@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udoit/models/firestoreObject.dart';
 import 'package:udoit/utils/hash.dart';
 
 class Category {
@@ -15,8 +16,8 @@ class Category {
   }
 }
 
-class Initiative {
-  String publisherUserId;
+class Initiative extends FirestoreObject {
+  String userId;
   String id;
   DateTime dateTime;
   Category category;
@@ -35,7 +36,8 @@ class Initiative {
   int viewers;
 
   Initiative(
-      {this.publisherUserId,
+      {this.id,
+      this.userId,
       this.dateTime,
       this.category,
       this.title,
@@ -44,14 +46,18 @@ class Initiative {
       this.request,
       this.uint8images,
       this.youtubeVideoUrl}) {
-    assert(publisherUserId != null);
+    //assert(userId != null);
     //id generated from user user uuid and dateTime
-    this.id = generateMD5fromStringList(
-        [this.dateTime.toIso8601String(), this.publisherUserId]);
+    /*this.id = generateMD5fromStringList(
+        [this.dateTime.toIso8601String(), this.userId]);
+        */
   }
 
-  Initiative.fromJSON(Map<String, dynamic> data) {
-    this.publisherUserId = data['publisherUserId'];
+  @override
+  void fromFirestoreDoc(dynamic doc) {
+    Map<String, dynamic> data = doc.data();
+    this.id = doc.id;
+    this.userId = data['userId'];
     this.dateTime = DateTime.fromMicrosecondsSinceEpoch(
         data['dateTime'].microsecondsSinceEpoch);
     this.category = Category(id: data['category']);
@@ -64,10 +70,11 @@ class Initiative {
     this.youtubeVideoUrl = data['youtubeVideoUrl'];
   }
 
-  Map<String, dynamic> toJSON() {
+  @override
+  Map<String, dynamic> asFirestoreData() {
     return {
-      'id': id,
-      'publisherUserId': publisherUserId,
+      //'id': id,
+      'userId': userId,
       'dateTime': dateTime,
       'category': category.id,
       'title': title,
