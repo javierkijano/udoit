@@ -68,60 +68,64 @@ class PageCommentsState extends State<PageComments>
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        Row(
-          children: <Widget>[
-            CircleAvatar(
-                backgroundImage: Globals.appUser.profilePhotoImageProvider,
-                radius: 30),
-            SizedBox(width: 16),
-            Expanded(
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Añade un comentario público ...',
-                  //labelText: 'Título de la petición (max. 100 caracteres )',
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
+          child: Row(
+            children: <Widget>[
+              CircleAvatar(
+                  backgroundImage: Globals.appUser.profilePhotoImageProvider,
+                  radius: 30),
+              SizedBox(width: 16),
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Añade un comentario público ...',
+                    //labelText: 'Título de la petición (max. 100 caracteres )',
+                  ),
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(100),
+                  ],
+                  onChanged: (text) {
+                    currentText = text;
+                  },
+                  onSaved: (text) async {
+                    print('upload comment to firestore');
+                    Globals.fireManager.uploadCommentToFirestore(
+                        widget.initiative.id,
+                        Comment(
+                            userId: Globals.appUser.id,
+                            dateTime: DateTime.now(),
+                            text: text,
+                            likes: 0));
+                  },
                 ),
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(100),
-                ],
-                onChanged: (text) {
-                  currentText = text;
-                },
-                onSaved: (text) async {
+              ),
+              SizedBox(width: 10),
+              GestureDetector(
+                child: Icon(
+                  Icons.add_circle_outline_sharp,
+                  size: 40.0,
+                  color: Colors.blue,
+                  semanticLabel: 'Send comment',
+                ),
+                onTap: () {
                   print('upload comment to firestore');
                   Globals.fireManager.uploadCommentToFirestore(
                       widget.initiative.id,
                       Comment(
-                          userId: Globals.appUser.id,
+                          userId: Globals.appUser.uid,
                           dateTime: DateTime.now(),
-                          text: text,
+                          text: currentText,
                           likes: 0));
                 },
-              ),
-            ),
-            SizedBox(width: 10),
-            GestureDetector(
-              child: Icon(
-                Icons.add_circle_outline_sharp,
-                size: 40.0,
-                color: Colors.blue,
-                semanticLabel: 'Send comment',
-              ),
-              onTap: () {
-                print('upload comment to firestore');
-                Globals.fireManager.uploadCommentToFirestore(
-                    widget.initiative.id,
-                    Comment(
-                        userId: Globals.appUser.uid,
-                        dateTime: DateTime.now(),
-                        text: currentText,
-                        likes: 0));
-              },
-            )
-          ],
+              )
+            ],
+          ),
         ),
         Expanded(child: ListScreen(itemFetcher: commentsListItemFetcher)),
+        Divider(thickness: 0.5, color: Colors.grey),
       ],
     );
   }

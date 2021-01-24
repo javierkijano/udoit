@@ -49,11 +49,11 @@ class User extends FirestoreObject {
   void fromFirestoreDoc(dynamic doc) {
     Map<String, dynamic> data = doc.data();
     this.id = doc.id;
-    this.uid = doc.uid;
-    this.name = doc.name;
-    this.email = doc.email;
-    this.phoneNumber = doc.phoneNumber;
-    this.profilePhotoUrl = doc.profilePhoto;
+    this.uid = data['uid'];
+    this.name = data['name'];
+    this.email = data['email'];
+    this.phoneNumber = data['phoneNumber'];
+    this.profilePhotoUrl = data['profilePhotoUrl'];
   }
 
   @override

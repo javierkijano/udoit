@@ -45,9 +45,11 @@ class FireManager {
     } else if (uid != null) {
       QuerySnapshot querySnapshot =
           await _refStoreUsers.where('uid', isEqualTo: uid).get();
-      if (querySnapshot.docs.length == 1)
+      if (querySnapshot.docs.length == 1) {
+        User temp = User();
+        temp.fromFirestoreDoc(querySnapshot.docs[0]);
         return User()..fromFirestoreDoc(querySnapshot.docs[0]);
-      else if (querySnapshot.docs.length == 0)
+      } else if (querySnapshot.docs.length == 0)
         throw Exception('... Not user founf with specified uid');
       else
         throw Exception('... multiple users found with provided uid');
