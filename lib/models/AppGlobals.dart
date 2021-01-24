@@ -7,17 +7,16 @@ import 'package:udoit/models/user.dart';
 
 class Globals {
   //static var appStore = AppStore();
-
-  static var fbApp;
+  static bool loggedIn = false;
   static Configuration appConf = Configuration(version: 'v0.1');
   static FireManager fireManager = FireManager();
-  static var appUser = User();
+  static User appUser;
 
   static Future init() async {
     // load global configuration
     await appConf.loadConfiguration();
-    appUser.profileImageProvider =
-        CachedNetworkImageProvider(appConf.defaultAvatars['undefined']);
+    Globals.appUser =
+        User(profilePhotoUrl: appConf.defaultAvatars['undefined']);
     int a = 0;
   }
 }

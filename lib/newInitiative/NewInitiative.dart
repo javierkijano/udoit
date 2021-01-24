@@ -112,7 +112,7 @@ class NewInitiativeState extends State<NewInitiative> {
                       warnAboutMissingInformation(context,
                           'Fala información en alguna de los pasos anteriores');
                   } else {
-                    if (!Globals.appUser.loggedIn) {
+                    if (!Globals.loggedIn) {
                       Globals.appUser.alreadyRequestedToLogIn = true;
                       await Navigator.pushNamed(context, Login.tag);
                     }

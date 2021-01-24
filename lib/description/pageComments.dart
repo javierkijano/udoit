@@ -72,7 +72,7 @@ class PageCommentsState extends State<PageComments>
         Row(
           children: <Widget>[
             CircleAvatar(
-                backgroundImage: Globals.appUser.profileImageProvider,
+                backgroundImage: Globals.appUser.profilePhotoImageProvider,
                 radius: 30),
             SizedBox(width: 16),
             Expanded(

@@ -51,10 +51,10 @@ class SideMenuState extends State<SideMenu> {
                           children: <Widget>[
                             CircleAvatar(
                                 backgroundImage:
-                                    Globals.appUser.profileImageProvider,
+                                    Globals.appUser.profilePhotoImageProvider,
                                 radius: 40),
                             SizedBox(width: 16),
-                            if (Globals.appUser.loggedIn)
+                            if (Globals.loggedIn)
                               Expanded(
                                 child: Container(
                                   child: Column(

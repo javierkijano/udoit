@@ -39,20 +39,20 @@ class FireManager {
     return;
   }
 
-  Future downloadUser({String id, String uid}) async {
+  Future<User> downloadUser({String id, String uid}) async {
     if (id != null) {
-      User()..fromFirestoreDoc(await _refStoreUsers.doc(id).get());
+      return User()..fromFirestoreDoc(await _refStoreUsers.doc(id).get());
     } else if (uid != null) {
       QuerySnapshot querySnapshot =
           await _refStoreUsers.where('uid', isEqualTo: uid).get();
       if (querySnapshot.docs.length == 1)
-        User()..fromFirestoreDoc(querySnapshot.docs[0]);
+        return User()..fromFirestoreDoc(querySnapshot.docs[0]);
       else if (querySnapshot.docs.length == 0)
-        Exception('... Not user founf with specified uid');
+        throw Exception('... Not user founf with specified uid');
       else
-        Exception('... multiple users found with provided uid');
+        throw Exception('... multiple users found with provided uid');
     } else
-      Exception(
+      throw Exception(
           'no user identifier was profided. You need to provide either id or uid');
   }
 

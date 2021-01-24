@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:udoit/models/AppGlobals.dart';
+import 'package:udoit/models/fireManager.dart';
+import 'package:udoit/models/user.dart' as udoit_user;
 //import 'package:flutter/material.dart';
 
 enum SignInProvider { Own, Facebook, Google, Twitter }
@@ -153,29 +155,30 @@ class SignInUp {
       // sign in with provider (Facebook, Google or Twitter)
       else {
         await _auth.signInWithPopup(provider).then((result) async {
-          var token = result.credential.token;
-          var user = result.user;
-          Globals.appUser.loggedIn = true;
-          String photoURL = result.user.providerData[0].photoURL +
-              '?type=square&width=500&access_token=' +
-              result.credential.asMap()['accessToken'];
-          Globals.appUser.profileImageProvider =
-              CachedNetworkImageProvider(photoURL);
-          Globals.appUser.email = result.user.providerData[0].email;
-          Globals.appUser.uid = result.user.uid;
-          Globals.appUser.name = result.user.providerData[0].displayName;
-          Globals.appUser.phoneNumber =
-              result.user.providerData[0].phoneNumber != null
-                  ? result.user.providerData[0].phoneNumber
-                  : 'unknown phone number';
+          //var token = result.credential.token;
+          //var user = result.user;
+          Globals.loggedIn = true;
+          udoit_user.User appUser = udoit_user.User(
+              profilePhotoUrl: result.user.providerData[0].photoURL +
+                  '?type=square&width=500&access_token=' +
+                  result.credential.asMap()['accessToken'],
+              email: result.user.providerData[0].email,
+              uid: result.user.uid,
+              name: result.user.providerData[0].displayName,
+              phoneNumber: result.user.providerData[0].phoneNumber);
 
           if (result.additionalUserInfo.isNewUser == true) {
-            if (user.email == null) {
-              await user
+            //the first logged in, we need to upload to firestore. The appUser
+            //is the only information so it is the final user
+            Globals.fireManager.uploadNewUser(appUser);
+            Globals.appUser = appUser;
+            if (result.user.email == null) {
+              await result.user
                   .updateEmail(result.user.providerData[0].email)
                   .then((value) async {
-                await user.sendEmailVerification().then((vale) {
+                await result.user.sendEmailVerification().then((vale) {
                   print('... email verification sent');
+
                   return true;
                 }).catchError((onError) {
                   print('... error sending email verification');
@@ -186,6 +189,13 @@ class SignInUp {
                 return false;
               });
             }
+          } else {
+            //final appUser will need to be merged with new possible date from current
+            //facebook profile with data saved in previous loggins
+            await Globals.fireManager.updateUser(appUser);
+            Globals.appUser =
+                await Globals.fireManager.downloadUser(uid: appUser.uid);
+            int a = 0;
           }
         }).catchError((error) {
           print('...error sigin in with facebook');
