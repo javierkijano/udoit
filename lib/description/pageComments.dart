@@ -31,6 +31,7 @@ class PageCommentsState extends State<PageComments>
   Random rand = Random();
   int _randomSeedCommentsQuery;
   int numDocs = 10;
+  String currentText;
 
   Future<List<CommentsListItem>> commentsListItemFetcher(
       int start, int end) async {
@@ -57,6 +58,7 @@ class PageCommentsState extends State<PageComments>
   @override
   void initState() {
     super.initState();
+    _randomSeedCommentsQuery = rand.nextInt(1000000);
   }
 
   @override
@@ -67,40 +69,59 @@ class PageCommentsState extends State<PageComments>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-            semanticContainer: true,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            color: scaffoldBackground,
-            child: Row(children: <Widget>[
-              CircleAvatar(
-                  backgroundImage: Globals.appUser.profileImageProvider,
-                  radius: 40),
-              SizedBox(width: 16),
-              Container(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    icon: const Icon(Icons.person),
-                    hintText: 'Añade un comentario público ...',
-                    //labelText: 'Título de la petición (max. 100 caracteres )',
-                  ),
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(100),
-                  ],
-                  onSaved: (text) async {
-                    print('upload comment to firestore');
-                    Globals.fireManager.uploadCommentToFirestore(
-                        widget.initiative.id,
-                        Comment(
-                            userId: Globals.appUser.id,
-                            dateTime: DateTime.now(),
-                            text: text,
-                            likes: 0));
-                  },
+        Row(
+          children: <Widget>[
+            CircleAvatar(
+                backgroundImage: Globals.appUser.profileImageProvider,
+                radius: 30),
+            SizedBox(width: 16),
+            Expanded(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Añade un comentario público ...',
+                  //labelText: 'Título de la petición (max. 100 caracteres )',
                 ),
-              )
-            ])),
-        ListScreen(itemFetcher: commentsListItemFetcher)
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(100),
+                ],
+                onChanged: (text) {
+                  currentText = text;
+                },
+                onSaved: (text) async {
+                  print('upload comment to firestore');
+                  Globals.fireManager.uploadCommentToFirestore(
+                      widget.initiative.id,
+                      Comment(
+                          userId: Globals.appUser.id,
+                          dateTime: DateTime.now(),
+                          text: text,
+                          likes: 0));
+                },
+              ),
+            ),
+            SizedBox(width: 10),
+            GestureDetector(
+              child: Icon(
+                Icons.add_circle_outline_sharp,
+                size: 40.0,
+                color: Colors.blue,
+                semanticLabel: 'Send comment',
+              ),
+              onTap: () {
+                print('upload comment to firestore');
+                Globals.fireManager.uploadCommentToFirestore(
+                    widget.initiative.id,
+                    Comment(
+                        userId: Globals.appUser.uid,
+                        dateTime: DateTime.now(),
+                        text: currentText,
+                        likes: 0));
+              },
+            )
+          ],
+        ),
+        Expanded(child: ListScreen(itemFetcher: commentsListItemFetcher)),
       ],
     );
   }

@@ -23,70 +23,71 @@ class CommentsListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-        child: Container(
-          decoration: BoxDecoration(
-              color: scaffoldBackground,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: defaultBoxShadow()),
-          child: Card(
-            semanticContainer: true,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+      child: Container(
+        decoration: BoxDecoration(
             color: scaffoldBackground,
+            borderRadius: BorderRadius.circular(5),
+            boxShadow: defaultBoxShadow()),
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: scaffoldBackground,
+          child: Container(
+            decoration: BoxDecoration(
+                color: scaffoldBackground,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: defaultBoxShadow()),
             child: Row(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    CircleAvatar(
-                        backgroundImage:
-                            CachedNetworkImageProvider(profilePhotoUrl),
-                        radius: 40),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                CircleAvatar(
+                    backgroundImage:
+                        CachedNetworkImageProvider(profilePhotoUrl),
+                    radius: 40),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Text(name),
-                                SizedBox(width: 30),
-                                Text(dateTime.toString()),
-                              ],
-                            ),
-                            Text(text,
-                                overflow: TextOverflow.ellipsis,
-                                style: primaryTextStyle(size: 14),
-                                maxLines: 3),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Icon(Icons.favorite_border_outlined),
-                                SizedBox(width: 30),
-                                Text(likes.toString()),
-                                SizedBox(width: 30),
-                                Text('Denunciar'),
-                              ],
-                            ),
+                            Text(name),
+                            SizedBox(width: 30),
+                            Text(dateTime.toString()),
                           ],
                         ),
-                      ),
-                    )
-                  ],
-                ),
+                        Text(text,
+                            overflow: TextOverflow.ellipsis,
+                            style: primaryTextStyle(size: 14),
+                            maxLines: 3),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Icon(Icons.favorite_border_outlined),
+                            SizedBox(width: 30),
+                            Text(likes.toString()),
+                            SizedBox(width: 30),
+                            Text('Denunciar'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-            margin: EdgeInsets.all(0),
           ),
+          elevation: 0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          margin: EdgeInsets.all(0),
         ),
       ),
+      //),
     );
   }
 }

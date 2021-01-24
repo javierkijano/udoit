@@ -1,6 +1,9 @@
+import 'dart:html';
+
 import 'package:udoit/models/configuration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:udoit/models/user.dart';
 import 'package:udoit/utils/gallery_image_picker/generic_gallery_image_picker.dart';
 
 import 'dart:async';
@@ -10,7 +13,7 @@ import 'package:udoit/models/comment.dart';
 //TODO: confusing that we have a initiatives class and then we use initiatives list in other part of the code. Better change name for iniativesManager or similar
 class FireManager {
   CollectionReference _refStoreInitiatives;
-  CollectionReference _refStoreComments;
+  //CollectionReference _refStoreComments;
   CollectionReference _refStoreUsers;
   firebase_storage.Reference _refStorageInitiatives;
 
@@ -21,12 +24,39 @@ class FireManager {
 
   FireManager() {
     _refStoreInitiatives = FirebaseFirestore.instance.collection('initiatives');
-    _refStoreComments = FirebaseFirestore.instance.collection('comments');
+    //_refStoreComments = FirebaseFirestore.instance.collection('comments');
     _refStoreUsers = FirebaseFirestore.instance.collection('users');
     _refStorageInitiatives =
         firebase_storage.FirebaseStorage.instance.ref().child('initiatives');
   }
 
+  Future uploadNewUser(User user) async {
+    await _refStoreUsers.add(user.asFirestoreData());
+    return;
+  }
+
+  Future updateUser(User user) async {
+    return;
+  }
+
+  Future downloadUser({String id, String uid}) async {
+    if (id != null) {
+      User()..fromFirestoreDoc(await _refStoreUsers.doc(id).get());
+    } else if (uid != null) {
+      QuerySnapshot querySnapshot =
+          await _refStoreUsers.where('uid', isEqualTo: uid).get();
+      if (querySnapshot.docs.length == 1)
+        User()..fromFirestoreDoc(querySnapshot.docs[0]);
+      else if (querySnapshot.docs.length == 0)
+        Exception('... Not user founf with specified uid');
+      else
+        Exception('... multiple users found with provided uid');
+    } else
+      Exception(
+          'no user identifier was profided. You need to provide either id or uid');
+  }
+
+  // TODO: need to redo the way uploading to upload with giving id and at once
   Future uploadInitiativeToFirestore(Initiative initiative) async {
     List<Future<firebase_storage.TaskSnapshot>> _uploadTasks = [];
 
@@ -82,18 +112,21 @@ class FireManager {
         .doc(initiativeId)
         .collection('comments')
         .add(comment.asFirestoreData())
-        .then((value) => null)
-        .catchError((onError) {
+        .then((value) {
+      int a = 0;
+    }).catchError((onError) {
       print('... ERROR uploading to firestore: $onError');
     });
   }
 
   Future<List<Comment>> downloadInitiativeComments(
-      String iniativeID, int numDocs, int seed) async {
+      String initiativeID, int numDocs, int seed) async {
     List<Comment> comments = [];
     if (seed != _previousInitiativeCommentsQuerySeed) {
       _previousInitiativeCommentsQuerySeed = seed;
-      QuerySnapshot querySnapshot = await _refStoreComments
+      QuerySnapshot querySnapshot = await _refStoreInitiatives
+          .doc(initiativeID)
+          .collection('comments')
           .orderBy('dateTime', descending: true)
           .limit(numDocs)
           .get();
@@ -104,7 +137,9 @@ class FireManager {
         comments.add(Comment()..fromFirestoreDoc(doc));
       });
     } else {
-      QuerySnapshot querySnapshot = await _refStoreComments
+      QuerySnapshot querySnapshot = await _refStoreInitiatives
+          .doc(initiativeID)
+          .collection('comments')
           .orderBy('dateTime', descending: true)
           .startAfterDocument(_lastInitiativeCommentsDocFomPreviousQuery)
           .limit(numDocs)

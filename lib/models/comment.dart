@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udoit/models/AppGlobals.dart';
 import 'package:udoit/models/firestoreObject.dart';
 import 'package:udoit/utils/hash.dart';
 
@@ -8,12 +9,16 @@ class Comment extends FirestoreObject {
   DateTime dateTime;
   String text;
   int likes;
+  String profilePhotoUrl;
 
   Comment({this.id, this.userId, this.dateTime, this.text, this.likes}) {
-    assert(userId != null);
+    //assert(userId != null);
     //id generated from user user uuid and dateTime
     /*this.id = generateMD5fromStringList(
         [this.dateTime.toIso8601String(), this.userId]);*/
+    if (userId != null) {
+      profilePhotoUrl = Globals.appUser.profilePhotoUrl;
+    }
   }
 
   @override
@@ -25,6 +30,7 @@ class Comment extends FirestoreObject {
         data['dateTime'].microsecondsSinceEpoch);
     this.text = data['text'];
     this.likes = data['likes'];
+    this.profilePhotoUrl = data['profilePhotoUrl'];
   }
 
   @override
@@ -34,6 +40,7 @@ class Comment extends FirestoreObject {
       'dateTime': dateTime,
       'text': text,
       'likes': likes,
+      'profilePhotoUrl': profilePhotoUrl
     };
   }
 }
