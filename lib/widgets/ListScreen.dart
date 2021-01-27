@@ -31,12 +31,19 @@ class ListScreenState extends State<ListScreen>
   List<Widget> _itemList;
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
-  bool _isLoading = true;
-  bool _hasMore = true;
+  bool _isLoading;
+  bool _hasMore;
 
   @override
   void initState() {
     super.initState();
+    _isLoading = true;
+    _hasMore = true;
+    _itemList = <Widget>[];
+    _loadMore();
+  }
+
+  void resetState() {
     _isLoading = true;
     _hasMore = true;
     _itemList = <Widget>[];

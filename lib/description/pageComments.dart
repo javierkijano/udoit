@@ -31,7 +31,8 @@ class PageCommentsState extends State<PageComments>
   Random rand = Random();
   int _randomSeedCommentsQuery;
   int numDocs = 10;
-  String currentText;
+  TextEditingController commentTextEditingController = TextEditingController();
+  GlobalKey<ListScreenState> _keyListScreenState = GlobalKey();
 
   Future<List<CommentsListItem>> commentsListItemFetcher(
       int start, int end) async {
@@ -63,10 +64,11 @@ class PageCommentsState extends State<PageComments>
 
   @override
   // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: <Widget>[
         Container(
@@ -79,6 +81,7 @@ class PageCommentsState extends State<PageComments>
               SizedBox(width: 16),
               Expanded(
                 child: TextFormField(
+                  controller: commentTextEditingController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Añade un comentario público ...',
@@ -87,9 +90,6 @@ class PageCommentsState extends State<PageComments>
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(100),
                   ],
-                  onChanged: (text) {
-                    currentText = text;
-                  },
                   onSaved: (text) async {
                     print('upload comment to firestore');
                     Globals.fireManager.uploadCommentToFirestore(
@@ -110,21 +110,29 @@ class PageCommentsState extends State<PageComments>
                   color: Colors.blue,
                   semanticLabel: 'Send comment',
                 ),
-                onTap: () {
+                onTap: () async {
                   print('upload comment to firestore');
-                  Globals.fireManager.uploadCommentToFirestore(
+                  await Globals.fireManager.uploadCommentToFirestore(
                       widget.initiative.id,
                       Comment(
                           userId: Globals.appUser.uid,
                           dateTime: DateTime.now(),
-                          text: currentText,
+                          text: commentTextEditingController.text,
                           likes: 0));
+                  setState(() {
+                    _randomSeedCommentsQuery = rand.nextInt(1000000);
+                    _keyListScreenState.currentState.resetState();
+                    this.commentTextEditingController.text = '';
+                  });
                 },
               )
             ],
           ),
         ),
-        Expanded(child: ListScreen(itemFetcher: commentsListItemFetcher)),
+        Expanded(
+            child: ListScreen(
+                key: _keyListScreenState,
+                itemFetcher: commentsListItemFetcher)),
         Divider(thickness: 0.5, color: Colors.grey),
       ],
     );
