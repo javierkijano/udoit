@@ -4,7 +4,7 @@ import 'package:udoit/utils/AppColors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 //import 'package:udoit/showInitiatives/models/models.dart';
 
-class CommentsListItem extends StatelessWidget {
+class CommentsListItem extends StatefulWidget {
   String profilePhotoUrl;
   String name;
   String text;
@@ -19,6 +19,20 @@ class CommentsListItem extends StatelessWidget {
       @required this.dateTime,
       @required this.likes,
       this.index = 0});
+
+  @override
+  CommentsListItemState createState() => new CommentsListItemState();
+}
+
+class CommentsListItemState extends State<CommentsListItem> {
+  bool likeActive;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    likeActive = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +50,8 @@ class CommentsListItem extends StatelessWidget {
           child: Row(
             children: <Widget>[
               CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(profilePhotoUrl),
+                  backgroundImage:
+                      CachedNetworkImageProvider(widget.profilePhotoUrl),
                   radius: 30),
               SizedBox(width: 16),
               Expanded(
@@ -48,21 +63,32 @@ class CommentsListItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Text(name),
+                          Text(widget.name),
                           SizedBox(width: 30),
-                          Text(dateTime.toString()),
+                          Text(widget.dateTime.toString()),
                         ],
                       ),
-                      Text(text,
+                      Text(widget.text,
                           overflow: TextOverflow.ellipsis,
                           style: primaryTextStyle(size: 14),
                           maxLines: 3),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.favorite_border_outlined),
+                          GestureDetector(
+                            child: likeActive
+                                ? Icon(Icons.favorite_rounded,
+                                    color: Colors.red)
+                                : Icon(Icons.favorite_border,
+                                    color: Colors.red),
+                            onTap: () {
+                              setState(() {
+                                this.likeActive = !this.likeActive;
+                              });
+                            },
+                          ),
                           SizedBox(width: 30),
-                          Text(likes.toString()),
+                          Text(widget.likes.toString()),
                           SizedBox(width: 30),
                           Text('Denunciar'),
                         ],
