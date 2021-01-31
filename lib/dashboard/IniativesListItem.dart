@@ -31,15 +31,15 @@ class IniativesListItem extends StatelessWidget {
       children: <Widget>[
         Container(
           height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width / 1.5,
+          width: MediaQuery.of(context).size.width * 0.5,
           child: CachedNetworkImage(
             imageUrl: imageUrl,
             fit: BoxFit.cover,
-          ).cornerRadiusWithClipRRect(20).paddingTop(16),
+          ).cornerRadiusWithClipRRect(10).paddingTop(16),
         ),
         Container(
           height: 90,
-          width: MediaQuery.of(context).size.width / 1.5,
+          width: MediaQuery.of(context).size.width * 0.5,
           color: blackColor.withOpacity(0.7),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,8 +58,8 @@ class IniativesListItem extends StatelessWidget {
                   .paddingTop(4),
             ],
           ).paddingAll(16),
-        ).cornerRadiusWithClipRRect(20)
+        ).cornerRadiusWithClipRRect(10)
       ],
-    ).paddingAll(16);
+    ).paddingAll(10);
   }
 }

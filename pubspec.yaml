@@ -94,6 +94,7 @@ dependencies:
   dash_chat: ^1.1.15
   #could be use to replace the upload of videos an images
   #interactiveviewer_gallery: ^0.3.0
+  percent_indicator: ^2.1.9
 
   flutter_localizations:
     sdk: flutter
