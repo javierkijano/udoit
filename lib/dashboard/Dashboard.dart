@@ -29,7 +29,7 @@ import 'package:udoit/gamification/summary.dart';
 class Dashboard extends StatefulWidget {
   static String tag = '/Dashboard';
 
-  Dashboard({Key key}) : super(key: key);
+  Dashboard({Key key}) : super(key: key) {}
 
   @override
   _DashboardState createState() => _DashboardState();
@@ -43,9 +43,12 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  GlobalKey<ScaffoldState> _scaffoldKey;
+  GlobalKey<ListScreenState> _keyListScreen;
+  List<String> _filteredCategoriesIds = [];
   Random rand = Random();
   int _randomSeedTrendingQuery;
-  int _randomSeedPopularQuery;
+  //int _randomSeedPopularQuery;
   List<Initiative> trendingInitiatives;
 
   List<Theme11SongType> mList1;
@@ -58,8 +61,9 @@ class _DashboardState extends State<Dashboard> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager
-            .downloadTrendingInitiatives(numDocs, _randomSeedTrendingQuery))
+    (await Globals.fireManager.downloadTrendingInitiatives(
+            numDocs, _randomSeedTrendingQuery,
+            categoriesIds: _filteredCategoriesIds))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -74,12 +78,14 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
+    _scaffoldKey = GlobalKey<ScaffoldState>();
+    _keyListScreen = GlobalKey<ListScreenState>();
+    _filteredCategoriesIds =
+        Globals.appConf.categories.map((category) => category.id).toList();
     _randomSeedTrendingQuery = rand.nextInt(1000000);
-    FireManager().downloadTrendingInitiatives(10, 0).then((value) {
+    /*FireManager().downloadTrendingInitiatives(10, 0).then((value) {
       trendingInitiatives = value;
-    });
-    mList1 = theme11songTypeList();
-    mList2 = theme11SongList();
+    });*/
   }
 
   @override
@@ -101,7 +107,6 @@ class _DashboardState extends State<Dashboard> {
       alignment: Alignment.center,
     ).cornerRadiusWithClipRRect(10).paddingAll(16);
 
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
       appBar: UpNavBar(),
@@ -117,13 +122,13 @@ class _DashboardState extends State<Dashboard> {
               //songDetail,
               Divider(height: 25, thickness: 0.3),
               FilterList(
-                  filtersNamesList:
+                  filtersList:
                       Globals.appConf.categories.map((cat) => cat.id).toList(),
-                  onFiltersChanged: (activeFilters) {
-                    activeFilters.forEach((index) {
-                      print(Globals.appConf.categories
-                          .map((cat) => cat.id)
-                          .toList()[index]);
+                  onFiltersChanged: (filteredCategoriesIds) {
+                    setState(() {
+                      _filteredCategoriesIds = filteredCategoriesIds;
+                      _randomSeedTrendingQuery = rand.nextInt(1000000);
+                      _keyListScreen.currentState.resetState();
                     });
                   }),
 
@@ -132,6 +137,7 @@ class _DashboardState extends State<Dashboard> {
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width,
                 child: ListScreen(
+                  key: _keyListScreen,
                   itemFetcher: iniativesListItemFetcher_trending,
                   scrollDirection: Axis.horizontal,
                 ),

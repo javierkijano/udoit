@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 
 class FilterList extends StatefulWidget {
   List<String> _filtersNamesList = [];
-  void Function(List<int>) onFiltersChanged;
+  List<String> _filtersList = [];
+
+  void Function(List<String>) onFiltersChanged;
 
   FilterList(
-      {Key key, @required List<String> filtersNamesList, this.onFiltersChanged})
+      {Key key, @required List<String> filtersList, this.onFiltersChanged})
       : super(key: key) {
-    filtersNamesList.forEach((element) {
+    _filtersList = filtersList;
+    filtersList.forEach((element) {
       _filtersNamesList.add('#' + element);
     });
   }
@@ -21,41 +24,40 @@ class FilterList extends StatefulWidget {
 
 class FilterListState extends State<FilterList> {
   List<bool> filtersActivatedList;
+  bool filterAllActivated;
 
   @override
   void initState() {
     super.initState();
     filtersActivatedList =
-        List<bool>.filled(widget._filtersNamesList.length, false);
+        List<bool>.filled(widget._filtersNamesList.length, true);
+    filterAllActivated = true;
   }
 
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget._filtersNamesList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        children: [
+          VerticalDivider(
+            width: 15,
+            thickness: 0.5,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
             color: Colors.transparent,
             child: GestureDetector(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: new BoxDecoration(
-                    color: filtersActivatedList[index]
-                        ? appColorPrimary
-                        : appWhite,
+                    color: filterAllActivated ? appColorPrimary : appWhite,
                     borderRadius:
                         new BorderRadius.all(const Radius.circular(40.0))),
                 alignment: Alignment.center,
                 child: Text(
-                  widget._filtersNamesList[index],
+                  '#all',
                   style: TextStyle(
-                    color: filtersActivatedList[index]
-                        ? appWhite
-                        : appColorPrimary,
+                    color: filterAllActivated ? appWhite : appColorPrimary,
                     fontSize: textSizeLargeMedium,
                     fontFamily: fontRegular,
                   ),
@@ -64,19 +66,71 @@ class FilterListState extends State<FilterList> {
               ),
               onTap: () {
                 setState(() {
-                  filtersActivatedList[index] = !filtersActivatedList[index];
+                  filterAllActivated = !filterAllActivated;
+                  filtersActivatedList = List<bool>.filled(
+                      widget._filtersNamesList.length, filterAllActivated);
                 });
-                if (widget.onFiltersChanged != null) {
-                  List<int> activatedFiltersIndices = [];
-                  for (int i = 0; i < filtersActivatedList.length; i++)
-                    if (filtersActivatedList[i] == true)
-                      activatedFiltersIndices.add(i);
-                  widget.onFiltersChanged(activatedFiltersIndices);
-                }
+                if (filterAllActivated)
+                  widget.onFiltersChanged(widget._filtersList);
+                else
+                  widget.onFiltersChanged(List<String>());
               },
             ),
-          );
-        },
+          ),
+          VerticalDivider(
+            width: 15,
+            thickness: 0.5,
+          ),
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: widget._filtersNamesList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  color: Colors.transparent,
+                  child: GestureDetector(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      decoration: new BoxDecoration(
+                          color: filtersActivatedList[index]
+                              ? appColorPrimary
+                              : appWhite,
+                          borderRadius: new BorderRadius.all(
+                              const Radius.circular(40.0))),
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget._filtersNamesList[index],
+                        style: TextStyle(
+                          color: filtersActivatedList[index]
+                              ? appWhite
+                              : appColorPrimary,
+                          fontSize: textSizeLargeMedium,
+                          fontFamily: fontRegular,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        filtersActivatedList[index] =
+                            !filtersActivatedList[index];
+                      });
+                      if (widget.onFiltersChanged != null) {
+                        List<String> activatedFilters = [];
+                        for (int i = 0; i < filtersActivatedList.length; i++)
+                          if (filtersActivatedList[i] == true)
+                            activatedFilters.add(widget._filtersList[i]);
+                        widget.onFiltersChanged(activatedFilters);
+                      }
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

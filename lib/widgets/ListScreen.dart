@@ -11,10 +11,10 @@ class ListScreen extends StatefulWidget {
   Axis scrollDirection;
 
   ListScreen(
-      {Future<List<Widget>> Function(int, int) itemFetcher,
+      {Key key,
+      Future<List<Widget>> Function(int, int) itemFetcher,
       this.numItemsPerPage = 10,
-      this.scrollDirection = Axis.vertical,
-      Key key})
+      this.scrollDirection = Axis.vertical})
       : super(key: key) {
     if (itemFetcher != null) _itemFetcher = itemFetcher;
   }
@@ -44,10 +44,12 @@ class ListScreenState extends State<ListScreen>
   }
 
   void resetState() {
-    _isLoading = true;
-    _hasMore = true;
-    _itemList = <Widget>[];
-    _loadMore();
+    setState(() {
+      _isLoading = true;
+      _hasMore = true;
+      _itemList = <Widget>[];
+      _loadMore();
+    });
   }
 
   void add(List<Widget> itemList) {

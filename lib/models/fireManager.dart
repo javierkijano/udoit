@@ -78,12 +78,13 @@ class FireManager {
     }
   }
 
-  Future<List<Initiative>> downloadTrendingInitiatives(
-      int numDocs, int seed) async {
+  Future<List<Initiative>> downloadTrendingInitiatives(int numDocs, int seed,
+      {List<String> categoriesIds}) async {
     List<Initiative> initiatives = [];
     if (seed != _previousTrendingInitiativesQuerySeed) {
       _previousTrendingInitiativesQuerySeed = seed;
       QuerySnapshot querySnapshot = await _refStoreInitiatives
+          .where('category', whereIn: categoriesIds)
           .orderBy('dateTime', descending: true)
           .limit(numDocs)
           .get();
@@ -95,6 +96,7 @@ class FireManager {
       });
     } else {
       QuerySnapshot querySnapshot = await _refStoreInitiatives
+          .where('category', whereIn: categoriesIds)
           .orderBy('dateTime', descending: true)
           .startAfterDocument(_lastTrendingInitiativesDocFomPreviousQuery)
           .limit(numDocs)
