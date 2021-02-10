@@ -83,11 +83,18 @@ class FireManager {
     List<Initiative> initiatives = [];
     if (seed != _previousTrendingInitiativesQuerySeed) {
       _previousTrendingInitiativesQuerySeed = seed;
-      QuerySnapshot querySnapshot = await _refStoreInitiatives
-          .where('category', whereIn: categoriesIds)
-          .orderBy('dateTime', descending: true)
-          .limit(numDocs)
-          .get();
+      QuerySnapshot querySnapshot;
+      if (categoriesIds == null)
+        querySnapshot = await _refStoreInitiatives
+            .orderBy('dateTime', descending: true)
+            .limit(numDocs)
+            .get();
+      else
+        querySnapshot = await _refStoreInitiatives
+            .where('category', whereIn: categoriesIds)
+            .orderBy('dateTime', descending: true)
+            .limit(numDocs)
+            .get();
       if (querySnapshot.docs.length > 0)
         _lastTrendingInitiativesDocFomPreviousQuery =
             querySnapshot.docs[querySnapshot.docs.length - 1];
@@ -95,12 +102,21 @@ class FireManager {
         initiatives.add(Initiative()..fromFirestoreDoc(doc));
       });
     } else {
-      QuerySnapshot querySnapshot = await _refStoreInitiatives
-          .where('category', whereIn: categoriesIds)
-          .orderBy('dateTime', descending: true)
-          .startAfterDocument(_lastTrendingInitiativesDocFomPreviousQuery)
-          .limit(numDocs)
-          .get();
+      QuerySnapshot querySnapshot;
+      if (categoriesIds == null)
+        querySnapshot = await _refStoreInitiatives
+            .orderBy('dateTime', descending: true)
+            .startAfterDocument(_lastTrendingInitiativesDocFomPreviousQuery)
+            .limit(numDocs)
+            .get();
+      else
+        querySnapshot = await _refStoreInitiatives
+            .where('category', whereIn: categoriesIds)
+            .orderBy('dateTime', descending: true)
+            .startAfterDocument(_lastTrendingInitiativesDocFomPreviousQuery)
+            .limit(numDocs)
+            .get();
+
       if (querySnapshot.docs.length > 0)
         _lastTrendingInitiativesDocFomPreviousQuery =
             querySnapshot.docs[querySnapshot.docs.length - 1];

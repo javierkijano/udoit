@@ -48,13 +48,7 @@ class WalkThroughState extends State<WalkThrough> {
         alignment: Alignment.topCenter,
         //fit: StackFit.expand,
         children: <Widget>[
-          Align(
-              alignment: Alignment.bottomCenter,
-              child: OverflowBox(
-                maxHeight: double.infinity,
-                alignment: Alignment.bottomCenter,
-                child: Image.asset(walkthrough_bg, fit: BoxFit.fitWidth),
-              )),
+          Image.asset(walkthrough_bg, fit: BoxFit.cover),
           Positioned(
               top: height * 0.025,
               height: height * 0.1,
@@ -137,7 +131,7 @@ class WalkThroughPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    //var width = MediaQuery.of(context).size.width;
     return Stack(
       fit: StackFit.expand,
       alignment: Alignment.bottomCenter,

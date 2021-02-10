@@ -10,6 +10,7 @@ import 'package:udoit/utils/AppConstant.dart';
 import 'package:udoit/showInitiatives/ShowInitiativesList.dart';
 import 'package:udoit/description/description.dart';
 import 'package:udoit/widgets/AppWidget.dart';
+//import 'package:clipboard/clipboard.dart';
 
 class UpNavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -46,8 +47,10 @@ class UpNavBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Icon(Icons.share),
                   onTap: () {
                     //Navigator.pushNamed(context, ShareTest.tag);
+                    //FlutterClipboard.copy('hello flutter friends').then(( value ) => print('copied'));
                   },
                 ),
+                SizedBox(width: spacing_standard_new),
                 GestureDetector(
                   child: Icon(Icons.add),
                   onTap: () {

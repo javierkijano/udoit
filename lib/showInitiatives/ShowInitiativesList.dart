@@ -11,9 +11,14 @@ import 'package:udoit/widgets/ListScreen.dart';
 import 'IniativesListItem.dart';
 import 'dart:math';
 import 'package:udoit/models/fireManager.dart';
+import 'package:udoit/widgets/searchBar.dart';
 
 class ShowInitiatives extends StatefulWidget {
   static var tag = "/ShowInitiatives";
+
+  ShowInitiatives({Key key, String initialSearchBarText}) : super(key: key) {
+    //initialSearchBarText
+  }
 
   @override
   ShowInitiativesState createState() => ShowInitiativesState();
@@ -24,13 +29,15 @@ class ShowInitiativesState extends State<ShowInitiatives> {
   Random rand = Random();
   int _randomSeedTrendingQuery;
   int _randomSeedPopularQuery;
+  List<String> _filteredCategoriesIds = [];
 
   Future<List<IniativesListItem>> iniativesListItemFetcher_new(
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager
-            .downloadTrendingInitiatives(numDocs, _randomSeedTrendingQuery))
+    (await Globals.fireManager.downloadTrendingInitiatives(
+            numDocs, _randomSeedTrendingQuery,
+            categoriesIds: _filteredCategoriesIds))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -46,8 +53,9 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager
-            .downloadTrendingInitiatives(numDocs, _randomSeedTrendingQuery))
+    (await Globals.fireManager.downloadTrendingInitiatives(
+            numDocs, _randomSeedTrendingQuery,
+            categoriesIds: _filteredCategoriesIds))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -63,8 +71,9 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       int start, int end) async {
     List<IniativesListItem> list = <IniativesListItem>[];
     int numDocs = end - start + 1;
-    (await Globals.fireManager
-            .downloadTrendingInitiatives(numDocs, _randomSeedPopularQuery))
+    (await Globals.fireManager.downloadTrendingInitiatives(
+            numDocs, _randomSeedPopularQuery,
+            categoriesIds: _filteredCategoriesIds))
         .forEach((element) {
       list.add(IniativesListItem(
           imageUrl: element.imagesUrls[0],
@@ -79,6 +88,8 @@ class ShowInitiativesState extends State<ShowInitiatives> {
   @override
   void initState() {
     super.initState();
+    _filteredCategoriesIds =
+        Globals.appConf.categories.map((category) => category.id).toList();
     selectedPos = 1;
     _randomSeedTrendingQuery = rand.nextInt(1000000);
   }
@@ -92,6 +103,7 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          title: Text('udoit.org'),
           bottom: TabBar(
             onTap: (value) {
               setState(() {
@@ -130,13 +142,22 @@ class ShowInitiativesState extends State<ShowInitiatives> {
           ),
         ),
         body: Observer(
-            builder: (_) => Container(
-                width: MediaQuery.of(context).size.width,
-                child: TabBarView(children: <Widget>[
-                  ListScreen(itemFetcher: iniativesListItemFetcher_new),
-                  ListScreen(itemFetcher: iniativesListItemFetcher_trend),
-                  ListScreen(itemFetcher: iniativesListItemFetcher_popular),
-                ]))),
+          builder: (_) => Container(
+            color: app_gradientColor2,
+            child: Column(children: [
+              SearchBar(),
+              Expanded(
+                child: TabBarView(
+                  children: <Widget>[
+                    ListScreen(itemFetcher: iniativesListItemFetcher_new),
+                    ListScreen(itemFetcher: iniativesListItemFetcher_trend),
+                    ListScreen(itemFetcher: iniativesListItemFetcher_popular),
+                  ],
+                ),
+              ),
+            ]),
+          ),
+        ),
       ),
     );
   }

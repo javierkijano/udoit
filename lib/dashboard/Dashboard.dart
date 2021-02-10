@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:udoit/login/Login.dart';
 import 'package:udoit/models/initiative.dart';
+import 'package:udoit/showInitiatives/ShowInitiativesList.dart';
 import 'package:udoit/widgets/AppWidget.dart';
 import 'package:udoit/dashboard/T11Models.dart';
 import 'package:udoit/utils/AppConstant.dart';
@@ -25,6 +26,7 @@ import 'dart:math';
 
 import 'package:udoit/widgets/upNavBar.dart';
 import 'package:udoit/gamification/summary.dart';
+import 'package:udoit/widgets/searchBar.dart';
 
 class Dashboard extends StatefulWidget {
   static String tag = '/Dashboard';
@@ -51,9 +53,6 @@ class _DashboardState extends State<Dashboard> {
   //int _randomSeedPopularQuery;
   List<Initiative> trendingInitiatives;
 
-  List<Theme11SongType> mList1;
-  List<Theme11SongsList> mList2;
-
   var selectedIndex = 0;
   var selectedSongType = 0;
 
@@ -64,13 +63,8 @@ class _DashboardState extends State<Dashboard> {
     (await Globals.fireManager.downloadTrendingInitiatives(
             numDocs, _randomSeedTrendingQuery,
             categoriesIds: _filteredCategoriesIds))
-        .forEach((element) {
-      list.add(IniativesListItem(
-          imageUrl: element.imagesUrls[0],
-          title: element.title,
-          category: element.category.id.toString(),
-          date: element.dateTime.toString(),
-          summary: element.summary));
+        .forEach((initiative) {
+      list.add(IniativesListItem(initiative: initiative));
     });
     return list;
   }
@@ -90,23 +84,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final searchView = Container(
-      height: 80,
-      child: TextField(
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: whiteColor,
-          hintText: "Busca una iniciativa",
-          border: InputBorder.none,
-          suffixIcon: Icon(Icons.search, color: appColorPrimary).paddingAll(16),
-          contentPadding:
-              EdgeInsets.only(left: 16.0, bottom: 8.0, top: 8.0, right: 16.0),
-        ),
-      ).cornerRadiusWithClipRRect(20),
-      alignment: Alignment.center,
-    ).cornerRadiusWithClipRRect(10).paddingAll(16);
-
     return Scaffold(
       key: _scaffoldKey,
       appBar: UpNavBar(),
@@ -117,9 +94,11 @@ class _DashboardState extends State<Dashboard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 30),
-              searchView,
-              //songDetail,
+              SizedBox(height: 10),
+              SearchBar(onTextInputCallback: (text) {
+                Navigator.of(context)
+                    .pushNamed(ShowInitiatives.tag, arguments: text);
+              }),
               Divider(height: 25, thickness: 0.3),
               FilterList(
                   filtersList:
@@ -131,7 +110,6 @@ class _DashboardState extends State<Dashboard> {
                       _keyListScreen.currentState.resetState();
                     });
                   }),
-
               Divider(height: 25, thickness: 0.3),
               Container(
                 height: MediaQuery.of(context).size.height / 3,

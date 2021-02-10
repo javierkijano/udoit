@@ -95,7 +95,9 @@ dependencies:
   #could be use to replace the upload of videos an images
   #interactiveviewer_gallery: ^0.3.0
   percent_indicator: ^2.1.9
+  clipboard: ^0.1.2+8
 
+  
   flutter_localizations:
     sdk: flutter
 

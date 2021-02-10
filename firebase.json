@@ -4,6 +4,7 @@
   },
   "hosting": {
     "public": "build/web",
+    "site": "smartmobs",
     "ignore": [
       "firebase.json",
       "**/.*",
