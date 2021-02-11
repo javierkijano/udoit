@@ -96,8 +96,9 @@ class _DashboardState extends State<Dashboard> {
             children: <Widget>[
               SizedBox(height: 10),
               SearchBar(onTextInputCallback: (text) {
-                Navigator.of(context)
-                    .pushNamed(ShowInitiatives.tag, arguments: text);
+                if (text.length > 3)
+                  Navigator.of(context)
+                      .pushNamed(ShowInitiatives.tag, arguments: text);
               }),
               Divider(height: 25, thickness: 0.3),
               FilterList(

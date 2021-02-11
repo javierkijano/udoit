@@ -36,7 +36,7 @@ class GamificationSummary extends StatelessWidget {
                       center: new Text(
                         "70.0%",
                         style: new TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 40.0),
+                            fontWeight: FontWeight.bold, fontSize: 30.0),
                       ),
                       /*footer: new Text(
                                   "Sales this week",
@@ -58,7 +58,7 @@ class GamificationSummary extends StatelessWidget {
                   child: Container(
                       padding: EdgeInsets.only(top: 15),
                       child: Text(
-                        'Level: Rookie',
+                        'Level:\nRookie',
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),
@@ -69,7 +69,7 @@ class GamificationSummary extends StatelessWidget {
                   child: Container(
                       padding: EdgeInsets.only(top: 15),
                       child: Text(
-                        'Level Achievements',
+                        'Level\nAchievements',
                         textAlign: TextAlign.center,
                         style: new TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0),

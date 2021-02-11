@@ -103,37 +103,17 @@ class ShowInitiativesState extends State<ShowInitiatives> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('udoit.org'),
+          backgroundColor: app_gradientColor2,
+          title: SearchBar(
+                  initialText: ModalRoute.of(context).settings.arguments,
+                  autofocus: true)
+              .paddingTop(15),
           bottom: TabBar(
-            onTap: (value) {
-              setState(() {
-                /*
-                switch (value) {
-                  case 0:
-                    {
-                      setState(() {
-                        mListings_current = mListings_new;
-                      });
-                      break;
-                    }
-                  case 1:
-                    {
-                      setState(() {
-                        mListings_current = mListings_trend;
-                      });
-                      break;
-                    }
-                  case 2:
-                    {
-                      setState(() {
-                        mListings_current = mListings_new;
-                      });
-                      break;
-                    }
-                }
-                */
-              });
-            },
+            indicatorColor: Colors.blue,
+            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.white,
+            onTap: (value) {},
             tabs: [
               Tab(text: "New"),
               Tab(text: "Trends"),
@@ -145,7 +125,7 @@ class ShowInitiativesState extends State<ShowInitiatives> {
           builder: (_) => Container(
             color: app_gradientColor2,
             child: Column(children: [
-              SearchBar(),
+              SizedBox(height: 15),
               Expanded(
                 child: TabBarView(
                   children: <Widget>[

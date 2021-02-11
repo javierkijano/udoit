@@ -4,17 +4,27 @@ import 'package:nb_utils/nb_utils.dart';
 
 class SearchBar extends StatefulWidget {
   Function(String) onTextInputCallback;
+  String initialText;
+  bool autofocus;
 
-  SearchBar({Key key, this.onTextInputCallback}) : super(key: key) {}
+  SearchBar(
+      {Key key,
+      this.initialText,
+      this.autofocus = false,
+      this.onTextInputCallback})
+      : super(key: key) {}
 
   @override
   SearchBarState createState() => SearchBarState();
 }
 
 class SearchBarState extends State<SearchBar> {
+  TextEditingController _textController;
+
   @override
   void initState() {
     super.initState();
+    _textController = new TextEditingController(text: widget.initialText);
   }
 
   @override
@@ -22,6 +32,8 @@ class SearchBarState extends State<SearchBar> {
     return Container(
       //height: 30,
       child: TextField(
+          autofocus: widget.autofocus,
+          controller: _textController,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             filled: true,
@@ -31,13 +43,13 @@ class SearchBarState extends State<SearchBar> {
             suffixIcon: Icon(Icons.search, size: 30, color: appColorPrimary)
                 .paddingAll(5),
             contentPadding:
-                EdgeInsets.only(left: 16.0, bottom: 8.0, top: 8.0, right: 16.0),
+                EdgeInsets.only(left: 16.0, bottom: 4.0, top: 4.0, right: 16.0),
           ),
           onChanged: (text) {
             if (widget.onTextInputCallback != null)
               widget.onTextInputCallback(text);
           }).cornerRadiusWithClipRRect(20),
       alignment: Alignment.center,
-    ).cornerRadiusWithClipRRect(10).paddingAll(16);
+    ).cornerRadiusWithClipRRect(10).paddingAll(10);
   }
 }
