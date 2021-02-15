@@ -2,7 +2,7 @@
 
 //import 'package:admob_flutter/admob_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:clustering_google_maps/clustering_google_maps.dart';
+//import 'package:clustering_google_maps/clustering_google_maps.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
@@ -59,6 +59,7 @@ BoxDecoration boxDecoration(
   );
 }
 
+/*
 Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(
     BuildContext context) async {
   try {
@@ -76,6 +77,7 @@ Future<List<LatLngAndGeohash>> getListOfLatLngAndGeoHash(
     throw Exception(e.toString());
   }
 }
+*/
 
 void changeStatusColor(Color color) async {
   try {

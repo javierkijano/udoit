@@ -11,6 +11,7 @@
         {
             "name": "udoit (Flutter)",
             "program": "lib/main.dart",
+            //"program": "lib/widgets/maps.dart",
             "request": "launch",
             "type": "dart"
         }

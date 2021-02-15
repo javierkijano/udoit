@@ -60,10 +60,10 @@ dependencies:
   flutter_staggered_animations: 0.1.2
 
   #google_sign_in: 4.5.3
-  geolocator: 5.3.2+2
-  geocoder: 0.2.1
-  google_maps_flutter: 0.5.21+3
-  clustering_google_maps: 0.1.2
+  #geolocator: 5.3.2+2
+  #geocoder: 0.2.1
+  #google_maps_flutter: 0.5.21+3
+  #clustering_google_maps: 0.1.2
   #signature: 3.2.0
   #liquid_swipe: 1.5.0
   #lipsum: 1.0.1
@@ -95,7 +95,12 @@ dependencies:
   #could be use to replace the upload of videos an images
   #interactiveviewer_gallery: ^0.3.0
   percent_indicator: ^2.1.9
-  clipboard: ^0.1.2+8
+  #share_plus: ^1.2.0
+  share_plus_linux: ^1.1.0
+
+  # these two come at the same time
+  google_maps_flutter: ^0.5.28
+  google_maps_flutter_web: ^0.1.1
 
   
   flutter_localizations:
