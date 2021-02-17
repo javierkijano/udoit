@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,6 +24,11 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   BitmapDescriptor pinLocationIcon;
   Set<Marker> _markers = {};
+  LatLng min_area;
+  LatLng max_area;
+  double delta_lat;
+  double delta_lng;
+
   Completer<GoogleMapController> _controller = Completer();
 
   static final CameraPosition _kSpain = CameraPosition(
@@ -39,6 +45,17 @@ class MapSampleState extends State<MapSample> {
   @override
   void initState() {
     super.initState();
+    min_area = LatLng(41.38669257741156, 2.169411536650914);
+    max_area = LatLng(41.38745727220532, 2.1704844202406623);
+    delta_lat = max_area.latitude - min_area.latitude;
+    delta_lng = max_area.longitude - min_area.longitude;
+    for (int i = 0; i < 10; i++) {
+      _markers.add(Marker(
+        markerId: MarkerId('user_${i.toString()}'),
+        position: LatLng(min_area.latitude + Random().nextDouble() * delta_lat,
+            min_area.longitude + Random().nextDouble() * delta_lng),
+      ));
+    }
   }
 
   @override
@@ -53,13 +70,6 @@ class MapSampleState extends State<MapSample> {
           /*pinLocationIcon = await BitmapDescriptor.fromAssetImage(
               ImageConfiguration(devicePixelRatio: 2.5),
               'assets/destination_map_marker.png');*/
-          setState(() {
-            _markers.add(Marker(
-              markerId: MarkerId('hola'),
-              position: LatLng(41.38750747103278, 2.170584352959006),
-            ));
-            //icon: pinLocationIcon));
-          });
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -72,12 +82,23 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> _goToPosition() async {
     final GoogleMapController controller = await _controller.future;
+
     setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId('hola1'),
-        position: LatLng(41.38651548883045, 2.1700552665479913),
-      ));
-      //icon: pinLocationIcon));
+      void handleTimeout(Timer timer) {
+        _markers = _markers.map((marker) {
+          print(marker.toJson());
+          return Marker(
+            markerId: marker.markerId,
+            position: LatLng(
+                marker.position.latitude +
+                    delta_lat / 20 * pow(-1, Random().nextInt(2)),
+                marker.position.longitude +
+                    delta_lng / 20 * pow(-1, Random().nextInt(2))),
+          );
+        });
+      }
+
+      Timer.periodic(Duration(milliseconds: 500), handleTimeout);
     });
     //controller.animateCamera(CameraUpdate.newCameraPosition(_kPosition));
   }
