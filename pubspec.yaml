@@ -102,6 +102,8 @@ dependencies:
   google_maps_flutter: ^0.5.28
   google_maps_flutter_web: ^0.1.1
 
+  table_calendar: ^2.3.3
+
   
   flutter_localizations:
     sdk: flutter

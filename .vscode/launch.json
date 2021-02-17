@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "pwa-chrome",
             "request": "launch",
@@ -10,8 +11,9 @@
         },
         {
             "name": "udoit (Flutter)",
-            "program": "lib/main.dart",
-            //"program": "lib/widgets/maps.dart",
+            //"program": "lib/main.dart",
+            "program": "lib/widgets/maps.dart",
+            //"program": "lib/widgets/calendar.dart",
             "request": "launch",
             "type": "dart"
         }
