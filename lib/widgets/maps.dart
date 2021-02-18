@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/marker_updates.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,6 +29,8 @@ class MapSampleState extends State<MapSample> {
   LatLng max_area;
   double delta_lat;
   double delta_lng;
+  int timerIteration = 0;
+  //GlobalKey<GoogleMapState> _keyGoogleMap = GlobalKey<GoogleMapState>();
 
   Completer<GoogleMapController> _controller = Completer();
 
@@ -51,7 +54,7 @@ class MapSampleState extends State<MapSample> {
     delta_lng = max_area.longitude - min_area.longitude;
     for (int i = 0; i < 10; i++) {
       _markers.add(Marker(
-        markerId: MarkerId('user_${i.toString()}'),
+        markerId: MarkerId('${i.toString()}'),
         position: LatLng(min_area.latitude + Random().nextDouble() * delta_lat,
             min_area.longitude + Random().nextDouble() * delta_lng),
       ));
@@ -83,23 +86,29 @@ class MapSampleState extends State<MapSample> {
   Future<void> _goToPosition() async {
     final GoogleMapController controller = await _controller.future;
 
-    setState(() {
-      void handleTimeout(Timer timer) {
+    void handleTimeout(Timer timer) {
+      if (timerIteration == 0)
+        timerIteration = 1;
+      else
+        timerIteration = 0;
+      setState(() {
         _markers = _markers.map((marker) {
-          print(marker.toJson());
           return Marker(
-            markerId: marker.markerId,
+            markerId: timerIteration == 0
+                ? MarkerId('${int.parse(marker.markerId.value) + 99999}')
+                : MarkerId('${int.parse(marker.markerId.value) - 99999}'),
             position: LatLng(
                 marker.position.latitude +
-                    delta_lat / 20 * pow(-1, Random().nextInt(2)),
+                    delta_lat / 30 * pow(-1, Random().nextInt(2)),
                 marker.position.longitude +
-                    delta_lng / 20 * pow(-1, Random().nextInt(2))),
+                    delta_lng / 30 * pow(-1, Random().nextInt(2))),
           );
-        });
-      }
+        }).toSet();
+      });
+    }
 
-      Timer.periodic(Duration(milliseconds: 500), handleTimeout);
-    });
+    Timer.periodic(Duration(milliseconds: 500), handleTimeout);
+
     //controller.animateCamera(CameraUpdate.newCameraPosition(_kPosition));
   }
 }
